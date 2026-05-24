@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Enyukado · Terms &amp; Conditions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --blue:       #326fca;
+      --blue-dark:  #2458a8;
+      --blue-light: #4e87d4;
+      --peach:      #ffe7be;
+      --light:      #f4f5f7;
+      --charcoal:   #3c3c3c;
+      --charcoal-2: #5a5a5a;
+      --charcoal-3: #888;
+      --white:      #ffffff;
+      --radius:     14px;
+      --radius-sm:  8px;
+      --shadow:     0 4px 24px rgba(50, 111, 202, 0.12);
+    }
+
+    html, body {
+      min-height: 100%;
+      font-family: 'DM Sans', sans-serif;
+      background: #f4f5f7;
+      color: var(--charcoal);
+    }
+    /* NAV */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: #f4f5f7;
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(50,111,202,0.12);
+      padding: 0 48px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: #f4f5f7;
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(50,111,202,0.12);
+      padding: 0 48px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+    .nav-back {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--blue);
+      transition: opacity 0.2s;
+    }
+    .nav-back:hover { opacity: 0.7; }
+    /* PAGE */
+    .page {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 56px 32px 80px;
+    }
+    .page-badge {
+      display: inline-block;
+      background: rgba(50,111,202,0.12);
+      color: var(--blue);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 18px;
+    }
+    .page-title {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 700;
+      color: var(--charcoal);
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 10px;
+    }
+    .page-updated {
+      font-size: 0.85rem;
+      color: var(--charcoal-3);
+      margin-bottom: 48px;
+      font-weight: 300;
+    }
+    .divider {
+      height: 1px;
+      background: rgba(50,111,202,0.15);
+      margin-bottom: 48px;
+    }
+    .section {
+      margin-bottom: 40px;
+    }
+    .section h2 {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--charcoal);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section h2::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 18px;
+      background: var(--blue);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+    .section p {
+      font-size: 0.95rem;
+      line-height: 1.75;
+      color: var(--charcoal-2);
+      font-weight: 300;
+      margin-bottom: 10px;
+    }
+    .section ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding-left: 14px;
+    }
+    .section ul li {
+      font-size: 0.95rem;
+      line-height: 1.65;
+      color: var(--charcoal-2);
+      font-weight: 300;
+      position: relative;
+      padding-left: 16px;
+    }
+    .section ul li::before {
+      content: '·';
+      position: absolute;
+      left: 0;
+      color: var(--blue);
+      font-size: 1.2rem;
+      line-height: 1.4;
+    }
+    .footer-note {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(50,111,202,0.15);
+      font-size: 0.85rem;
+      color: var(--charcoal-3);
+      text-align: center;
+      font-weight: 300;
+    }
+    .footer-note a { color: var(--blue); text-decoration: none; }
+    @media (max-width: 600px) {
+      .nav { padding: 0 20px; }
+      .page { padding: 40px 20px 60px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="index.html" class="nav-back">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      Go back
+    </a>
+  </nav>
+
+  <main class="page">
+    <div class="page-badge">Legal</div>
+    <h1 class="page-title">Terms &amp; Conditions</h1>
+    <p class="page-updated">Last updated: May 2025</p>
+    <div class="divider"></div>
+
+    <div class="section">
+      <h2>1. Acceptance of Terms</h2>
+      <p>By accessing or using Enyukado, you agree to be bound by these Terms &amp; Conditions. If you do not agree to all of the following terms, please do not use our platform. These terms apply to all users of the platform, including buyers, sellers, and visitors.</p>
+    </div>
+
+    <div class="section">
+      <h2>2. Eligibility</h2>
+      <p>To use Enyukado, you must:</p>
+      <ul>
+        <li>Be a currently enrolled student at a participating university.</li>
+        <li>Have a valid university-issued email address and student ID.</li>
+        <li>Agree not to share your account credentials with any other person.</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>3. Listings and Transactions</h2>
+      <p>Enyukado serves as a marketplace platform only. We do not own, buy, or sell any items listed on the platform. All transactions are conducted directly between buyers and sellers. You agree that:</p>
+      <ul>
+        <li>All listings must be accurate, honest, and non-misleading.</li>
+        <li>You will not list prohibited items including weapons, illegal substances, counterfeit goods, or any item that violates university policy.</li>
+        <li>Enyukado is not responsible for disputes, damages, or losses arising from transactions.</li>
+        <li>You are solely responsible for verifying the condition of items before purchase or sale.</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>4. Prohibited Conduct</h2>
+      <p>You agree not to engage in any of the following:</p>
+      <ul>
+        <li>Fraudulent, deceptive, or misleading activity on the platform.</li>
+        <li>Harassment, threats, or abuse toward other users.</li>
+        <li>Attempting to hack, reverse-engineer, or exploit the platform.</li>
+        <li>Posting spam, advertisements for off-platform services, or irrelevant content.</li>
+        <li>Creating multiple accounts to circumvent restrictions or bans.</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>5. Account Suspension and Termination</h2>
+      <p>Enyukado reserves the right to suspend or permanently terminate any account that violates these Terms &amp; Conditions, at our sole discretion and without prior notice. Upon termination, your right to use the platform ceases immediately.</p>
+    </div>
+
+    <div class="section">
+      <h2>6. Limitation of Liability</h2>
+      <p>Enyukado and its developers are not liable for any indirect, incidental, special, or consequential damages arising out of your use of the platform, including but not limited to loss of funds, data, or property resulting from transactions conducted through Enyukado.</p>
+    </div>
+
+    <div class="section">
+      <h2>7. Changes to Terms</h2>
+      <p>We reserve the right to modify these Terms &amp; Conditions at any time. Continued use of the platform after any changes constitutes your acceptance of the revised terms. We encourage you to review these terms periodically.</p>
+    </div>
+
+    <div class="section">
+      <h2>8. Contact</h2>
+      <p>If you have questions regarding these Terms &amp; Conditions, please reach out to us at <strong>contact.enyukado@gmail.com</strong>.</p>
+    </div>
+
+    <div class="footer-note">
+      Also read our <a href="privacy.html">Privacy Policy</a>. &nbsp;·&nbsp; &copy; 2025 Enyukado. All rights reserved.
+    </div>
+  </main>
+
+</body>
+</html>

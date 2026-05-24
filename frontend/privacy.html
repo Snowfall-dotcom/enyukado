@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Enyukado · Privacy Policy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --blue:       #326fca;
+      --blue-dark:  #2458a8;
+      --blue-light: #4e87d4;
+      --peach:      #ffe7be;
+      --light:      #f4f5f7;
+      --charcoal:   #3c3c3c;
+      --charcoal-2: #5a5a5a;
+      --charcoal-3: #888;
+      --white:      #ffffff;
+      --radius:     14px;
+      --radius-sm:  8px;
+      --shadow:     0 4px 24px rgba(50, 111, 202, 0.12);
+    }
+
+    html, body {
+      min-height: 100%;
+      font-family: 'DM Sans', sans-serif;
+      background: #f4f5f7;
+      color: var(--charcoal);
+    }
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: #f4f5f7;
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(50,111,202,0.12);
+      padding: 0 48px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+    .nav-back {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--blue);
+      transition: opacity 0.2s;
+    }
+    .nav-back:hover { opacity: 0.7; }
+    .page {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 56px 32px 80px;
+    }
+    .page-badge {
+      display: inline-block;
+      background: rgba(50,111,202,0.12);
+      color: var(--blue);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 18px;
+    }
+    .page-title {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 700;
+      color: var(--charcoal);
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 10px;
+    }
+    .page-updated {
+      font-size: 0.85rem;
+      color: var(--charcoal-3);
+      margin-bottom: 48px;
+      font-weight: 300;
+    }
+    .divider {
+      height: 1px;
+      background: rgba(50,111,202,0.15);
+      margin-bottom: 48px;
+    }
+    .section { margin-bottom: 40px; }
+    .section h2 {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--charcoal);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section h2::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 18px;
+      background: var(--blue);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+    .section p {
+      font-size: 0.95rem;
+      line-height: 1.75;
+      color: var(--charcoal-2);
+      font-weight: 300;
+      margin-bottom: 10px;
+    }
+    .section ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding-left: 14px;
+    }
+    .section ul li {
+      font-size: 0.95rem;
+      line-height: 1.65;
+      color: var(--charcoal-2);
+      font-weight: 300;
+      position: relative;
+      padding-left: 16px;
+    }
+    .section ul li::before {
+      content: '·';
+      position: absolute;
+      left: 0;
+      color: var(--blue);
+      font-size: 1.2rem;
+      line-height: 1.4;
+    }
+    .footer-note {
+      margin-top: 56px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(50,111,202,0.15);
+      font-size: 0.85rem;
+      color: var(--charcoal-3);
+      text-align: center;
+      font-weight: 300;
+    }
+    .footer-note a { color: var(--blue); text-decoration: none; }
+    @media (max-width: 600px) {
+      .nav { padding: 0 20px; }
+      .page { padding: 40px 20px 60px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="index.html" class="nav-back">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      Go back
+    </a>
+  </nav>
+
+  <main class="page">
+    <div class="page-badge">Legal</div>
+    <h1 class="page-title">Privacy Policy</h1>
+    <p class="page-updated">Last updated: May 2025</p>
+    <div class="divider"></div>
+
+    <div class="section">
+      <h2>1. Information We Collect</h2>
+      <p>When you register for or use Enyukado, we may collect the following types of information:</p>
+      <ul>
+        <li>Full name, university email address, and student ID number.</li>
+        <li>Profile information you voluntarily provide, such as a display photo or contact number.</li>
+        <li>Listing data including item descriptions, photos, prices, and category.</li>
+        <li>Usage data such as pages visited, time on platform, and search queries.</li>
+        <li>Device and browser information for security and performance purposes.</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>2. How We Use Your Information</h2>
+      <p>The information we collect is used solely to operate and improve the platform:</p>
+      <ul>
+        <li>To verify your student status and authenticate your account.</li>
+        <li>To display your listings and facilitate transactions between users.</li>
+        <li>To send you important platform notifications and updates.</li>
+        <li>To detect, investigate, and prevent fraudulent or prohibited activities.</li>
+        <li>To improve platform features, usability, and overall experience.</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>3. Data Sharing</h2>
+      <p>We do not sell, rent, or trade your personal information to any third parties. We may share your data only in the following limited circumstances:</p>
+      <ul>
+        <li>With your university administration if required to verify enrollment or investigate a report.</li>
+        <li>With law enforcement agencies if required by applicable law or legal process.</li>
+        <li>With service providers who assist us in operating the platform, under strict confidentiality obligations.</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>4. Data Retention</h2>
+      <p>We retain your personal data for as long as your account remains active or as needed to provide services. If you request account deletion, we will remove your personal data within 30 days, except where retention is required by law.</p>
+    </div>
+
+    <div class="section">
+      <h2>5. Your Rights</h2>
+      <p>As a user, you have the right to:</p>
+      <ul>
+        <li>Access the personal data we hold about you.</li>
+        <li>Request correction of inaccurate or incomplete data.</li>
+        <li>Request deletion of your account and associated personal data.</li>
+        <li>Withdraw consent to optional data processing at any time.</li>
+      </ul>
+      <p>To exercise any of these rights, contact us at <strong>contact.enyukado@gmail.com</strong>.</p>
+    </div>
+
+    <div class="section">
+    <h2>6. Security</h2>
+    <p>
+        We take basic steps to keep your information safe, such as limiting access to data and handling it carefully within the system.
+    </p>
+    </div>
+
+    <div class="section">
+      <h2>7. Changes to This Policy</h2>
+      <p>We may update this Privacy Policy from time to time. Significant changes will be communicated through platform notifications. Your continued use of Enyukado following any changes constitutes your acceptance of the updated policy.</p>
+    </div>
+
+    <div class="footer-note">
+      Also read our <a href="terms.html">Terms &amp; Conditions</a>. &nbsp;·&nbsp; &copy; 2025 Enyukado. All rights reserved.
+    </div>
+  </main>
+
+</body>
+</html>

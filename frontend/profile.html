@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profile — Enyukado</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --blue: #326fca; --blue-dark: #2458a8; --blue-light: #4e87d4;
+      --peach: #ffe7be; --light: #f4f5f7; --charcoal: #3c3c3c;
+      --charcoal-2: #5a5a5a; --charcoal-3: #888; --white: #ffffff;
+      --radius: 14px; --radius-sm: 8px; --shadow: 0 4px 24px rgba(50,111,202,0.10);
+    }
+    html, body { min-height: 100%; font-family: 'DM Sans', sans-serif; color: var(--charcoal); background: var(--light); }
+
+    /* NAVBAR */
+    .navbar { position: sticky; top: 0; z-index: 100; background: var(--light); border-bottom: 1px solid rgba(50,111,202,0.09); height: 62px; padding: 0 40px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 12px rgba(50,111,202,0.06); }
+    .navbar-brand { display: flex; align-items: center; gap: 9px; text-decoration: none; }
+    .navbar-brand-icon { width: 34px; height: 34px; background: var(--blue); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+    .navbar-brand-name { font-family: 'Sora', sans-serif; font-size: 1.05rem; font-weight: 700; color: var(--charcoal); letter-spacing: -0.02em; }
+    .navbar-right { display: flex; align-items: center; gap: 8px; }
+    .back-btn { display: flex; align-items: center; gap: 6px; padding: 7px 16px; border-radius: 100px; border: 1.5px solid #dde2ec; background: transparent; color: var(--charcoal-2); font-family: 'DM Sans', sans-serif; font-size: 0.84rem; font-weight: 500; cursor: pointer; text-decoration: none; transition: background 0.2s; }
+    .back-btn:hover { background: rgba(50,111,202,0.06); border-color: rgba(50,111,202,0.3); color: var(--blue); }
+
+    /* MAIN */
+    .main { max-width: 1000px; margin: 0 auto; padding: 36px 40px 72px; }
+
+    /* PROFILE HEADER */
+    .profile-header {
+      background: var(--white); border-radius: var(--radius);
+      border: 1px solid rgba(50,111,202,0.08); box-shadow: var(--shadow);
+      margin-bottom: 24px;
+    }
+    .profile-banner {
+      height: 160px;
+      background: linear-gradient(135deg, #1e3f78 0%, #326fca 60%, #4e87d4 100%);
+      position: relative;
+      border-radius: var(--radius) var(--radius) 0 0;
+      overflow: hidden;
+    }
+    .profile-banner::after {
+      content: ''; position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='28'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .profile-body { padding: 0 32px 28px; }
+    .profile-avatar-row { display: flex; align-items: flex-end; justify-content: space-between; margin-top: -56px; margin-bottom: 16px; position: relative; z-index: 1; }
+    .profile-avatar {
+      width: 108px; height: 108px; border-radius: 50%;
+      background: var(--blue); color: var(--white);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Sora', sans-serif; font-size: 2rem; font-weight: 700;
+      border: 4px solid var(--white); box-shadow: 0 4px 20px rgba(50,111,202,0.3);
+      flex-shrink: 0; overflow: hidden;
+    }
+    .profile-avatar-actions { display: flex; gap: 8px; padding-bottom: 4px; }
+    .btn-edit-profile {
+      display: flex; align-items: center; gap: 6px; padding: 8px 18px;
+      border-radius: 100px; border: 1.5px solid #dde2ec; background: transparent;
+      color: var(--charcoal-2); font-family: 'Sora', sans-serif; font-size: 0.84rem; font-weight: 600;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .btn-edit-profile:hover { border-color: var(--blue); color: var(--blue); background: rgba(50,111,202,0.05); }
+    .btn-share-profile {
+      width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid #dde2ec;
+      background: transparent; color: var(--charcoal-3); display: flex; align-items: center;
+      justify-content: center; cursor: pointer; transition: all 0.2s;
+    }
+    .btn-share-profile:hover { border-color: var(--blue); color: var(--blue); }
+
+    .profile-name { font-family: 'Sora', sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--charcoal); letter-spacing: -0.02em; margin-bottom: 2px; }
+    .profile-handle { font-size: 0.86rem; color: var(--charcoal-3); font-weight: 300; margin-bottom: 10px; }
+    .profile-bio { font-size: 0.9rem; color: var(--charcoal-2); font-weight: 300; line-height: 1.6; margin-bottom: 14px; max-width: 520px; }
+    .profile-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+    .profile-tag { display: flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 100px; background: var(--light); border: 1px solid rgba(50,111,202,0.1); font-size: 0.78rem; font-weight: 500; color: var(--charcoal-2); }
+    .profile-stats { display: flex; gap: 28px; }
+    .stat-item { text-align: left; }
+    .stat-value { font-family: 'Sora', sans-serif; font-size: 1.2rem; font-weight: 700; color: var(--charcoal); line-height: 1; margin-bottom: 2px; }
+    .stat-label { font-size: 0.75rem; color: var(--charcoal-3); font-weight: 300; }
+
+    /* RATING CARD */
+    .rating-card {
+      background: var(--white); border-radius: var(--radius);
+      border: 1px solid rgba(50,111,202,0.08); box-shadow: var(--shadow);
+      padding: 20px 24px; margin-bottom: 24px;
+      display: flex; align-items: center; gap: 32px;
+    }
+    .rating-big { text-align: center; flex-shrink: 0; }
+    .rating-big-num { font-family: 'Sora', sans-serif; font-size: 3rem; font-weight: 700; color: var(--charcoal); line-height: 1; }
+    .rating-stars { font-size: 1.1rem; color: #f5a623; letter-spacing: 2px; margin: 4px 0; }
+    .rating-count { font-size: 0.76rem; color: var(--charcoal-3); font-weight: 300; }
+    .rating-bars { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+    .rating-bar-row { display: flex; align-items: center; gap: 10px; font-size: 0.78rem; color: var(--charcoal-2); }
+    .rating-bar-row span:first-child { width: 14px; text-align: right; flex-shrink: 0; }
+    .rating-bar-bg { flex: 1; height: 6px; background: var(--light); border-radius: 3px; overflow: hidden; }
+    .rating-bar-fill { height: 100%; background: #f5a623; border-radius: 3px; transition: width 0.6s ease; }
+    .rating-bar-row span:last-child { width: 20px; flex-shrink: 0; }
+    .rating-badge-group { display: flex; flex-direction: column; gap: 8px; flex-shrink: 0; }
+    .rating-badge { display: flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: var(--radius-sm); font-size: 0.78rem; font-weight: 600; }
+    .rating-badge.verified { background: rgba(93,223,122,0.12); color: #2d9e50; }
+    .rating-badge.trusted { background: rgba(50,111,202,0.1); color: var(--blue); }
+
+    /* TABS */
+    .tabs { display: flex; gap: 4px; background: var(--white); border-radius: var(--radius); border: 1px solid rgba(50,111,202,0.08); padding: 6px; margin-bottom: 24px; box-shadow: var(--shadow); }
+    .tab { flex: 1; padding: 9px 8px; border-radius: var(--radius-sm); border: none; background: transparent; font-family: 'Sora', sans-serif; font-size: 0.83rem; font-weight: 600; color: var(--charcoal-3); cursor: pointer; transition: background 0.2s, color 0.2s; display: flex; align-items: center; justify-content: center; gap: 6px; }
+    .tab:hover { background: var(--light); color: var(--charcoal-2); }
+    .tab.active { background: var(--blue); color: white; }
+    .tab .tab-count { font-size: 0.7rem; background: rgba(255,255,255,0.25); padding: 1px 6px; border-radius: 100px; }
+    .tab.active .tab-count { background: rgba(255,255,255,0.25); }
+    .tab:not(.active) .tab-count { background: rgba(50,111,202,0.1); color: var(--blue); }
+
+    /* TAB CONTENT */
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* LISTINGS GRID */
+    .listings-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 16px; }
+    .listing-card { background: var(--white); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); border: 1px solid rgba(50,111,202,0.07); cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
+    .listing-card:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(50,111,202,0.15); }
+    .listing-img { width: 100%; aspect-ratio: 1; background: var(--light); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; position: relative; }
+    .listing-badge { position: absolute; top: 10px; left: 10px; background: var(--peach); color: var(--charcoal); font-size: 0.72rem; font-weight: 600; padding: 3px 8px; border-radius: 100px; }
+    .listing-status { position: absolute; top: 10px; right: 10px; font-size: 0.7rem; font-weight: 600; padding: 3px 8px; border-radius: 100px; }
+    .listing-status.active { background: white; color: #3c3c3c; border: 1px solid #dde2ec; }
+    .listing-status.sold { background: rgba(224,80,74,0.12); color: #c0392b; }
+    .listing-info { padding: 12px 14px 14px; }
+    .listing-info h4 { font-family: 'Sora', sans-serif; font-size: 0.88rem; font-weight: 600; color: var(--charcoal); margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .listing-info .price { font-family: 'Sora', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--blue); margin-bottom: 6px; }
+    .listing-info .meta { font-size: 0.75rem; color: var(--charcoal-3); font-weight: 300; display: flex; align-items: center; gap: 5px; }
+    .condition-dot { width: 6px; height: 6px; border-radius: 50%; background: #5ddf7a; flex-shrink: 0; }
+    .condition-dot.fair { background: #f5a623; }
+
+    /* REVIEWS */
+    .reviews-list { display: flex; flex-direction: column; gap: 14px; }
+    .review-card { background: var(--white); border-radius: var(--radius); padding: 18px 20px; border: 1px solid rgba(50,111,202,0.07); box-shadow: var(--shadow); }
+    .review-header { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+    .reviewer-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--blue); color: white; display: flex; align-items: center; justify-content: center; font-family: 'Sora', sans-serif; font-size: 0.8rem; font-weight: 600; flex-shrink: 0; }
+    .reviewer-name { font-family: 'Sora', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--charcoal); margin-bottom: 1px; }
+    .reviewer-sub { font-size: 0.75rem; color: var(--charcoal-3); font-weight: 300; }
+    .review-stars { font-size: 0.85rem; color: #f5a623; }
+    .review-time { font-size: 0.74rem; color: var(--charcoal-3); margin-left: auto; }
+    .review-item-ref { display: inline-flex; align-items: center; gap: 5px; background: var(--light); border-radius: var(--radius-sm); padding: 4px 10px; font-size: 0.76rem; color: var(--charcoal-2); margin-bottom: 8px; border: 1px solid rgba(50,111,202,0.07); }
+    .review-text { font-size: 0.87rem; color: var(--charcoal-2); line-height: 1.65; font-weight: 300; }
+
+    /* SAVED (in profile) */
+    .saved-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 16px; }
+    .saved-card { background: var(--white); border-radius: var(--radius); overflow: hidden; border: 1px solid rgba(50,111,202,0.07); box-shadow: var(--shadow); cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
+    .saved-card:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(50,111,202,0.15); }
+    .saved-card-img { width: 100%; aspect-ratio: 1.3; background: var(--light); display: flex; align-items: center; justify-content: center; font-size: 2.2rem; }
+    .saved-card-info { padding: 12px 14px; }
+    .saved-card-name { font-family: 'Sora', sans-serif; font-size: 0.86rem; font-weight: 600; color: var(--charcoal); margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .saved-card-price { font-size: 0.88rem; color: var(--blue); font-weight: 700; margin-bottom: 4px; }
+    .saved-card-seller { font-size: 0.74rem; color: var(--charcoal-3); font-weight: 300; }
+
+    /* SETTINGS */
+    .settings-section { background: var(--white); border-radius: var(--radius); border: 1px solid rgba(50,111,202,0.08); box-shadow: var(--shadow); overflow: hidden; margin-bottom: 20px; }
+    .settings-section-title { padding: 16px 22px 12px; font-family: 'Sora', sans-serif; font-size: 0.78rem; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: 0.1em; border-bottom: 1px solid rgba(50,111,202,0.08); }
+    .settings-row { display: flex; align-items: center; padding: 14px 22px; border-bottom: 1px solid rgba(50,111,202,0.05); transition: background 0.15s; cursor: pointer; }
+    .settings-row:last-child { border-bottom: none; }
+    .settings-row:hover { background: var(--light); }
+    .settings-row-icon { width: 34px; height: 34px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; margin-right: 14px; }
+    .settings-row-info { flex: 1; }
+    .settings-row-title { font-size: 0.9rem; font-weight: 500; color: var(--charcoal); margin-bottom: 1px; }
+    .settings-row-sub { font-size: 0.76rem; color: var(--charcoal-3); font-weight: 300; }
+    .settings-row-action { margin-left: auto; color: var(--charcoal-3); font-size: 0.9rem; }
+    .settings-toggle { width: 40px; height: 22px; border-radius: 11px; background: #dde2ec; border: none; cursor: pointer; position: relative; transition: background 0.2s; flex-shrink: 0; }
+    .settings-toggle.on { background: var(--blue); }
+    .settings-toggle::after { content: ''; position: absolute; width: 16px; height: 16px; border-radius: 50%; background: white; top: 3px; left: 3px; transition: transform 0.2s; box-shadow: 0 1px 4px rgba(0,0,0,0.15); }
+    .settings-toggle.on::after { transform: translateX(18px); }
+    .btn-danger { display: flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: var(--radius-sm); border: 1.5px solid rgba(224,80,74,0.3); background: rgba(224,80,74,0.05); color: #c0392b; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+    .btn-danger:hover { background: rgba(224,80,74,0.1); border-color: rgba(224,80,74,0.5); }
+
+    /* EMPTY STATE */
+    .empty-state { text-align: center; padding: 52px 20px; background: var(--white); border-radius: var(--radius); border: 1px solid rgba(50,111,202,0.07); }
+    .empty-state-icon { font-size: 3rem; margin-bottom: 12px; }
+    .empty-state h4 { font-family: 'Sora', sans-serif; font-size: 1rem; font-weight: 700; color: var(--charcoal); margin-bottom: 6px; }
+    .empty-state p { font-size: 0.86rem; color: var(--charcoal-3); font-weight: 300; }
+
+    /* EDIT PROFILE MODAL */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(30,40,60,0.45); backdrop-filter: blur(4px); z-index: 200; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+    .edit-modal { background: var(--white); border-radius: var(--radius); width: 100%; max-width: 480px; margin: 20px; box-shadow: 0 24px 64px rgba(30,40,60,0.22); overflow: visible; }
+    .modal-overlay.open .edit-modal { transform: translateY(0) scale(1); }
+    .edit-modal-header { padding: 22px 24px 16px; border-bottom: 1px solid rgba(50,111,202,0.08); display: flex; align-items: center; justify-content: space-between; }
+    .edit-modal-header h3 { font-family: 'Sora', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--charcoal); }
+    .modal-close-btn { width: 32px; height: 32px; border-radius: 50%; border: none; background: var(--light); cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--charcoal-3); transition: background 0.2s; }
+    .modal-close-btn:hover { background: #dde2ec; }
+    .edit-modal-body { padding: 20px 24px 24px; max-height: 70vh; overflow-y: auto; }
+    .modal-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+    .modal-field label { font-size: 0.88rem; font-weight: 500; color: var(--charcoal-2); }
+    .modal-field input, .modal-field textarea, .modal-field select { padding: 10px 12px; border: 1.5px solid #dde2ec; border-radius: var(--radius-sm); font-family: 'DM Sans', sans-serif; font-size: 0.9rem; color: var(--charcoal); background: var(--light); outline: none; transition: border-color 0.2s, box-shadow 0.2s; resize: none; }
+    .modal-field input:focus, .modal-field textarea:focus, .modal-field select:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(50,111,202,0.1); background: var(--white); }
+    .modal-field textarea { height: 80px; }
+    .modal-row { display: flex; gap: 12px; }
+    .modal-row .modal-field { flex: 1; }
+    .btn-save { width: 100%; padding: 12px; background: var(--blue); color: white; border: none; border-radius: var(--radius-sm); font-family: 'Sora', sans-serif; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: background 0.2s; box-shadow: 0 4px 16px rgba(50,111,202,0.3); }
+    .btn-save:hover { background: var(--blue-dark); }
+
+    /* TOAST */
+    .toast { position: fixed; bottom: 32px; right: 32px; background: var(--charcoal); color: white; padding: 14px 20px; border-radius: var(--radius-sm); display: flex; align-items: center; gap: 10px; font-size: 0.88rem; font-weight: 500; box-shadow: 0 8px 32px rgba(60,60,60,0.22); transform: translateY(80px); opacity: 0; transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s; pointer-events: none; z-index: 999; }
+    .toast.show { transform: translateY(0); opacity: 1; }
+
+    @media (max-width: 768px) {
+      .navbar { padding: 0 20px; }
+      .main { padding: 24px 16px 60px; }
+      .profile-body { padding: 0 20px 22px; }
+      .rating-card { flex-wrap: wrap; gap: 20px; }
+      .tabs { flex-wrap: wrap; }
+      .listings-grid, .saved-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* ===== ITEM MODAL (shared with dashboard) ===== */
+    .item-modal { background: var(--white); border-radius: var(--radius); width: 100%; max-width: 720px; margin: 20px; box-shadow: 0 24px 64px rgba(30,40,60,0.22); overflow: hidden; max-height: 90vh; display: flex; flex-direction: column; }
+    .item-modal-inner { display: flex; flex-direction: row; overflow: hidden; flex: 1; min-height: 0; }
+    .item-modal-img-panel { width: 280px; flex-shrink: 0; background: var(--light); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 32px 24px; position: relative; min-height: 320px; }
+    .item-modal-emoji { font-size: 5.5rem; line-height: 1; margin-bottom: 16px; }
+    .item-modal-badge-large { background: var(--peach); color: var(--charcoal); font-size: 0.78rem; font-weight: 600; padding: 5px 14px; border-radius: 100px; }
+    .item-modal-img-actions { position: absolute; top: 14px; right: 14px; display: flex; flex-direction: column; gap: 8px; }
+    .img-action-btn { width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,0.92); border: 1px solid rgba(50,111,202,0.12); cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--charcoal-3); font-size: 0.9rem; transition: background 0.2s, color 0.2s; }
+    .img-action-btn:hover { background: white; color: var(--blue); }
+    .item-modal-info-panel { flex: 1; padding: 28px 28px 24px; overflow-y: auto; display: flex; flex-direction: column; }
+    .item-modal-close { width: 30px; height: 30px; border-radius: 50%; border: none; background: var(--light); cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--charcoal-3); align-self: flex-end; margin-bottom: 12px; flex-shrink: 0; }
+    .item-modal-title { font-family: 'Sora', sans-serif; font-size: 1.35rem; font-weight: 700; color: var(--charcoal); letter-spacing: -0.025em; margin-bottom: 4px; }
+    .item-modal-price { font-family: 'Sora', sans-serif; font-size: 1.6rem; font-weight: 700; color: var(--blue); margin-bottom: 16px; }
+    .item-meta-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
+    .meta-tag { display: flex; align-items: center; gap: 5px; padding: 5px 11px; border-radius: 100px; background: var(--light); border: 1px solid rgba(50,111,202,0.1); font-size: 0.78rem; font-weight: 500; color: var(--charcoal-2); }
+    .meta-tag .dot { width: 6px; height: 6px; border-radius: 50%; background: #5ddf7a; flex-shrink: 0; }
+    .item-modal-desc-label { font-size: 0.78rem; font-weight: 600; color: var(--charcoal-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+    .item-modal-desc { font-size: 0.9rem; color: var(--charcoal-2); line-height: 1.65; margin-bottom: 20px; font-weight: 300; }
+    .seller-card-p { background: var(--light); border-radius: var(--radius-sm); padding: 14px 16px; display: flex; align-items: center; gap: 12px; margin-bottom: 22px; border: 1px solid rgba(50,111,202,0.09); }
+    .seller-avatar-p { width: 40px; height: 40px; border-radius: 50%; background: var(--blue); color: var(--white); display: flex; align-items: center; justify-content: center; font-family: 'Sora', sans-serif; font-size: 0.85rem; font-weight: 600; flex-shrink: 0; }
+    .seller-info-p { flex: 1; }
+    .seller-name-p { font-family: 'Sora', sans-serif; font-size: 0.88rem; font-weight: 600; color: var(--charcoal); margin-bottom: 1px; }
+    .seller-sub-p { font-size: 0.76rem; color: var(--charcoal-3); font-weight: 300; }
+    .seller-rating-p { font-size: 0.78rem; color: var(--charcoal-2); font-weight: 500; }
+    .item-modal-actions { display: flex; flex-direction: column; gap: 10px; margin-top: auto; }
+    .btn-buy-p { width: 100%; padding: 13px 20px; background: var(--blue); color: var(--white); border: none; border-radius: var(--radius-sm); font-family: 'Sora', sans-serif; font-size: 0.95rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background 0.2s; }
+    .btn-buy-p:hover { background: var(--blue-dark); }
+    .btn-contact-p { width: 100%; padding: 12px 20px; background: transparent; color: var(--blue); border: 1.5px solid var(--blue); border-radius: var(--radius-sm); font-family: 'Sora', sans-serif; font-size: 0.9rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background 0.2s; }
+    .btn-contact-p:hover { background: rgba(50,111,202,0.06); }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="dashboard.html" class="navbar-brand">
+      <div class="navbar-brand-icon">
+        <svg width="40" height="40" viewBox="0 0 32 32" fill="none"><path d="M7 8h2l2.5 9h8l2-6H11" stroke="#ffe7be" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="13.5" cy="21.5" r="1.5" fill="#f4f5f7"/><circle cx="19.5" cy="21.5" r="1.5" fill="#f4f5f7"/></svg>
+      </div>
+      <span class="navbar-brand-name">Enyukado</span>
+    </a>
+    <div class="navbar-right">
+      <a href="dashboard.html" class="back-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        Back to marketplace
+      </a>
+    </div>
+  </nav>
+
+  <main class="main">
+
+    <!-- PROFILE HEADER -->
+    <div class="profile-header">
+      <div class="profile-banner"></div>
+      <div class="profile-body">
+        <div class="profile-avatar-row">
+          <div class="profile-avatar" id="profileAvatarDisplay">JD</div>
+          <div class="profile-avatar-actions">
+            <button class="btn-edit-profile" onclick="openEditModal()">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              Edit Profile
+            </button>
+
+          </div>
+        </div>
+        <div class="profile-name">Juan dela Cruz</div>
+        <div class="profile-handle">@juandelacruz · Member since Aug 2023</div>
+        <div class="profile-bio">BS Computer Engineering, 3rd year · NU Manila. Selling textbooks, electronics, and more. Fast replies, honest listings. 🤝</div>
+        <div class="profile-tags">
+          <span class="profile-tag">🏫 NU Manila</span>
+          <span class="profile-tag">📚 BS CpE · 3rd Year</span>
+          <span class="profile-tag">📍 Sampaloc, Manila</span>
+          <span class="profile-tag">📅 Joined Aug 2023</span>
+        </div>
+        <div class="profile-stats">
+          <div class="stat-item"><div class="stat-value" id="statListings">—</div><div class="stat-label">Listings</div></div>
+          <div class="stat-item"><div class="stat-value" id="statSold">—</div><div class="stat-label">Sold</div></div>
+          <div class="stat-item"><div class="stat-value" id="statBought">—</div><div class="stat-label">Bought</div></div>
+          <div class="stat-item"><div class="stat-value" id="statRating">—</div><div class="stat-label">Rating</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RATING CARD -->
+    <div class="rating-card">
+      <div class="rating-big">
+        <div class="rating-big-num">0.0</div>
+        <div class="rating-stars">★★★★★</div>
+        <div class="rating-count">0 reviews</div>
+      </div>
+      <div class="rating-bars">
+        <div class="rating-bar-row"><span>5</span><div class="rating-bar-bg"><div class="rating-bar-fill" style="width:0%"></div></div><span>0</span></div>
+        <div class="rating-bar-row"><span>4</span><div class="rating-bar-bg"><div class="rating-bar-fill" style="width:0%"></div></div><span>0</span></div>
+        <div class="rating-bar-row"><span>3</span><div class="rating-bar-bg"><div class="rating-bar-fill" style="width:0%"></div></div><span>0</span></div>
+        <div class="rating-bar-row"><span>2</span><div class="rating-bar-bg"><div class="rating-bar-fill" style="width:0%"></div></div><span>0</span></div>
+        <div class="rating-bar-row"><span>1</span><div class="rating-bar-bg"><div class="rating-bar-fill" style="width:0%"></div></div><span>0</span></div>
+      </div>
+      <div class="rating-badge-group">
+      <div class="rating-badges" id="ratingBadges"></div>
+      </div>
+    </div>
+
+    <!-- TABS -->
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('listings', this)">📦 Listings <span class="tab-count">0</span></button>
+      <button class="tab" onclick="switchTab('sold', this)">✅ Sold <span class="tab-count" id="soldTabCount">0</span></button>
+      <button class="tab" onclick="switchTab('purchases', this)">🛍️ Purchases <span class="tab-count" id="purchasesTabCount">0</span></button>
+      <button class="tab" onclick="switchTab('cart', this)">🛒 Cart <span class="tab-count" id="cartTabCount">0</span></button>
+      <button class="tab" onclick="switchTab('saved', this)">❤️ Saved <span class="tab-count" id="savedTabCount">0</span></button>
+      <button class="tab" onclick="switchTab('reviews', this)">⭐ Reviews <span class="tab-count">0</span></button>
+      <button class="tab" onclick="switchTab('settings', this)">⚙️ Settings</button>
+    </div>
+
+    <!-- LISTINGS TAB -->
+    <div class="tab-content active" id="tab-listings">
+      <div class="empty-state">
+        <div class="empty-state-icon">📦</div>
+        <h4>No listings yet</h4>
+        <p>Post something you no longer need!</p>
+      </div>
+    </div>
+
+    <!-- SOLD TAB -->
+    <div class="tab-content" id="tab-sold">
+      <div class="empty-state">
+        <div class="empty-state-icon">🏷️</div>
+        <h4>No sales yet</h4>
+        <p>When a buyer purchases your item, it appears here.</p>
+      </div>
+    </div>
+
+    <!-- PURCHASES TAB -->
+    <div class="tab-content" id="tab-purchases">
+      <div class="empty-state">
+        <div class="empty-state-icon">🛍️</div>
+        <h4>No purchases yet</h4>
+        <p>Items you buy will appear here.</p>
+      </div>
+    </div>
+
+    <!-- CART TAB -->
+    <div class="tab-content" id="tab-cart">
+      <div class="listings-grid" id="cartGrid">
+        <div class="empty-state">
+          <div class="empty-state-icon">🛒</div>
+          <h4>Your cart is empty</h4>
+          <p>Add items from the marketplace to see them here.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SAVED TAB -->
+    <div class="tab-content" id="tab-saved">
+      <div class="saved-grid" id="profileSavedGrid">
+        <div class="empty-state" id="profileSavedEmpty">
+          <div class="empty-state-icon">🤍</div>
+          <h4>Nothing saved yet</h4>
+          <p>Heart items on the marketplace to save them here.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- REVIEWS TAB -->
+    <div class="tab-content" id="tab-reviews">
+      <div class="reviews-list" id="reviewsList">
+        <div class="empty-state">
+          <div class="empty-state-icon">⭐</div>
+          <h4>No reviews yet</h4>
+          <p>Reviews from buyers will appear here.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SETTINGS TAB -->
+    <div class="tab-content" id="tab-settings">
+      <div class="settings-section">
+        <div class="settings-section-title">Account</div>
+        <div class="settings-row" onclick="openEditModal()">
+          <div class="settings-row-icon" style="background:rgba(50,111,202,0.1)">👤</div>
+          <div class="settings-row-info"><div class="settings-row-title">Edit Profile</div><div class="settings-row-sub">Update your name, bio, and contact info</div></div>
+          <div class="settings-row-action">›</div>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-icon" style="background:rgba(50,111,202,0.1)">🔒</div>
+          <div class="settings-row-info"><div class="settings-row-title">Change Password</div><div class="settings-row-sub">Last changed 3 months ago</div></div>
+          <div class="settings-row-action">›</div>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-icon" style="background:rgba(93,223,122,0.12)">✅</div>
+          <div class="settings-row-info"><div class="settings-row-title">Verify Identity</div><div class="settings-row-sub">Upload your school ID to get verified</div></div>
+          <div class="settings-row-action" style="color:#5ddf7a;font-weight:600;font-size:0.78rem;">Done</div>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <div class="settings-section-title">Notifications</div>
+        <div class="settings-row">
+          <div class="settings-row-icon" style="background:rgba(255,231,190,0.6)">💬</div>
+          <div class="settings-row-info"><div class="settings-row-title">Message Notifications</div><div class="settings-row-sub">Get notified when someone messages you</div></div>
+          <button class="settings-toggle on" onclick="this.classList.toggle('on')"></button>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-icon" style="background:rgba(255,231,190,0.6)">❤️</div>
+          <div class="settings-row-info"><div class="settings-row-title">Listing Saves</div><div class="settings-row-sub">When someone saves your listing</div></div>
+          <button class="settings-toggle on" onclick="this.classList.toggle('on')"></button>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-icon" style="background:rgba(255,231,190,0.6)">🛒</div>
+          <div class="settings-row-info"><div class="settings-row-title">Purchase Requests</div><div class="settings-row-sub">When someone wants to buy your item</div></div>
+          <button class="settings-toggle on" onclick="this.classList.toggle('on')"></button>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-icon" style="background:rgba(255,231,190,0.6)">📢</div>
+          <div class="settings-row-info"><div class="settings-row-title">Promotional Updates</div><div class="settings-row-sub">Campus events and featured listings</div></div>
+          <button class="settings-toggle" onclick="this.classList.toggle('on')"></button>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <div class="settings-section-title">Privacy</div>
+        <div class="settings-row">
+          <div class="settings-row-icon" style="background:rgba(50,111,202,0.1)">👁</div>
+          <div class="settings-row-info"><div class="settings-row-title">Show Online Status</div><div class="settings-row-sub">Let buyers see when you're active</div></div>
+          <button class="settings-toggle on" onclick="this.classList.toggle('on')"></button>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-icon" style="background:rgba(50,111,202,0.1)">📊</div>
+          <div class="settings-row-info"><div class="settings-row-title">Show Activity Stats</div><div class="settings-row-sub">Show your sold count and listing history</div></div>
+          <button class="settings-toggle on" onclick="this.classList.toggle('on')"></button>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <div class="settings-section-title">Danger Zone</div>
+        <div class="settings-row">
+          <div class="settings-row-icon" style="background:rgba(224,80,74,0.1)">🚪</div>
+          <div class="settings-row-info"><div class="settings-row-title">Log Out</div><div class="settings-row-sub">Sign out of your account</div></div>
+          <div class="settings-row-action">›</div>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-icon" style="background:rgba(224,80,74,0.1)">🗑️</div>
+          <div class="settings-row-info"><div class="settings-row-title" style="color:#c0392b;">Delete Account</div><div class="settings-row-sub">This action is irreversible</div></div>
+          <div class="settings-row-action" style="color:#e0504a;">›</div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- EDIT PROFILE MODAL -->
+  <div class="modal-overlay" id="editModal">
+    <div class="edit-modal">
+      <div class="edit-modal-header">
+        <h3>Edit Profile</h3>
+        <button class="modal-close-btn" onclick="closeEditModal()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="edit-modal-body">
+
+        <div class="modal-row">
+          <div class="modal-field"><label>First Name</label><input type="text" value="Juan" /></div>
+          <div class="modal-field"><label>Last Name</label><input type="text" value="dela Cruz" /></div>
+        </div>
+        <div class="modal-field"><label>Username</label><input type="text" value="juandelacruz" /></div>
+        <div class="modal-field"><label>Bio</label><textarea>BS Computer Engineering, 3rd year · NU Manila. Selling textbooks, electronics, and more. Fast replies, honest listings. 🤝</textarea></div>
+        <div class="modal-row">
+          <div class="modal-field"><label>Course</label><input type="text" value="BS Computer Engineering" /></div>
+          <div class="modal-field"><label>Year Level</label>
+            <select>
+              <option>1st year</option><option>2nd year</option><option selected>3rd year</option><option>4th year</option><option>5th year</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-field"><label>Location (Campus Area)</label><input type="text" value="Sampaloc, Manila" /></div>
+        <div class="modal-field"><label>Contact Number</label><input type="text" placeholder="09XXXXXXXXX" /></div>
+        <div class="modal-field"><label>Messenger Link</label><input type="text" placeholder="https://m.me/yourusername" /></div>
+        <button class="btn-save" onclick="saveProfile()">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+    <span id="toastMsg">Done!</span>
+  </div>
+
+  <script>
+    // TABS
+    function switchTab(name, btn) {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + name).classList.add('active');
+    }
+
+    // EDIT MODAL
+    function openEditModal() { document.getElementById('editModal').classList.add('open'); }
+    function closeEditModal() { document.getElementById('editModal').classList.remove('open'); }
+    document.getElementById('editModal').addEventListener('click', e => { if (e.target === document.getElementById('editModal')) closeEditModal(); });
+    function saveProfile() { closeEditModal(); showToast('Profile updated successfully! ✅'); }
+
+    // TOAST
+    let toastTimeout;
+    function showToast(msg, type = 'success') {
+      const toast = document.getElementById('toast');
+      document.getElementById('toastMsg').textContent = msg;
+      const icon = toast.querySelector('svg');
+      if (icon) icon.style.color = type === 'error' ? '#e0504a' : '#5ddf7a';
+      toast.classList.add('show');
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    // Sync saved items from localStorage key if present (shared between pages)
+    // (In a real app this would use a backend; here we just show empty state)
+    document.getElementById('profileSavedEmpty').style.display = 'block';
+
+  </script>
+  <!-- ===== ITEM MODAL (for cart items) ===== -->
+  <div id="cartItemModal" style="display:none;position:fixed;inset:0;z-index:1000;background:rgba(30,40,70,0.45);backdrop-filter:blur(4px);align-items:center;justify-content:center;" onclick="if(event.target===this) closeCartItemModal()">
+    <div style="background:white;border-radius:16px;display:flex;max-width:780px;width:95%;max-height:90vh;overflow:hidden;box-shadow:0 24px 80px rgba(50,111,202,0.2);" onclick="event.stopPropagation()">
+      <div style="flex:0 0 280px;background:#f4f5f7;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;gap:14px;border-right:1px solid rgba(50,111,202,0.08);">
+        <div id="cartModalImg" style="width:100%;font-size:4rem;text-align:center;display:flex;align-items:center;justify-content:center;min-height:200px;">📦</div>
+        <div id="cartModalCategory" style="background:#ffe7be;color:#3c3c3c;font-size:0.78rem;font-weight:600;padding:5px 14px;border-radius:100px;">Category</div>
+      </div>
+      <div style="flex:1;padding:28px 28px 24px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;">
+        <button onclick="closeCartItemModal()" style="align-self:flex-end;background:none;border:none;cursor:pointer;color:#888;font-size:1.1rem;">✕</button>
+        <div id="cartModalTitle" style="font-family:Sora,sans-serif;font-size:1.4rem;font-weight:700;color:#3c3c3c;"></div>
+        <div id="cartModalPrice" style="font-family:Sora,sans-serif;font-size:1.6rem;font-weight:700;color:#326fca;"></div>
+        <div id="cartModalStock" style="font-size:0.82rem;"></div>
+        <div id="cartModalTags" style="display:flex;gap:8px;flex-wrap:wrap;"></div>
+        <div style="font-size:0.75rem;font-weight:600;color:#888;letter-spacing:0.08em;text-transform:uppercase;margin-top:4px;">Description</div>
+        <div id="cartModalDesc" style="font-size:0.92rem;color:#5a5a5a;line-height:1.7;"></div>
+        <div id="cartModalSeller" style="background:#f4f5f7;border-radius:10px;padding:14px 16px;display:flex;align-items:center;gap:12px;border:1px solid rgba(50,111,202,0.08);margin-top:4px;">
+          <div id="cartModalSellerAvatar" style="width:38px;height:38px;border-radius:50%;background:#326fca;color:white;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;flex-shrink:0;"></div>
+          <div style="flex:1;"><div id="cartModalSellerName" style="font-size:0.88rem;font-weight:600;"></div><div id="cartModalSellerSub" style="font-size:0.76rem;color:#888;"></div></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-top:8px;">
+          <button id="cartModalAddCartBtn" style="display:none;"></button>
+          <button id="cartModalBuyBtn" style="padding:14px;background:#326fca;color:white;border:none;border-radius:10px;font-size:0.95rem;font-weight:600;cursor:pointer;">🛒 Buy</button>
+          <button id="cartModalRemoveBtn" style="padding:12px;background:white;color:#c0392b;border:1.5px solid rgba(224,80,74,0.3);border-radius:10px;font-size:0.9rem;font-weight:600;cursor:pointer;">🗑 Remove from Cart</button>
+          <button id="cartModalMessengerBtn" style="padding:13px;background:white;color:#326fca;border:2px solid #326fca;border-radius:10px;font-size:0.9rem;font-weight:600;cursor:pointer;">💬 Contact via Messenger</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== REVIEW MODAL ===== -->
+  <div id="reviewModal" style="display:none;position:fixed;inset:0;z-index:300;background:rgba(30,40,70,0.5);backdrop-filter:blur(4px);align-items:center;justify-content:center;">
+    <div style="background:white;border-radius:16px;padding:32px;max-width:440px;width:92%;box-shadow:0 24px 80px rgba(50,111,202,0.2);display:flex;flex-direction:column;gap:16px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div style="font-family:Sora,sans-serif;font-size:1.1rem;font-weight:700;">Leave a Review</div>
+        <button onclick="closeReviewModal()" style="background:none;border:none;cursor:pointer;font-size:1.1rem;color:#888;">✕</button>
+      </div>
+      <div id="reviewModalProduct" style="font-size:0.85rem;color:#888;"></div>
+      <input type="hidden" id="reviewTransactionID" />
+      <div style="display:flex;gap:8px;justify-content:center;">
+        <button class="star-btn" data-value="1" onclick="setRating(1)" style="font-size:1.8rem;background:none;border:none;cursor:pointer;opacity:0.3;transition:opacity 0.15s;">★</button>
+        <button class="star-btn" data-value="2" onclick="setRating(2)" style="font-size:1.8rem;background:none;border:none;cursor:pointer;opacity:0.3;transition:opacity 0.15s;">★</button>
+        <button class="star-btn" data-value="3" onclick="setRating(3)" style="font-size:1.8rem;background:none;border:none;cursor:pointer;opacity:0.3;transition:opacity 0.15s;">★</button>
+        <button class="star-btn" data-value="4" onclick="setRating(4)" style="font-size:1.8rem;background:none;border:none;cursor:pointer;opacity:0.3;transition:opacity 0.15s;">★</button>
+        <button class="star-btn" data-value="5" onclick="setRating(5)" style="font-size:1.8rem;background:none;border:none;cursor:pointer;opacity:0.3;transition:opacity 0.15s;">★</button>
+      </div>
+      <input type="hidden" id="selectedRating" value="" />
+      <textarea id="reviewComment" placeholder="Share your experience with this seller..." style="width:100%;padding:12px;border:1.5px solid #dde2ec;border-radius:8px;font-family:DM Sans,sans-serif;font-size:0.9rem;resize:vertical;min-height:90px;outline:none;"></textarea>
+      <button onclick="submitReview()" style="padding:13px;background:#326fca;color:white;border:none;border-radius:8px;font-family:Sora,sans-serif;font-size:0.95rem;font-weight:600;cursor:pointer;">Submit Review</button>
+    </div>
+  </div>
+  <script>
+    function setRating(val) {
+      document.getElementById("selectedRating").value = val;
+      document.querySelectorAll(".star-btn").forEach(btn => {
+        btn.style.opacity = parseInt(btn.dataset.value) <= val ? "1" : "0.3";
+        btn.style.color   = parseInt(btn.dataset.value) <= val ? "#f5a623" : "#888";
+      });
+    }
+    document.getElementById("reviewModal").addEventListener("click", e => {
+      if (e.target === document.getElementById("reviewModal")) closeReviewModal();
+    });
+  </script>
+
+<script src="profile-api.js"></script>
+  <!-- ===== EDIT LISTING MODAL ===== -->
+  <div id="editListingModal" onclick="if(event.target===this) closeEditListingModal()" style="display:none;position:fixed;inset:0;z-index:1000;background:rgba(30,40,60,0.55);backdrop-filter:blur(6px);align-items:center;justify-content:center;pointer-events:all;">
+    <div class="edit-modal" style="max-width:520px;width:100%;" onclick="event.stopPropagation()">
+      <div class="edit-modal-header">
+        <h3 style="font-family:Sora,sans-serif;font-size:1.1rem;font-weight:700;">Edit Listing</h3>
+        <button onclick="closeEditListingModal()" style="background:none;border:none;cursor:pointer;color:#888;font-size:1.2rem;">✕</button>
+      </div>
+      <div class="edit-modal-body" style="max-height:65vh;overflow-y:auto;">
+        <input type="hidden" id="editListingID" />
+
+        <div style="margin-bottom:14px;">
+          <label style="font-size:0.88rem;font-weight:500;color:#5a5a5a;display:block;margin-bottom:5px;">Item Name</label>
+          <input id="editListingName" type="text" placeholder="e.g. Engineering Math Vol. 2"
+            style="width:100%;padding:10px 12px;border:1.5px solid #dde2ec;border-radius:8px;font-size:0.9rem;background:#f4f5f7;outline:none;" />
+        </div>
+
+        <div style="display:flex;gap:12px;margin-bottom:14px;">
+          <div style="flex:1;">
+            <label style="font-size:0.88rem;font-weight:500;color:#5a5a5a;display:block;margin-bottom:5px;">Price (₱)</label>
+            <input id="editListingPrice" type="number" min="0" step="0.01" placeholder="0.00"
+              style="width:100%;padding:10px 12px;border:1.5px solid #dde2ec;border-radius:8px;font-size:0.9rem;background:#f4f5f7;outline:none;" />
+          </div>
+          <div style="flex:1;">
+            <label style="font-size:0.88rem;font-weight:500;color:#5a5a5a;display:block;margin-bottom:5px;">Quantity</label>
+            <input id="editListingQuantity" type="number" min="1" value="1"
+              style="width:100%;padding:10px 12px;border:1.5px solid #dde2ec;border-radius:8px;font-size:0.9rem;background:#f4f5f7;outline:none;" />
+          </div>
+        </div>
+
+        <div style="margin-bottom:14px;">
+          <label style="font-size:0.88rem;font-weight:500;color:#5a5a5a;display:block;margin-bottom:5px;">Category</label>
+          <select id="editListingCategory"
+            style="width:100%;padding:10px 12px;border:1.5px solid #dde2ec;border-radius:8px;font-size:0.9rem;background:#f4f5f7;outline:none;">
+            <option value="">Select category</option>
+          </select>
+        </div>
+
+        <div style="margin-bottom:14px;">
+          <label style="font-size:0.88rem;font-weight:500;color:#5a5a5a;display:block;margin-bottom:5px;">Condition</label>
+          <select id="editListingCondition"
+            style="width:100%;padding:10px 12px;border:1.5px solid #dde2ec;border-radius:8px;font-size:0.9rem;background:#f4f5f7;outline:none;">
+            <option value="">Select condition</option>
+            <option value="Like new">Like new</option>
+            <option value="Good">Good</option>
+            <option value="Used">Used</option>
+            <option value="Fair">Fair</option>
+            <option value="Poor">Poor</option>
+          </select>
+        </div>
+
+        <div style="margin-bottom:14px;">
+          <label style="font-size:0.88rem;font-weight:500;color:#5a5a5a;display:block;margin-bottom:5px;">Description</label>
+          <textarea id="editListingDesc" rows="3" placeholder="Describe the item..."
+            style="width:100%;padding:10px 12px;border:1.5px solid #dde2ec;border-radius:8px;font-size:0.9rem;background:#f4f5f7;outline:none;resize:vertical;"></textarea>
+        </div>
+
+        <div style="margin-bottom:20px;">
+          <label style="font-size:0.88rem;font-weight:500;color:#5a5a5a;display:block;margin-bottom:5px;">Cover Image <span style="color:#888;font-weight:300;">(upload new to replace)</span></label>
+          <label for="editListingImgFile" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border:1.5px dashed #dde2ec;border-radius:8px;background:#f4f5f7;cursor:pointer;"
+            onmouseover="this.style.borderColor='#326fca'" onmouseout="this.style.borderColor='#dde2ec'">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <span id="editListingImgLabel" style="font-size:0.85rem;color:#888;">Click to upload image</span>
+          </label>
+          <input type="file" id="editListingImgFile" accept="image/*" style="display:none;"
+            onchange="
+              const f=this.files[0];
+              if(f){
+                document.getElementById('editListingImgLabel').textContent=f.name;
+                const r=new FileReader();
+                r.onload=e=>{
+                  document.getElementById('editListingPreviewImg').src=e.target.result;
+                  document.getElementById('editListingImgPreview').style.display='block';
+                };
+                r.readAsDataURL(f);
+              }
+            " />
+          <div id="editListingImgPreview" style="margin-top:10px;display:none;">
+            <img id="editListingPreviewImg" src="" alt="Preview" style="width:100%;max-height:160px;object-fit:cover;border-radius:8px;border:1.5px solid #dde2ec;" />
+          </div>
+        </div>
+
+        <button onclick="submitEditListing()"
+          style="width:100%;padding:12px;background:#326fca;color:white;border:none;border-radius:8px;font-family:Sora,sans-serif;font-size:0.95rem;font-weight:600;cursor:pointer;"
+          onmouseover="this.style.background='#2458a8'" onmouseout="this.style.background='#326fca'">
+          Save Changes
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SAVED ITEM MODAL ===== -->
+  <div id="savedItemModal" style="display:none;position:fixed;inset:0;z-index:1000;background:rgba(30,40,60,0.45);backdrop-filter:blur(6px);align-items:center;justify-content:center;" onclick="if(event.target===this) closeSavedItemModal()">
+    <div class="item-modal" onclick="event.stopPropagation()">
+      <div class="item-modal-inner">
+        <div class="item-modal-img-panel">
+          <div class="item-modal-img-actions">
+            <button class="img-action-btn" id="savedItemFavBtn" title="Save to wishlist" onclick="toggleSavedItemFav()">♡</button>
+          </div>
+          <div class="item-modal-emoji" id="savedItemEmoji">📦</div>
+          <div class="item-modal-badge-large" id="savedItemCategory">Category</div>
+        </div>
+        <div class="item-modal-info-panel">
+          <button class="item-modal-close" onclick="closeSavedItemModal()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+          <div class="item-modal-title" id="savedItemTitle"></div>
+          <div class="item-modal-price" id="savedItemPrice"></div>
+          <div id="savedItemStock" style="font-size:0.82rem;color:#888;margin-bottom:4px;"></div>
+          <div class="item-meta-tags" id="savedItemTags"></div>
+          <div class="item-modal-desc-label">Description</div>
+          <div class="item-modal-desc" id="savedItemDesc">No description provided.</div>
+          <div class="seller-card-p">
+            <div class="seller-avatar-p" id="savedItemSellerAvatar">??</div>
+            <div class="seller-info-p">
+              <div class="seller-name-p" id="savedItemSellerName"></div>
+              <div class="seller-sub-p" id="savedItemSellerSub"></div>
+            </div>
+            <div class="seller-rating-p" id="savedItemRating">⭐ No ratings</div>
+          </div>
+          <div class="item-modal-actions">
+            <button class="btn-buy-p" id="savedItemAddCartBtn">🛒 Add to Cart</button>
+            <button class="btn-contact-p" id="savedItemContactBtn">💬 Contact via Messenger</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
