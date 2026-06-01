@@ -22,189 +22,120 @@
       --radius:     14px;
       --radius-sm:  8px;
       --shadow:     0 4px 24px rgba(50, 111, 202, 0.10);
+      --green:      #5ddf7a;
+      --red:        #e0504a;
+      --orange:     #f5a623;
     }
-    html, body {
-      min-height: 100%;
-      font-family: 'DM Sans', sans-serif;
-      color: var(--charcoal);
-      background: var(--light);
-    }
+    html, body { min-height: 100%; font-family: 'DM Sans', sans-serif; color: var(--charcoal); background: var(--light); }
 
     /* ===== NAVBAR ===== */
     .navbar {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: var(--light);
+      position: sticky; top: 0; z-index: 100;
+      background: var(--white);
       border-bottom: 1px solid rgba(50,111,202,0.09);
-      height: 62px;
-      padding: 0 40px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      height: 62px; padding: 0 40px;
+      display: flex; align-items: center; justify-content: space-between;
       box-shadow: 0 2px 12px rgba(50,111,202,0.06);
     }
     .navbar-left { display: flex; align-items: center; gap: 32px; }
     .navbar-brand { display: flex; align-items: center; gap: 9px; text-decoration: none; }
     .navbar-brand-icon {
-      width: 34px; height: 34px;
-      background: var(--blue);
-      border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
+      width: 34px; height: 34px; background: var(--blue);
+      border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
     .navbar-brand-name {
-      font-family: 'Sora', sans-serif;
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: var(--charcoal);
-      letter-spacing: -0.02em;
+      font-family: 'Sora', sans-serif; font-size: 1.05rem;
+      font-weight: 700; color: var(--charcoal); letter-spacing: -0.02em;
     }
     .navbar-right { display: flex; align-items: center; gap: 8px; }
-    .btn-sell {
+
+    .btn-messages {
       display: flex; align-items: center; gap: 6px;
-      padding: 7px 18px;
-      background: var(--peach);
-      color: var(--charcoal);
-      border: 1.5px solid rgba(50,111,202,0.18);
-      border-radius: 100px;
-      font-family: 'Sora', sans-serif;
-      font-size: 0.875rem;
-      font-weight: 600;
-      cursor: pointer;
-      text-decoration: none;
-      transition: background 0.2s, border-color 0.2s;
-    }
-    .btn-sell:hover { background: #ffd9a0; border-color: rgba(50,111,202,0.3); }
-    .icon-btn {
-      width: 38px; height: 38px;
-      border-radius: 50%;
-      border: none;
+      padding: 7px 16px;
       background: transparent;
-      cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
       color: var(--charcoal-2);
-      transition: background 0.2s, color 0.2s;
+      border: 1.5px solid #dde2ec;
+      border-radius: 100px;
+      font-family: 'Sora', sans-serif; font-size: 0.875rem; font-weight: 600;
+      cursor: pointer; transition: background 0.2s, border-color 0.2s, color 0.2s;
       position: relative;
     }
-    .icon-btn:hover { background: var(--light); color: var(--blue); }
-    .icon-btn .badge {
-      position: absolute;
-      top: 4px; right: 4px;
-      width: 8px; height: 8px;
-      background: #e0504a;
-      border-radius: 50%;
-      border: 1.5px solid var(--white);
-    }
-    .avatar-btn {
-      width: 36px; height: 36px;
-      border-radius: 50%;
-      background: var(--blue);
-      color: var(--white);
-      border: none;
-      cursor: pointer;
+    .btn-messages:hover { background: rgba(50,111,202,0.06); border-color: var(--blue); color: var(--blue); }
+    .msg-badge {
+      position: absolute; top: -4px; right: -4px;
+      min-width: 18px; height: 18px;
+      background: var(--red); color: white;
+      font-size: 0.65rem; font-weight: 700;
+      border-radius: 100px; padding: 0 4px;
       display: flex; align-items: center; justify-content: center;
-      font-family: 'Sora', sans-serif;
-      font-size: 0.8rem;
-      font-weight: 600;
+      border: 2px solid var(--white);
+      display: none;
+    }
+    .msg-badge.show { display: flex; }
+
+    .btn-sell {
+      display: flex; align-items: center; gap: 6px;
+      padding: 7px 18px; background: var(--peach);
+      color: var(--charcoal); border: 1.5px solid rgba(50,111,202,0.18);
+      border-radius: 100px; font-family: 'Sora', sans-serif;
+      font-size: 0.875rem; font-weight: 600; cursor: pointer;
+      text-decoration: none; transition: background 0.2s, border-color 0.2s;
+    }
+    .btn-sell:hover { background: #ffd9a0; border-color: rgba(50,111,202,0.3); }
+
+    .avatar-btn {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--blue); color: var(--white); border: none;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      font-family: 'Sora', sans-serif; font-size: 0.8rem; font-weight: 600;
       transition: opacity 0.2s;
     }
     .avatar-btn:hover { opacity: 0.85; }
 
-    /* ===== MAIN LAYOUT ===== */
+    /* ===== MAIN ===== */
     .main { max-width: 1200px; margin: 0 auto; padding: 32px 40px 60px; }
 
-    /* ===== HERO BANNER ===== */
+    /* ===== HERO ===== */
     .hero {
       background: linear-gradient(135deg, #1e3f78 0%, #326fca 60%, #4e87d4 100%);
-      border-radius: var(--radius);
-      padding: 36px 44px;
-      margin-bottom: 32px;
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      border-radius: var(--radius); padding: 36px 44px; margin-bottom: 32px;
+      position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: space-between;
     }
     .hero::before {
-      content: '';
-      position: absolute;
-      width: 300px; height: 300px;
-      border-radius: 50%;
+      content: ''; position: absolute;
+      width: 300px; height: 300px; border-radius: 50%;
       background: rgba(255,231,190,0.08);
-      bottom: -100px; right: -60px;
-      filter: blur(40px);
+      bottom: -100px; right: -60px; filter: blur(40px);
     }
     .hero-text h2 {
-      font-family: 'Sora', sans-serif;
-      font-size: 1.7rem;
-      font-weight: 700;
-      color: var(--white);
-      letter-spacing: -0.03em;
-      margin-bottom: 8px;
+      font-family: 'Sora', sans-serif; font-size: 1.7rem; font-weight: 700;
+      color: var(--white); letter-spacing: -0.03em; margin-bottom: 8px;
     }
-    .hero-text p {
-      font-size: 0.95rem;
-      color: rgba(255,255,255,0.72);
-      font-weight: 300;
-      max-width: 400px;
-      line-height: 1.6;
-    }
+    .hero-text p { font-size: 0.95rem; color: rgba(255,255,255,0.72); font-weight: 300; max-width: 400px; line-height: 1.6; }
     .hero-cta {
       display: flex; align-items: center; gap: 8px;
-      padding: 11px 24px;
-      background: var(--peach);
-      color: var(--charcoal);
-      border: none;
-      border-radius: 100px;
-      font-family: 'Sora', sans-serif;
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: pointer;
-      flex-shrink: 0;
-      transition: background 0.2s, transform 0.15s;
-      position: relative;
-      z-index: 1;
+      padding: 11px 24px; background: var(--peach); color: var(--charcoal);
+      border: none; border-radius: 100px; font-family: 'Sora', sans-serif;
+      font-size: 0.9rem; font-weight: 600; cursor: pointer; flex-shrink: 0;
+      transition: background 0.2s, transform 0.15s; position: relative; z-index: 1;
     }
     .hero-cta:hover { background: #ffd9a0; transform: translateY(-1px); }
 
     /* ===== SECTION HEADERS ===== */
-    .section-header {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 18px;
-    }
-    .section-title {
-      font-family: 'Sora', sans-serif;
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--charcoal);
-      letter-spacing: -0.02em;
-    }
-    .section-link {
-      font-size: 0.85rem;
-      color: var(--blue);
-      font-weight: 500;
-      text-decoration: none;
-      transition: opacity 0.2s;
-    }
+    .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+    .section-title { font-family: 'Sora', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--charcoal); letter-spacing: -0.02em; }
+    .section-link { font-size: 0.85rem; color: var(--blue); font-weight: 500; text-decoration: none; transition: opacity 0.2s; }
     .section-link:hover { opacity: 0.7; }
 
-    /* ===== SEARCH BAR ===== */
+    /* ===== SEARCH ===== */
     .browse-search { position: relative; margin-bottom: 14px; }
-    .browse-search-icon {
-      position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
-      color: var(--blue); pointer-events: none; display: flex; align-items: center;
-    }
+    .browse-search-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--blue); pointer-events: none; display: flex; align-items: center; }
     .browse-search input {
-      width: 100%;
-      padding: 13px 48px 13px 44px;
-      border: 1.5px solid #dde2ec;
-      border-radius: 100px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.95rem;
-      color: var(--charcoal);
-      background: var(--white);
-      outline: none;
+      width: 100%; padding: 13px 48px 13px 44px;
+      border: 1.5px solid #dde2ec; border-radius: 100px;
+      font-family: 'DM Sans', sans-serif; font-size: 0.95rem;
+      color: var(--charcoal); background: var(--white); outline: none;
       box-shadow: 0 2px 10px rgba(50,111,202,0.06);
       transition: border-color 0.2s, box-shadow 0.2s;
     }
@@ -212,157 +143,78 @@
     .browse-search input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(50,111,202,0.1); }
     .browse-search-arrow {
       position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
-      width: 34px; height: 34px;
-      background: var(--blue);
-      border-radius: 50%;
+      width: 34px; height: 34px; background: var(--blue); border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      color: var(--white);
-      cursor: pointer;
-      transition: background 0.2s;
+      color: var(--white); cursor: pointer; transition: background 0.2s;
     }
     .browse-search-arrow:hover { background: var(--blue-dark); }
 
-    /* ===== CATEGORY CHIPS ===== */
+    /* ===== CHIPS ===== */
     .categories-row { display: block; margin-bottom: 10px; }
-    .categories {
-      display: flex; gap: 8px;
-      flex-wrap: nowrap; overflow-x: auto;
-      white-space: nowrap; padding-bottom: 8px;
-    }
+    .categories { display: flex; gap: 8px; flex-wrap: nowrap; overflow-x: auto; white-space: nowrap; padding-bottom: 8px; }
     .chip {
-      display: flex; align-items: center; gap: 6px;
-      padding: 7px 14px;
-      border-radius: 100px;
-      border: 1.5px solid #dde2ec;
-      background: var(--white);
-      font-size: 0.84rem; font-weight: 500;
-      color: var(--charcoal-2);
-      cursor: pointer;
-      transition: border-color 0.2s, background 0.2s, color 0.2s;
-      white-space: nowrap;
+      display: flex; align-items: center; gap: 6px; padding: 7px 14px;
+      border-radius: 100px; border: 1.5px solid #dde2ec; background: var(--white);
+      font-size: 0.84rem; font-weight: 500; color: var(--charcoal-2);
+      cursor: pointer; transition: border-color 0.2s, background 0.2s, color 0.2s; white-space: nowrap;
     }
-    .chip:hover, .chip.active {
-      border-color: var(--blue);
-      background: rgba(50,111,202,0.07);
-      color: var(--blue);
-    }
+    .chip:hover, .chip.active { border-color: var(--blue); background: rgba(50,111,202,0.07); color: var(--blue); }
     .chip span { font-size: 0.95rem; }
-
-    /* ===== SORT CONTROL ===== */
     .sort-control { display: flex; justify-content: flex-end; margin-bottom: 32px; }
     .sort-control label { font-size: 0.84rem; color: var(--charcoal-3); font-weight: 400; white-space: nowrap; }
     .sort-select {
-      padding: 7px 32px 7px 12px;
-      border: 1.5px solid #dde2ec;
-      border-radius: var(--radius-sm);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.84rem;
-      color: var(--charcoal);
-      background: var(--white);
+      padding: 7px 32px 7px 12px; border: 1.5px solid #dde2ec;
+      border-radius: var(--radius-sm); font-family: 'DM Sans', sans-serif;
+      font-size: 0.84rem; color: var(--charcoal); background: var(--white);
       outline: none; cursor: pointer; appearance: none;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 10px center;
+      background-repeat: no-repeat; background-position: right 10px center;
       transition: border-color 0.2s;
     }
     .sort-select:focus { border-color: var(--blue); }
 
     /* ===== LISTINGS GRID ===== */
-    .listings-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-      gap: 16px;
-      margin-bottom: 40px;
-    }
+    .listings-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 16px; margin-bottom: 40px; }
     .listing-card {
-      background: var(--white);
-      border-radius: var(--radius);
-      overflow: hidden;
-      box-shadow: 0 2px 12px rgba(50,111,202,0.08);
-      border: 1px solid rgba(50,111,202,0.07);
-      cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
+      background: var(--white); border-radius: var(--radius); overflow: hidden;
+      box-shadow: 0 2px 12px rgba(50,111,202,0.08); border: 1px solid rgba(50,111,202,0.07);
+      cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
     }
     .listing-card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(50,111,202,0.16); }
     .listing-img {
-      width: 100%;
-      aspect-ratio: 4/3;
-      background: var(--light);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 3.5rem;
-      position: relative;
-      overflow: hidden;
-      border-bottom: 1px solid rgba(50,111,202,0.08);
+      width: 100%; aspect-ratio: 4/3; background: var(--light);
+      display: flex; align-items: center; justify-content: center; font-size: 3.5rem;
+      position: relative; overflow: hidden; border-bottom: 1px solid rgba(50,111,202,0.08);
     }
-    .listing-img img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      position: absolute; inset: 0;
-    }
+    .listing-img img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
     .listing-badge {
       position: absolute; top: 10px; left: 10px;
-      background: rgba(255,255,255,0.92);
-      color: var(--charcoal);
-      font-size: 0.68rem; font-weight: 600;
-      padding: 3px 8px;
-      border-radius: 100px;
-      letter-spacing: 0.02em;
-      backdrop-filter: blur(4px);
-      border: 1px solid rgba(50,111,202,0.1);
+      background: rgba(255,255,255,0.92); color: var(--charcoal);
+      font-size: 0.68rem; font-weight: 600; padding: 3px 8px; border-radius: 100px;
+      letter-spacing: 0.02em; backdrop-filter: blur(4px); border: 1px solid rgba(50,111,202,0.1);
     }
     .listing-fav {
       position: absolute; top: 8px; right: 8px;
-      width: 30px; height: 30px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.92);
-      border: none; cursor: pointer;
+      width: 30px; height: 30px; border-radius: 50%;
+      background: rgba(255,255,255,0.92); border: none; cursor: pointer;
       display: flex; align-items: center; justify-content: center;
-      color: var(--charcoal-3);
-      font-size: 0.9rem;
-      backdrop-filter: blur(4px);
-      transition: color 0.2s, transform 0.2s;
+      color: var(--charcoal-3); font-size: 0.9rem;
+      backdrop-filter: blur(4px); transition: color 0.2s, transform 0.2s;
     }
-    .listing-fav:hover { color: #e0504a; transform: scale(1.15); }
-    .listing-fav.liked { color: #e0504a; }
+    .listing-fav:hover { color: var(--red); transform: scale(1.15); }
+    .listing-fav.liked { color: var(--red); }
     .listing-info { padding: 10px 12px 13px; }
-    .listing-info h4 {
-      font-family: 'Sora', sans-serif;
-      font-size: 0.85rem; font-weight: 600;
-      color: var(--charcoal);
-      margin-bottom: 4px;
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    }
-    .listing-info .price {
-      font-family: 'Sora', sans-serif;
-      font-size: 1.05rem; font-weight: 700;
-      color: var(--blue);
-      margin-bottom: 5px;
-    }
-    .listing-info .meta {
-      font-size: 0.74rem; color: var(--charcoal-3); font-weight: 300;
-      display: flex; align-items: center; gap: 5px;
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    }
-    .condition-dot { width: 6px; height: 6px; border-radius: 50%; background: #5ddf7a; flex-shrink: 0; }
-    .condition-dot.fair { background: #f5a623; }
-    .condition-dot.poor { background: #e0504a; }
+    .listing-info h4 { font-family: 'Sora', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--charcoal); margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .listing-info .price { font-family: 'Sora', sans-serif; font-size: 1.05rem; font-weight: 700; color: var(--blue); margin-bottom: 5px; }
+    .listing-info .meta { font-size: 0.74rem; color: var(--charcoal-3); font-weight: 300; display: flex; align-items: center; gap: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .condition-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+    .condition-dot.fair { background: var(--orange); }
+    .condition-dot.poor { background: var(--red); }
 
-    /* ===== RECENT ACTIVITY ===== */
+    /* ===== ACTIVITY ===== */
     .activity-list { display: flex; flex-direction: column; gap: 10px; }
-    .activity-item {
-      background: var(--white);
-      border-radius: var(--radius-sm);
-      padding: 14px 18px;
-      display: flex; align-items: center; gap: 16px;
-      border: 1px solid rgba(50,111,202,0.07);
-      box-shadow: 0 2px 8px rgba(50,111,202,0.05);
-    }
-    .activity-icon {
-      width: 38px; height: 38px;
-      border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.1rem; flex-shrink: 0;
-    }
+    .activity-item { background: var(--white); border-radius: var(--radius-sm); padding: 14px 18px; display: flex; align-items: center; gap: 16px; border: 1px solid rgba(50,111,202,0.07); box-shadow: 0 2px 8px rgba(50,111,202,0.05); }
+    .activity-icon { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
     .activity-icon.sell { background: rgba(50,111,202,0.1); }
     .activity-icon.buy  { background: rgba(93,223,122,0.12); }
     .activity-icon.view { background: rgba(255,231,190,0.5); }
@@ -372,554 +224,322 @@
 
     /* ===== MODAL BASE ===== */
     .modal-overlay {
-      position: fixed; inset: 0;
-      background: rgba(30,40,60,0.45);
-      backdrop-filter: blur(4px);
-      z-index: 200;
+      position: fixed; inset: 0; background: rgba(30,40,60,0.45);
+      backdrop-filter: blur(4px); z-index: 200;
       display: flex; align-items: center; justify-content: center;
-      opacity: 0; pointer-events: none;
-      transition: opacity 0.3s;
+      opacity: 0; pointer-events: none; transition: opacity 0.3s;
     }
     .modal-overlay.open { opacity: 1; pointer-events: all; }
-
-    /* ===== SELL MODAL ===== */
-    .sell-modal {
-      background: var(--white);
-      border-radius: var(--radius);
-      padding: 32px;
-      width: 100%; max-width: 540px;
-      margin: 20px;
-      box-shadow: 0 24px 64px rgba(30,40,60,0.22);
-      transform: translateY(20px) scale(0.97);
-      transition: transform 0.3s cubic-bezier(0.34, 1.2, 0.64, 1);
-      max-height: 92vh;
-      overflow-y: auto;
-    }
-    .modal-overlay.open .sell-modal { transform: translateY(0) scale(1); }
-
-    /* ===== MEDIA UPLOAD ===== */
-    .upload-label {
-      font-size: 0.88rem; font-weight: 500; color: var(--charcoal-2);
-      margin-bottom: 8px;
-      display: block;
-    }
-    .upload-zone {
-      border: 2px dashed #c8d3e8;
-      border-radius: var(--radius-sm);
-      background: var(--light);
-      padding: 22px 16px;
-      text-align: center;
-      cursor: pointer;
-      transition: border-color 0.2s, background 0.2s;
-      position: relative;
-      margin-bottom: 16px;
-    }
-    .upload-zone:hover, .upload-zone.drag-over {
-      border-color: var(--blue);
-      background: rgba(50,111,202,0.04);
-    }
-    .upload-zone input[type="file"] {
-      position: absolute; inset: 0;
-      opacity: 0; width: 100%; height: 100%;
-      cursor: pointer;
-    }
-    .upload-zone-icon {
-      width: 40px; height: 40px;
-      background: rgba(50,111,202,0.1);
-      border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 10px;
-      color: var(--blue);
-    }
-    .upload-zone-title {
-      font-family: 'Sora', sans-serif;
-      font-size: 0.88rem; font-weight: 600;
-      color: var(--charcoal); margin-bottom: 3px;
-    }
-    .upload-zone-sub {
-      font-size: 0.76rem; color: var(--charcoal-3); font-weight: 300;
-    }
-    .upload-zone-sub span { color: var(--blue); font-weight: 500; }
-
-    /* Media preview grid */
-    .media-preview-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 16px;
-    }
-    .media-thumb {
-      width: 76px; height: 76px;
-      border-radius: var(--radius-sm);
-      background: var(--light);
-      border: 1.5px solid #dde2ec;
-      overflow: hidden;
-      position: relative;
-      flex-shrink: 0;
-    }
-    .media-thumb img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .media-thumb-video {
-      width: 100%; height: 100%;
-      display: flex; align-items: center; justify-content: center;
-      background: #1e2a3a;
-      color: white;
-      font-size: 1.5rem;
-    }
-    .media-thumb-video-label {
-      position: absolute; bottom: 3px; left: 0; right: 0;
-      text-align: center;
-      font-size: 0.6rem; color: rgba(255,255,255,0.8);
-      font-weight: 500; letter-spacing: 0.04em;
-      background: rgba(0,0,0,0.35);
-      padding: 1px 0;
-    }
-    .media-thumb-remove {
-      position: absolute; top: 3px; right: 3px;
-      width: 18px; height: 18px;
-      border-radius: 50%;
-      background: rgba(30,40,60,0.7);
-      border: none; cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      color: white; font-size: 0.65rem;
-      line-height: 1;
-      transition: background 0.15s;
-    }
-    .media-thumb-remove:hover { background: #e0504a; }
-    .media-thumb-first-badge {
-      position: absolute; bottom: 3px; left: 3px;
-      background: var(--blue);
-      color: white;
-      font-size: 0.58rem; font-weight: 600;
-      padding: 1px 5px; border-radius: 4px;
-      letter-spacing: 0.03em;
-    }
-    .upload-count-note {
-      font-size: 0.75rem; color: var(--charcoal-3);
-      text-align: right; margin-top: -10px; margin-bottom: 16px;
-    }
-
-    /* ===== ITEM VIEW MODAL ===== */
-    .item-modal {
-      background: var(--white);
-      border-radius: var(--radius);
-      width: 100%;
-      max-width: 720px;
-      margin: 20px;
-      box-shadow: 0 24px 64px rgba(30,40,60,0.22);
-      transform: translateY(24px) scale(0.97);
-      transition: transform 0.35s cubic-bezier(0.34, 1.15, 0.64, 1);
-      overflow: hidden;
-      max-height: 90vh;
-      display: flex;
-      flex-direction: column;
-    }
-    .modal-overlay.open .item-modal { transform: translateY(0) scale(1); }
-
-    .item-modal-inner {
-      display: flex;
-      flex-direction: row;
-      overflow: hidden;
-      flex: 1;
-      min-height: 0;
-    }
-
-    /* Left: image panel */
-    .item-modal-img-panel {
-      width: 280px;
-      flex-shrink: 0;
-      background: var(--light);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 32px 24px;
-      position: relative;
-      min-height: 320px;
-    }
-    .item-modal-emoji {
-      font-size: 5.5rem;
-      line-height: 1;
-      margin-bottom: 16px;
-      filter: drop-shadow(0 8px 24px rgba(50,111,202,0.15));
-    }
-    .item-modal-badge-large {
-      background: var(--peach);
-      color: var(--charcoal);
-      font-size: 0.78rem;
-      font-weight: 600;
-      padding: 5px 14px;
-      border-radius: 100px;
-      letter-spacing: 0.03em;
-    }
-    .item-modal-img-actions {
-      position: absolute;
-      top: 14px;
-      right: 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .img-action-btn {
-      width: 34px; height: 34px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.92);
-      border: 1px solid rgba(50,111,202,0.12);
-      cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      color: var(--charcoal-3);
-      font-size: 0.9rem;
-      transition: background 0.2s, color 0.2s, border-color 0.2s;
-      box-shadow: 0 2px 8px rgba(50,111,202,0.08);
-    }
-    .img-action-btn:hover { background: white; color: var(--blue); border-color: var(--blue); }
-    .img-action-btn.bookmarked { color: var(--blue); border-color: var(--blue); background: rgba(50,111,202,0.08); }
-
-    /* Right: info panel */
-    .item-modal-info-panel {
-      flex: 1;
-      padding: 28px 28px 24px;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-    }
-    .item-modal-close {
-      width: 30px; height: 30px;
-      border-radius: 50%;
-      border: none;
-      background: var(--light);
-      cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      color: var(--charcoal-3);
-      transition: background 0.2s, color 0.2s;
-      align-self: flex-end;
-      margin-bottom: 12px;
-      flex-shrink: 0;
-    }
-    .item-modal-close:hover { background: #dde2ec; color: var(--charcoal); }
-
-    .item-modal-title {
-      font-family: 'Sora', sans-serif;
-      font-size: 1.35rem;
-      font-weight: 700;
-      color: var(--charcoal);
-      letter-spacing: -0.025em;
-      margin-bottom: 4px;
-      line-height: 1.25;
-    }
-    .item-modal-price {
-      font-family: 'Sora', sans-serif;
-      font-size: 1.6rem;
-      font-weight: 700;
-      color: var(--blue);
-      margin-bottom: 16px;
-    }
-
-    /* Metadata tags row */
-    .item-meta-tags {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-bottom: 18px;
-    }
-    .meta-tag {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      padding: 5px 11px;
-      border-radius: 100px;
-      background: var(--light);
-      border: 1px solid rgba(50,111,202,0.1);
-      font-size: 0.78rem;
-      font-weight: 500;
-      color: var(--charcoal-2);
-    }
-    .meta-tag .dot { width: 6px; height: 6px; border-radius: 50%; background: #5ddf7a; flex-shrink: 0; }
-    .meta-tag .dot.fair { background: #f5a623; }
-    .meta-tag .dot.poor { background: #e0504a; }
-
-    /* Description */
-    .item-modal-desc-label {
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: var(--charcoal-3);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 6px;
-    }
-    .item-modal-desc {
-      font-size: 0.9rem;
-      color: var(--charcoal-2);
-      line-height: 1.65;
-      margin-bottom: 20px;
-      font-weight: 300;
-    }
-
-    /* Seller card */
-    .seller-card {
-      background: var(--light);
-      border-radius: var(--radius-sm);
-      padding: 14px 16px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 22px;
-      border: 1px solid rgba(50,111,202,0.09);
-    }
-    .seller-avatar {
-      width: 40px; height: 40px;
-      border-radius: 50%;
-      background: var(--blue);
-      color: var(--white);
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Sora', sans-serif;
-      font-size: 0.85rem;
-      font-weight: 600;
-      flex-shrink: 0;
-    }
-    .seller-info { flex: 1; }
-    .seller-name {
-      font-family: 'Sora', sans-serif;
-      font-size: 0.88rem;
-      font-weight: 600;
-      color: var(--charcoal);
-      margin-bottom: 1px;
-    }
-    .seller-sub { font-size: 0.76rem; color: var(--charcoal-3); font-weight: 300; }
-    .seller-rating {
-      font-size: 0.78rem;
-      color: var(--charcoal-2);
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 3px;
-    }
-
-    /* Action buttons */
-    .item-modal-actions {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-top: auto;
-    }
-    .btn-buy {
-      width: 100%;
-      padding: 13px 20px;
-      background: var(--blue);
-      color: var(--white);
-      border: none;
-      border-radius: var(--radius-sm);
-      font-family: 'Sora', sans-serif;
-      font-size: 0.95rem;
-      font-weight: 600;
-      cursor: pointer;
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      transition: background 0.2s, transform 0.15s;
-      box-shadow: 0 4px 16px rgba(50,111,202,0.28);
-    }
-    .btn-buy:hover { background: var(--blue-dark); transform: translateY(-1px); }
-    .btn-contact {
-      width: 100%;
-      padding: 11px 20px;
-      background: transparent;
-      color: var(--blue);
-      border: 1.5px solid var(--blue);
-      border-radius: var(--radius-sm);
-      font-family: 'Sora', sans-serif;
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: pointer;
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      transition: background 0.2s, color 0.2s;
-    }
-    .btn-contact:hover { background: rgba(50,111,202,0.07); }
-    .btn-bookmark-row {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      padding: 9px;
-      border-radius: var(--radius-sm);
-      background: transparent;
-      border: 1.5px solid #dde2ec;
-      cursor: pointer;
-      font-size: 0.84rem;
-      font-weight: 500;
-      color: var(--charcoal-2);
-      transition: background 0.2s, border-color 0.2s, color 0.2s;
-      font-family: 'DM Sans', sans-serif;
-    }
-    .btn-bookmark-row:hover { border-color: var(--blue); color: var(--blue); background: rgba(50,111,202,0.05); }
-    .btn-bookmark-row.saved { border-color: var(--blue); color: var(--blue); background: rgba(50,111,202,0.07); }
-
-    /* Contact modal (sub-modal) */
-    .contact-modal {
-      background: var(--white);
-      border-radius: var(--radius);
-      padding: 28px;
-      width: 100%; max-width: 420px;
-      margin: 20px;
-      box-shadow: 0 24px 64px rgba(30,40,60,0.22);
-      transform: translateY(20px) scale(0.97);
-      transition: transform 0.3s cubic-bezier(0.34, 1.2, 0.64, 1);
-    }
-    .modal-overlay.open .contact-modal { transform: translateY(0) scale(1); }
-
-    /* ===== COMMON MODAL BITS ===== */
-    .modal-header {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 20px;
-    }
-    .modal-header h3 {
-      font-family: 'Sora', sans-serif;
-      font-size: 1.2rem; font-weight: 700;
-      color: var(--charcoal); letter-spacing: -0.02em;
-    }
+    .modal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+    .modal-header h3 { font-family: 'Sora', sans-serif; font-size: 1.2rem; font-weight: 700; color: var(--charcoal); letter-spacing: -0.02em; }
     .modal-close {
-      width: 32px; height: 32px;
-      border-radius: 50%; border: none;
-      background: var(--light);
-      cursor: pointer;
+      width: 32px; height: 32px; border-radius: 50%; border: none;
+      background: var(--light); cursor: pointer;
       display: flex; align-items: center; justify-content: center;
-      color: var(--charcoal-3);
-      transition: background 0.2s, color 0.2s;
+      color: var(--charcoal-3); transition: background 0.2s, color 0.2s;
     }
     .modal-close:hover { background: #dde2ec; color: var(--charcoal); }
     .modal-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
     .modal-field label { font-size: 0.88rem; font-weight: 500; color: var(--charcoal-2); }
-    .modal-field input,
-    .modal-field select,
-    .modal-field textarea {
-      padding: 10px 12px;
-      border: 1.5px solid #dde2ec;
-      border-radius: var(--radius-sm);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.9rem;
-      color: var(--charcoal);
-      background: var(--light);
-      outline: none;
-      transition: border-color 0.2s, box-shadow 0.2s;
-      resize: none;
+    .modal-field input, .modal-field select, .modal-field textarea {
+      padding: 10px 12px; border: 1.5px solid #dde2ec;
+      border-radius: var(--radius-sm); font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem; color: var(--charcoal); background: var(--light);
+      outline: none; transition: border-color 0.2s, box-shadow 0.2s; resize: none;
     }
-    .modal-field input:focus,
-    .modal-field select:focus,
-    .modal-field textarea:focus {
-      border-color: var(--blue);
-      box-shadow: 0 0 0 3px rgba(50,111,202,0.1);
-      background: var(--white);
-    }
+    .modal-field input:focus, .modal-field select:focus, .modal-field textarea:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(50,111,202,0.1); background: var(--white); }
     .modal-field textarea { height: 90px; }
     .modal-row { display: flex; gap: 12px; }
     .modal-row .modal-field { flex: 1; }
     .btn-modal-submit {
-      width: 100%;
-      margin-top: 4px;
-      padding: 12px 20px;
-      background: var(--blue);
-      color: var(--white);
-      border: none;
-      border-radius: var(--radius-sm);
-      font-family: 'Sora', sans-serif;
-      font-size: 0.95rem; font-weight: 600;
-      cursor: pointer;
+      width: 100%; margin-top: 4px; padding: 12px 20px;
+      background: var(--blue); color: var(--white); border: none;
+      border-radius: var(--radius-sm); font-family: 'Sora', sans-serif;
+      font-size: 0.95rem; font-weight: 600; cursor: pointer;
       transition: background 0.2s, transform 0.15s;
       box-shadow: 0 4px 16px rgba(50,111,202,0.3);
       display: flex; align-items: center; justify-content: center; gap: 8px;
     }
     .btn-modal-submit:hover { background: var(--blue-dark); transform: translateY(-1px); }
+    .btn-modal-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
-    /* Confirm buy modal */
-    .buy-modal {
-      background: var(--white);
-      border-radius: var(--radius);
-      padding: 28px;
-      width: 100%; max-width: 400px;
-      margin: 20px;
+    /* ===== SELL MODAL ===== */
+    .sell-modal {
+      background: var(--white); border-radius: var(--radius); padding: 32px;
+      width: 100%; max-width: 540px; margin: 20px;
       box-shadow: 0 24px 64px rgba(30,40,60,0.22);
       transform: translateY(20px) scale(0.97);
       transition: transform 0.3s cubic-bezier(0.34, 1.2, 0.64, 1);
-      text-align: center;
+      max-height: 92vh; overflow-y: auto;
     }
-    .modal-overlay.open .buy-modal { transform: translateY(0) scale(1); }
-    .buy-modal-icon {
-      width: 62px; height: 62px;
-      background: rgba(50,111,202,0.1);
-      border-radius: 50%;
+    .modal-overlay.open .sell-modal { transform: translateY(0) scale(1); }
+
+    /* Multi-image upload */
+    .upload-zone {
+      border: 2px dashed #c8d3e8; border-radius: var(--radius-sm);
+      background: var(--light); padding: 20px 16px; text-align: center;
+      cursor: pointer; transition: border-color 0.2s, background 0.2s;
+      position: relative; margin-bottom: 10px;
+    }
+    .upload-zone:hover { border-color: var(--blue); background: rgba(50,111,202,0.04); }
+    .upload-zone input[type="file"] { position: absolute; inset: 0; opacity: 0; width: 100%; height: 100%; cursor: pointer; }
+    .upload-zone-icon { width: 36px; height: 36px; background: rgba(50,111,202,0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin: 0 auto 8px; color: var(--blue); }
+    .upload-zone-title { font-family: 'Sora', sans-serif; font-size: 0.85rem; font-weight: 600; color: var(--charcoal); margin-bottom: 2px; }
+    .upload-zone-sub { font-size: 0.74rem; color: var(--charcoal-3); font-weight: 300; }
+    .upload-zone-sub span { color: var(--blue); font-weight: 500; }
+    .img-preview-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+    .img-thumb {
+      width: 72px; height: 72px; border-radius: var(--radius-sm);
+      background: var(--light); border: 1.5px solid #dde2ec;
+      overflow: hidden; position: relative; flex-shrink: 0;
+    }
+    .img-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .img-thumb-remove {
+      position: absolute; top: 2px; right: 2px;
+      width: 16px; height: 16px; border-radius: 50%;
+      background: rgba(30,40,60,0.7); border: none; cursor: pointer;
       display: flex; align-items: center; justify-content: center;
-      font-size: 1.8rem;
-      margin: 0 auto 16px;
+      color: white; font-size: 0.6rem; transition: background 0.15s;
     }
-    .buy-modal h3 {
-      font-family: 'Sora', sans-serif;
-      font-size: 1.2rem; font-weight: 700;
-      color: var(--charcoal); margin-bottom: 8px;
+    .img-thumb-remove:hover { background: var(--red); }
+    .img-thumb-primary { position: absolute; bottom: 2px; left: 2px; background: var(--blue); color: white; font-size: 0.55rem; font-weight: 700; padding: 1px 4px; border-radius: 3px; letter-spacing: 0.03em; }
+    .upload-count { font-size: 0.74rem; color: var(--charcoal-3); text-align: right; margin-bottom: 16px; }
+
+    /* ===== ITEM VIEW MODAL ===== */
+    .item-modal {
+      background: var(--white); border-radius: var(--radius);
+      width: 100%; max-width: 720px; margin: 20px;
+      box-shadow: 0 24px 64px rgba(30,40,60,0.22);
+      transform: translateY(24px) scale(0.97);
+      transition: transform 0.35s cubic-bezier(0.34, 1.15, 0.64, 1);
+      overflow: hidden; max-height: 90vh; display: flex; flex-direction: column;
     }
-    .buy-modal p {
-      font-size: 0.88rem; color: var(--charcoal-3);
-      line-height: 1.6; margin-bottom: 22px;
+    .modal-overlay.open .item-modal { transform: translateY(0) scale(1); }
+    .item-modal-inner { display: flex; flex-direction: row; overflow: hidden; flex: 1; min-height: 0; }
+    .item-modal-img-panel {
+      width: 280px; flex-shrink: 0; background: var(--light);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 32px 24px; position: relative; min-height: 320px;
     }
-    .buy-modal-item-row {
-      background: var(--light);
-      border-radius: var(--radius-sm);
-      padding: 14px 16px;
-      display: flex; align-items: center; gap: 12px;
-      margin-bottom: 22px;
-      text-align: left;
+    /* Image carousel inside modal */
+    .item-img-carousel { width: 100%; position: relative; }
+    .item-img-main { width: 100%; height: 200px; object-fit: cover; border-radius: 10px; display: block; }
+    .item-img-placeholder { font-size: 5rem; text-align: center; padding: 20px 0; }
+    .item-img-thumbs { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; justify-content: center; }
+    .item-img-thumb { width: 44px; height: 44px; border-radius: 6px; object-fit: cover; cursor: pointer; border: 2px solid transparent; transition: border-color 0.2s; }
+    .item-img-thumb.active { border-color: var(--blue); }
+    .item-modal-badge-large { background: var(--peach); color: var(--charcoal); font-size: 0.78rem; font-weight: 600; padding: 5px 14px; border-radius: 100px; letter-spacing: 0.03em; margin-top: 12px; }
+    .item-modal-img-actions { position: absolute; top: 14px; right: 14px; display: flex; flex-direction: column; gap: 8px; }
+    .img-action-btn {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: rgba(255,255,255,0.92); border: 1px solid rgba(50,111,202,0.12);
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      color: var(--charcoal-3); font-size: 0.9rem;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+      box-shadow: 0 2px 8px rgba(50,111,202,0.08);
     }
-    .buy-modal-item-emoji { font-size: 1.8rem; }
-    .buy-modal-item-name {
-      font-family: 'Sora', sans-serif;
-      font-size: 0.9rem; font-weight: 600;
-      color: var(--charcoal); margin-bottom: 2px;
+    .img-action-btn:hover { background: white; color: var(--blue); border-color: var(--blue); }
+    .img-action-btn.bookmarked { color: var(--blue); border-color: var(--blue); background: rgba(50,111,202,0.08); }
+    .item-modal-info-panel { flex: 1; padding: 28px 28px 24px; overflow-y: auto; display: flex; flex-direction: column; }
+    .item-modal-close { width: 30px; height: 30px; border-radius: 50%; border: none; background: var(--light); cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--charcoal-3); transition: background 0.2s, color 0.2s; align-self: flex-end; margin-bottom: 12px; flex-shrink: 0; }
+    .item-modal-close:hover { background: #dde2ec; color: var(--charcoal); }
+    .item-modal-title { font-family: 'Sora', sans-serif; font-size: 1.35rem; font-weight: 700; color: var(--charcoal); letter-spacing: -0.025em; margin-bottom: 4px; line-height: 1.25; }
+    .item-modal-price { font-family: 'Sora', sans-serif; font-size: 1.6rem; font-weight: 700; color: var(--blue); margin-bottom: 16px; }
+    .item-meta-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
+    .meta-tag { display: flex; align-items: center; gap: 5px; padding: 5px 11px; border-radius: 100px; background: var(--light); border: 1px solid rgba(50,111,202,0.1); font-size: 0.78rem; font-weight: 500; color: var(--charcoal-2); }
+    .meta-tag .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+    .meta-tag .dot.fair { background: var(--orange); }
+    .meta-tag .dot.poor { background: var(--red); }
+    .item-modal-desc-label { font-size: 0.78rem; font-weight: 600; color: var(--charcoal-3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+    .item-modal-desc { font-size: 0.9rem; color: var(--charcoal-2); line-height: 1.65; margin-bottom: 20px; font-weight: 300; }
+    .seller-card { background: var(--light); border-radius: var(--radius-sm); padding: 14px 16px; display: flex; align-items: center; gap: 12px; margin-bottom: 22px; border: 1px solid rgba(50,111,202,0.09); cursor: pointer; }
+    .seller-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--blue); color: var(--white); display: flex; align-items: center; justify-content: center; font-family: 'Sora', sans-serif; font-size: 0.85rem; font-weight: 600; flex-shrink: 0; }
+    .seller-info { flex: 1; }
+    .seller-name { font-family: 'Sora', sans-serif; font-size: 0.88rem; font-weight: 600; color: var(--charcoal); margin-bottom: 1px; }
+    .seller-sub { font-size: 0.76rem; color: var(--charcoal-3); font-weight: 300; }
+    .seller-rating { font-size: 0.78rem; color: var(--charcoal-2); font-weight: 500; display: flex; align-items: center; gap: 3px; }
+    .item-modal-actions { display: flex; flex-direction: column; gap: 10px; margin-top: auto; }
+    .btn-buy {
+      width: 100%; padding: 13px 20px; background: var(--blue); color: var(--white);
+      border: none; border-radius: var(--radius-sm); font-family: 'Sora', sans-serif;
+      font-size: 0.95rem; font-weight: 600; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      transition: background 0.2s, transform 0.15s; box-shadow: 0 4px 16px rgba(50,111,202,0.28);
     }
-    .buy-modal-item-price {
-      font-size: 0.82rem; color: var(--blue); font-weight: 600;
+    .btn-buy:hover { background: var(--blue-dark); transform: translateY(-1px); }
+    .btn-message-seller {
+      width: 100%; padding: 11px 20px; background: transparent;
+      color: var(--blue); border: 1.5px solid var(--blue); border-radius: var(--radius-sm);
+      font-family: 'Sora', sans-serif; font-size: 0.9rem; font-weight: 600;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+      transition: background 0.2s, color 0.2s;
     }
-    .buy-modal-actions { display: flex; gap: 10px; }
-    .btn-cancel {
-      flex: 1; padding: 11px;
-      border: 1.5px solid #dde2ec;
-      border-radius: var(--radius-sm);
-      background: transparent;
-      color: var(--charcoal-2);
-      font-family: 'Sora', sans-serif;
-      font-size: 0.88rem; font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s;
+    .btn-message-seller:hover { background: rgba(50,111,202,0.07); }
+    .btn-save-row {
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      padding: 9px; border-radius: var(--radius-sm); background: transparent;
+      border: 1.5px solid #dde2ec; cursor: pointer; font-size: 0.84rem;
+      font-weight: 500; color: var(--charcoal-2); transition: background 0.2s, border-color 0.2s, color 0.2s;
+      font-family: 'DM Sans', sans-serif;
     }
-    .btn-cancel:hover { background: var(--light); }
-    .btn-confirm-buy {
-      flex: 1.5; padding: 11px;
-      border: none;
-      border-radius: var(--radius-sm);
-      background: var(--blue);
-      color: var(--white);
-      font-family: 'Sora', sans-serif;
-      font-size: 0.88rem; font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s;
-      box-shadow: 0 4px 12px rgba(50,111,202,0.28);
+    .btn-save-row:hover { border-color: var(--blue); color: var(--blue); background: rgba(50,111,202,0.05); }
+    .btn-save-row.saved { border-color: var(--blue); color: var(--blue); background: rgba(50,111,202,0.07); }
+
+    /* ===== PAYMENT MODAL ===== */
+    .payment-modal {
+      background: var(--white); border-radius: var(--radius);
+      width: 100%; max-width: 460px; margin: 20px;
+      box-shadow: 0 24px 64px rgba(30,40,60,0.22);
+      transform: translateY(20px) scale(0.97);
+      transition: transform 0.3s cubic-bezier(0.34, 1.2, 0.64, 1);
+      overflow: hidden; max-height: 92vh; overflow-y: auto;
     }
-    .btn-confirm-buy:hover { background: var(--blue-dark); }
+    .modal-overlay.open .payment-modal { transform: translateY(0) scale(1); }
+
+    /* Payment steps */
+    .payment-steps { display: flex; padding: 0 28px; border-bottom: 1px solid rgba(50,111,202,0.08); }
+    .payment-step { flex: 1; padding: 14px 0; text-align: center; font-size: 0.78rem; font-weight: 600; color: var(--charcoal-3); border-bottom: 2px solid transparent; transition: color 0.2s, border-color 0.2s; cursor: default; }
+    .payment-step.active { color: var(--blue); border-color: var(--blue); }
+    .payment-step.done { color: var(--green); border-color: var(--green); }
+
+    .payment-body { padding: 24px 28px; }
+    .payment-item-row { display: flex; align-items: center; gap: 12px; background: var(--light); border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 20px; border: 1px solid rgba(50,111,202,0.08); }
+    .payment-item-img { width: 44px; height: 44px; border-radius: 8px; object-fit: cover; background: #dde2ec; }
+    .payment-item-name { font-family: 'Sora', sans-serif; font-size: 0.88rem; font-weight: 600; color: var(--charcoal); margin-bottom: 2px; }
+    .payment-item-price { font-size: 0.82rem; color: var(--blue); font-weight: 700; }
+
+    /* Step 1: payment method selection */
+    .payment-methods { display: flex; gap: 10px; margin-bottom: 20px; }
+    .payment-method-btn {
+      flex: 1; padding: 16px 12px; border: 2px solid #dde2ec;
+      border-radius: var(--radius-sm); background: var(--light);
+      cursor: pointer; text-align: center; transition: border-color 0.2s, background 0.2s;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .payment-method-btn:hover { border-color: var(--blue); background: rgba(50,111,202,0.04); }
+    .payment-method-btn.selected { border-color: var(--blue); background: rgba(50,111,202,0.07); }
+    .payment-method-btn .pm-icon { font-size: 1.8rem; margin-bottom: 6px; }
+    .payment-method-btn .pm-name { font-size: 0.88rem; font-weight: 600; color: var(--charcoal); }
+    .payment-method-btn .pm-sub { font-size: 0.72rem; color: var(--charcoal-3); font-weight: 300; }
+
+    /* Step 2: QR display */
+    .qr-display { text-align: center; margin-bottom: 20px; }
+    .qr-display img { width: 100%; max-width: 260px; border-radius: 12px; border: 2px solid rgba(50,111,202,0.12); margin-bottom: 12px; }
+    .qr-no-code { padding: 32px; background: var(--light); border-radius: 12px; color: var(--charcoal-3); font-size: 0.88rem; margin-bottom: 12px; }
+    .qr-display p { font-size: 0.85rem; color: var(--charcoal-2); line-height: 1.6; }
+    .qr-amount { font-family: 'Sora', sans-serif; font-size: 1.4rem; font-weight: 700; color: var(--blue); margin-bottom: 8px; }
+
+    /* Proof upload */
+    .proof-upload-zone {
+      border: 2px dashed #c8d3e8; border-radius: var(--radius-sm);
+      background: var(--light); padding: 18px 16px; text-align: center;
+      cursor: pointer; transition: border-color 0.2s, background 0.2s;
+      position: relative; margin-bottom: 8px;
+    }
+    .proof-upload-zone:hover { border-color: var(--blue); background: rgba(50,111,202,0.04); }
+    .proof-upload-zone input[type="file"] { position: absolute; inset: 0; opacity: 0; width: 100%; height: 100%; cursor: pointer; }
+    .proof-upload-zone .puz-icon { font-size: 1.5rem; margin-bottom: 6px; }
+    .proof-upload-zone .puz-text { font-size: 0.84rem; color: var(--charcoal-2); font-weight: 500; }
+    .proof-upload-zone .puz-sub { font-size: 0.74rem; color: var(--charcoal-3); margin-top: 2px; }
+    .proof-preview { width: 100%; max-height: 160px; object-fit: cover; border-radius: 8px; margin-bottom: 8px; display: none; }
+    .confirm-check { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 20px; }
+    .confirm-check input[type="checkbox"] { margin-top: 3px; width: 16px; height: 16px; accent-color: var(--blue); cursor: pointer; flex-shrink: 0; }
+    .confirm-check label { font-size: 0.84rem; color: var(--charcoal-2); line-height: 1.5; cursor: pointer; }
+
+    /* ===== MESSAGES MODAL — Full Teams Style ===== */
+    .messages-modal { background: var(--white); border-radius: var(--radius); width: 95vw; max-width: 960px; height: 88vh; margin: 20px; box-shadow: 0 24px 64px rgba(30,40,60,0.22); transform: translateY(24px) scale(0.97); transition: transform 0.35s cubic-bezier(0.34,1.15,0.64,1); overflow: hidden; display: flex; flex-direction: column; }
+    .modal-overlay.open .messages-modal { transform: translateY(0) scale(1); }
+    .messages-modal-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; border-bottom: 1px solid rgba(50,111,202,0.09); flex-shrink: 0; background: var(--white); }
+    .messages-modal-header h3 { font-family: 'Sora', sans-serif; font-size: 1rem; font-weight: 700; color: var(--charcoal); }
+    .msg-new-btn { display: flex; align-items: center; gap: 5px; padding: 6px 12px; background: rgba(50,111,202,0.08); color: var(--blue); border: 1.5px solid rgba(50,111,202,0.2); border-radius: 100px; font-family: 'Sora', sans-serif; font-size: 0.78rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+    .msg-new-btn:hover { background: rgba(50,111,202,0.14); }
+    .messages-layout { display: flex; flex: 1; overflow: hidden; }
+
+    /* Left panel */
+    .conv-list { width: 280px; flex-shrink: 0; background: #f7f8fc; border-right: 1px solid rgba(50,111,202,0.09); overflow-y: auto; display: flex; flex-direction: column; }
+    .conv-list-header { padding: 12px 14px 8px; flex-shrink: 0; }
+    .conv-search-wrap { position: relative; margin-bottom: 8px; }
+    .conv-search-wrap input { width: 100%; padding: 8px 12px 8px 32px; border: 1.5px solid #dde2ec; border-radius: 100px; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--charcoal); background: var(--white); outline: none; transition: border-color 0.2s; }
+    .conv-search-wrap input:focus { border-color: var(--blue); }
+    .conv-search-wrap svg { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--charcoal-3); pointer-events: none; }
+    .conv-search-results { position: absolute; top: calc(100% + 4px); left: 0; right: 0; background: var(--white); border: 1.5px solid rgba(50,111,202,0.15); border-radius: var(--radius-sm); box-shadow: 0 8px 24px rgba(50,111,202,0.12); z-index: 10; max-height: 200px; overflow-y: auto; display: none; }
+    .conv-search-results.open { display: block; }
+    .conv-search-result-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; cursor: pointer; transition: background 0.15s; border-bottom: 1px solid rgba(50,111,202,0.05); }
+    .conv-search-result-item:hover { background: var(--light); }
+    .conv-search-result-item:last-child { border-bottom: none; }
+    .conv-search-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--blue); color: white; display: flex; align-items: center; justify-content: center; font-family: 'Sora', sans-serif; font-size: 0.72rem; font-weight: 600; flex-shrink: 0; }
+    .conv-search-name { font-size: 0.84rem; font-weight: 600; color: var(--charcoal); }
+    .conv-search-sub  { font-size: 0.72rem; color: var(--charcoal-3); }
+    .conv-section-label { padding: 4px 14px 6px; font-size: 0.68rem; font-weight: 700; color: var(--charcoal-3); text-transform: uppercase; letter-spacing: 0.08em; }
+    .conv-item { padding: 10px 14px; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: background 0.15s; border-bottom: 1px solid rgba(50,111,202,0.04); }
+    .conv-item:hover  { background: rgba(50,111,202,0.05); }
+    .conv-item.active { background: rgba(50,111,202,0.1); }
+    .conv-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--blue); color: white; display: flex; align-items: center; justify-content: center; font-family: 'Sora', sans-serif; font-size: 0.8rem; font-weight: 600; flex-shrink: 0; }
+    .conv-info { flex: 1; min-width: 0; }
+    .conv-name { font-family: 'Sora', sans-serif; font-size: 0.84rem; font-weight: 600; color: var(--charcoal); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 2px; }
+    .conv-last-msg { font-size: 0.74rem; color: var(--charcoal-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .conv-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0; }
+    .conv-time { font-size: 0.68rem; color: var(--charcoal-3); }
+    .conv-unread { min-width: 18px; height: 18px; background: var(--blue); color: white; font-size: 0.64rem; font-weight: 700; border-radius: 100px; padding: 0 5px; display: flex; align-items: center; justify-content: center; }
+    .conv-empty { padding: 32px 16px; text-align: center; color: var(--charcoal-3); font-size: 0.82rem; line-height: 1.6; }
+
+    /* Right: thread */
+    .msg-thread { flex: 1; display: flex; flex-direction: column; overflow: hidden; background: var(--white); }
+    .msg-thread-header { padding: 12px 18px; border-bottom: 1px solid rgba(50,111,202,0.09); display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+    .msg-thread-header-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--blue); color: white; display: flex; align-items: center; justify-content: center; font-family: 'Sora', sans-serif; font-size: 0.76rem; font-weight: 600; flex-shrink: 0; cursor: pointer; transition: opacity 0.2s; }
+    .msg-thread-header-avatar:hover { opacity: 0.8; }
+    .msg-thread-header-info { flex: 1; }
+    .msg-thread-header-name { font-family: 'Sora', sans-serif; font-size: 0.92rem; font-weight: 700; color: var(--charcoal); cursor: pointer; transition: color 0.2s; }
+    .msg-thread-header-name:hover { color: var(--blue); }
+    .msg-thread-header-sub { font-size: 0.72rem; color: var(--charcoal-3); font-weight: 300; }
+    .msg-thread-empty { flex: 1; display: flex; align-items: center; justify-content: center; color: var(--charcoal-3); font-size: 0.9rem; flex-direction: column; gap: 10px; }
+    .msg-messages { flex: 1; overflow-y: auto; padding: 16px 20px; display: flex; flex-direction: column; gap: 2px; }
+    .msg-date-sep { text-align: center; font-size: 0.72rem; color: var(--charcoal-3); margin: 12px 0 6px; display: flex; align-items: center; gap: 10px; }
+    .msg-date-sep::before, .msg-date-sep::after { content: ''; flex: 1; height: 1px; background: rgba(50,111,202,0.1); }
+
+    /* Bubbles */
+    .msg-bubble-row { display: flex; align-items: flex-end; gap: 8px; margin-bottom: 2px; }
+    .msg-bubble-row.mine   { flex-direction: row-reverse; }
+    .msg-bubble-row.system { justify-content: center; margin: 6px 0; }
+    .msg-row-avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--blue); color: white; display: flex; align-items: center; justify-content: center; font-family: 'Sora', sans-serif; font-size: 0.62rem; font-weight: 600; flex-shrink: 0; cursor: pointer; }
+    .msg-row-avatar:hover { opacity: 0.8; }
+    .msg-bubble-row.mine .msg-row-avatar { display: none; }
+    .msg-bubble { max-width: 68%; padding: 9px 13px; border-radius: 18px; font-size: 0.86rem; line-height: 1.5; word-break: break-word; }
+    .msg-bubble-row.theirs .msg-bubble { background: #f0f2f8; color: var(--charcoal); border-bottom-left-radius: 4px; }
+    .msg-bubble-row.mine   .msg-bubble { background: var(--blue); color: white; border-bottom-right-radius: 4px; }
+    .msg-bubble-row.system .msg-bubble { background: rgba(50,111,202,0.07); color: var(--charcoal-2); font-size: 0.78rem; border-radius: 10px; text-align: center; border: 1px solid rgba(50,111,202,0.12); max-width: 80%; padding: 8px 14px; }
+    .msg-system-label { font-size: 0.66rem; color: var(--charcoal-3); text-align: center; margin-bottom: 3px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+    .msg-image { max-width: 240px; border-radius: 12px; cursor: pointer; display: block; transition: opacity 0.2s; }
+    .msg-image:hover { opacity: 0.9; }
+    .msg-time-row { font-size: 0.66rem; color: var(--charcoal-3); padding: 0 8px 6px; display: flex; }
+    .msg-bubble-row.mine   .msg-time-row { justify-content: flex-end; }
+    .msg-bubble-row.theirs .msg-time-row { justify-content: flex-start; }
+
+    /* Input row */
+    .msg-input-row { padding: 10px 16px 14px; border-top: 1px solid rgba(50,111,202,0.09); display: flex; align-items: flex-end; gap: 8px; flex-shrink: 0; background: var(--white); }
+    .msg-input-wrap { flex: 1; background: #f0f2f8; border-radius: 22px; border: 1.5px solid transparent; display: flex; align-items: flex-end; padding: 6px 10px; gap: 6px; transition: border-color 0.2s; }
+    .msg-input-wrap:focus-within { border-color: var(--blue); background: var(--white); }
+    .msg-input-row textarea { flex: 1; background: transparent; border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; color: var(--charcoal); resize: none; min-height: 22px; max-height: 120px; line-height: 1.5; padding: 2px 0; }
+    .msg-input-row textarea::placeholder { color: #b0b8c8; }
+    .msg-input-action { width: 30px; height: 30px; border-radius: 50%; border: none; background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--charcoal-3); font-size: 1.1rem; transition: color 0.2s, background 0.2s; flex-shrink: 0; }
+    .msg-input-action:hover { color: var(--blue); background: rgba(50,111,202,0.08); }
+    .msg-input-action-wrap { position: relative; }
+    .msg-input-action-wrap input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+    .emoji-picker { position: absolute; bottom: 44px; left: 0; background: var(--white); border: 1.5px solid rgba(50,111,202,0.15); border-radius: var(--radius-sm); box-shadow: 0 8px 24px rgba(50,111,202,0.12); padding: 10px; display: none; flex-wrap: wrap; gap: 6px; width: 220px; z-index: 10; }
+    .emoji-picker.open { display: flex; }
+    .emoji-btn { font-size: 1.3rem; cursor: pointer; padding: 3px; border-radius: 6px; transition: background 0.15s; }
+    .emoji-btn:hover { background: var(--light); }
+    .msg-img-preview-wrap { padding: 6px 16px 0; display: none; }
+    .msg-img-preview-wrap.show { display: flex; align-items: center; gap: 8px; }
+    .msg-img-preview { width: 64px; height: 64px; border-radius: var(--radius-sm); object-fit: cover; border: 1.5px solid rgba(50,111,202,0.15); }
+    .msg-img-preview-remove { width: 22px; height: 22px; border-radius: 50%; background: var(--red); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.7rem; }
+    .msg-send-btn { width: 40px; height: 40px; border-radius: 50%; background: var(--blue); color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s, transform 0.15s; flex-shrink: 0; }
+    .msg-send-btn:hover { background: var(--blue-dark); transform: scale(1.05); }
+    .msg-lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 500; display: none; align-items: center; justify-content: center; cursor: zoom-out; }
+    .msg-lightbox img { max-width: 90vw; max-height: 90vh; border-radius: var(--radius-sm); }
 
     /* ===== TOAST ===== */
-    .toast {
-      position: fixed; bottom: 32px; right: 32px;
-      background: var(--charcoal);
-      color: var(--white);
-      padding: 14px 20px;
-      border-radius: var(--radius-sm);
-      display: flex; align-items: center; gap: 10px;
-      font-size: 0.88rem; font-weight: 500;
-      box-shadow: 0 8px 32px rgba(60,60,60,0.22);
-      transform: translateY(80px); opacity: 0;
-      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s;
-      pointer-events: none;
-      z-index: 999;
-    }
+    .toast { position: fixed; bottom: 32px; right: 32px; background: var(--charcoal); color: var(--white); padding: 14px 20px; border-radius: var(--radius-sm); display: flex; align-items: center; gap: 10px; font-size: 0.88rem; font-weight: 500; box-shadow: 0 8px 32px rgba(60,60,60,0.22); transform: translateY(80px); opacity: 0; transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s; pointer-events: none; z-index: 999; }
     .toast.show { transform: translateY(0); opacity: 1; }
 
     /* ===== RESPONSIVE ===== */
@@ -928,10 +548,10 @@
       .main { padding: 24px 20px 48px; }
       .hero { padding: 28px 24px; flex-direction: column; gap: 20px; text-align: center; }
       .listings-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
-      .item-modal { max-width: 95vw; }
       .item-modal-inner { flex-direction: column; }
       .item-modal-img-panel { width: 100%; min-height: 180px; padding: 24px; }
-      .item-modal-emoji { font-size: 4rem; }
+      .messages-modal { height: 95vh; max-width: 100%; margin: 0; border-radius: var(--radius) var(--radius) 0 0; }
+      .conv-list { width: 200px; }
     }
   </style>
 </head>
@@ -948,11 +568,17 @@
       </a>
     </div>
     <div class="navbar-right">
+      <!-- Messages button next to Sell -->
+      <button class="btn-messages" id="openMessagesModal">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Messages
+        <span class="msg-badge" id="msgBadge">0</span>
+      </button>
       <button class="btn-sell" id="openSellModal">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         Sell
       </button>
-      <button class="avatar-btn" title="My account">JD</button>
+      <button class="avatar-btn" id="avatarBtn" title="My account">JD</button>
     </div>
   </nav>
 
@@ -971,12 +597,11 @@
       </button>
     </div>
 
-    <!-- Browse section header -->
+    <!-- Browse section -->
     <div class="section-header">
       <span class="section-title">Browse listings</span>
     </div>
 
-    <!-- Search bar -->
     <div class="browse-search">
       <div class="browse-search-icon">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -987,11 +612,9 @@
       </div>
     </div>
 
-    <!-- Categories + Sort -->
     <div class="categories-row">
       <div class="categories" id="categoryChips">
         <button class="chip active" data-category-id=""><span>🛍️</span> All</button>
-        <!-- remaining chips injected by dashboard-api.js loadChips() -->
       </div>
       <div class="sort-control">
         <label for="sortSelect">Sort by:&nbsp;</label>
@@ -1004,149 +627,20 @@
       </div>
     </div>
 
-    <!-- Listings -->
     <div class="section-header">
       <span class="section-title">Recent listings</span>
-      <a href="#listingsGrid" class="section-link" id="seeAllLink">See all →</a>
+      <a href="#" class="section-link" id="seeAllLink">See all →</a>
     </div>
     <div class="listings-grid" id="listingsGrid">
-
-      <div class="listing-card" onclick="openItem(0)">
-        <div class="listing-img">
-          📚
-          <span class="listing-badge">Books</span>
-          <button class="listing-fav" onclick="event.stopPropagation(); toggleFav(this)">♡</button>
-        </div>
-        <div class="listing-info">
-          <h4>Engineering Math Vol. 2</h4>
-          <div class="price">₱180</div>
-          <div class="meta"><span class="condition-dot"></span> Good condition · 2h ago</div>
-        </div>
-      </div>
-
-      <div class="listing-card" onclick="openItem(1)">
-        <div class="listing-img">
-          💻
-          <span class="listing-badge">Electronics</span>
-          <button class="listing-fav" onclick="event.stopPropagation(); toggleFav(this)">♡</button>
-        </div>
-        <div class="listing-info">
-          <h4>Mechanical Keyboard</h4>
-          <div class="price">₱950</div>
-          <div class="meta"><span class="condition-dot"></span> Like new · 3h ago</div>
-        </div>
-      </div>
-
-      <div class="listing-card" onclick="openItem(2)">
-        <div class="listing-img">
-          🎒
-          <span class="listing-badge">Supplies</span>
-          <button class="listing-fav" onclick="event.stopPropagation(); toggleFav(this)">♡</button>
-        </div>
-        <div class="listing-info">
-          <h4>Drafting Set (Complete)</h4>
-          <div class="price">₱320</div>
-          <div class="meta"><span class="condition-dot fair"></span> Fair · 5h ago</div>
-        </div>
-      </div>
-
-      <div class="listing-card" onclick="openItem(3)">
-        <div class="listing-img">
-          👕
-          <span class="listing-badge">Fashion</span>
-          <button class="listing-fav liked" onclick="event.stopPropagation(); toggleFav(this)">♥</button>
-        </div>
-        <div class="listing-info">
-          <h4>NU Jacket (XL)</h4>
-          <div class="price">₱450</div>
-          <div class="meta"><span class="condition-dot"></span> Good · 6h ago</div>
-        </div>
-      </div>
-
-      <div class="listing-card" onclick="openItem(4)">
-        <div class="listing-img">
-          🎨
-          <span class="listing-badge">Arts</span>
-          <button class="listing-fav" onclick="event.stopPropagation(); toggleFav(this)">♡</button>
-        </div>
-        <div class="listing-info">
-          <h4>Watercolor Set (24 pcs)</h4>
-          <div class="price">₱220</div>
-          <div class="meta"><span class="condition-dot"></span> Like new · 8h ago</div>
-        </div>
-      </div>
-
-      <div class="listing-card" onclick="openItem(5)">
-        <div class="listing-img">
-          📱
-          <span class="listing-badge">Electronics</span>
-          <button class="listing-fav" onclick="event.stopPropagation(); toggleFav(this)">♡</button>
-        </div>
-        <div class="listing-info">
-          <h4>USB-C Hub (7-in-1)</h4>
-          <div class="price">₱600</div>
-          <div class="meta"><span class="condition-dot fair"></span> Fair · 1d ago</div>
-        </div>
-      </div>
-
-      <div class="listing-card" onclick="openItem(6)">
-        <div class="listing-img">
-          🎟️
-          <span class="listing-badge">Tickets</span>
-          <button class="listing-fav" onclick="event.stopPropagation(); toggleFav(this)">♡</button>
-        </div>
-        <div class="listing-info">
-          <h4>JS Prom Ticket (1 slot)</h4>
-          <div class="price">₱250</div>
-          <div class="meta"><span class="condition-dot"></span> Valid · 1d ago</div>
-        </div>
-      </div>
-
-      <div class="listing-card" onclick="openItem(7)">
-        <div class="listing-img">
-          🍱
-          <span class="listing-badge">Food</span>
-          <button class="listing-fav" onclick="event.stopPropagation(); toggleFav(this)">♡</button>
-        </div>
-        <div class="listing-info">
-          <h4>Homemade Bento Box</h4>
-          <div class="price">₱85</div>
-          <div class="meta"><span class="condition-dot"></span> Fresh · 2d ago</div>
-        </div>
-      </div>
-
+      <div style="grid-column:1/-1;text-align:center;padding:48px;color:#888;">Loading...</div>
     </div>
 
-    <!-- Recent Activity -->
+    <!-- Activity -->
     <div class="section-header" id="activitySection">
       <span class="section-title">Your activity</span>
-      <a href="#activitySection" class="section-link">View all →</a>
     </div>
-    <div class="activity-list">
-      <div class="activity-item">
-        <div class="activity-icon sell">📦</div>
-        <div class="activity-text">
-          <h5>You listed "Calculus Textbook 3rd Ed."</h5>
-          <p>Listed for ₱200 · Books</p>
-        </div>
-        <span class="activity-time">2h ago</span>
-      </div>
-      <div class="activity-item">
-        <div class="activity-icon buy">✅</div>
-        <div class="activity-text">
-          <h5>You bought "Wireless Mouse"</h5>
-          <p>₱350 from Maria Santos</p>
-        </div>
-        <span class="activity-time">Yesterday</span>
-      </div>
-      <div class="activity-item">
-        <div class="activity-icon view">👀</div>
-        <div class="activity-text">
-          <h5>Someone viewed your listing</h5>
-          <p>"NU Jacket (L)" · 3 views today</p>
-        </div>
-        <span class="activity-time">3h ago</span>
-      </div>
+    <div class="activity-list" id="activityList">
+      <div style="text-align:center;padding:24px;color:#888;font-size:0.88rem;">Loading...</div>
     </div>
 
   </main>
@@ -1158,87 +652,205 @@
         <!-- Left image panel -->
         <div class="item-modal-img-panel">
           <div class="item-modal-img-actions">
-            <button class="img-action-btn" id="itemFavBtn" title="Save to wishlist" onclick="toggleItemFav()">♡</button>
+            <button class="img-action-btn" id="itemFavBtn" title="Save to wishlist">♡</button>
           </div>
-          <div class="item-modal-emoji" id="itemModalEmoji">📚</div>
-          <div class="item-modal-badge-large" id="itemModalCategory">Books</div>
+          <div class="item-img-carousel" id="itemImgCarousel">
+            <div class="item-img-placeholder" id="itemImgPlaceholder">📦</div>
+          </div>
+          <div class="item-modal-badge-large" id="itemModalCategory">Category</div>
         </div>
         <!-- Right info panel -->
         <div class="item-modal-info-panel">
           <button class="item-modal-close" id="closeItemModal">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
           </button>
-          <div class="item-modal-title" id="itemModalTitle">Engineering Math Vol. 2</div>
-          <div class="item-modal-price" id="itemModalPrice">₱180</div>
-          <div id="itemModalStock" style="font-size:0.82rem;color:var(--charcoal-3);margin-bottom:4px;"></div>
-
-          <div class="item-meta-tags" id="itemMetaTags">
-            <div class="meta-tag"><span class="dot"></span> Good condition</div>
-            <div class="meta-tag">📚 Books</div>
-            <div class="meta-tag">🕐 2h ago</div>
-            <div class="meta-tag">👁 12 views</div>
-          </div>
-
+          <div class="item-modal-title" id="itemModalTitle">Product Name</div>
+          <div class="item-modal-price" id="itemModalPrice">₱0</div>
+          <div id="itemModalStock" style="font-size:0.82rem;color:var(--charcoal-3);margin-bottom:8px;"></div>
+          <div class="item-meta-tags" id="itemMetaTags"></div>
           <div class="item-modal-desc-label">Description</div>
-          <div class="item-modal-desc" id="itemModalDesc">
-            No description provided.
-          </div>
-
-          <!-- Seller card -->
-          <div class="seller-card" id="sellerCard" style="cursor:pointer;" onclick="viewSellerProfile()">
-            <div class="seller-avatar" id="sellerAvatar">MS</div>
+          <div class="item-modal-desc" id="itemModalDesc">No description provided.</div>
+          <div class="seller-card" id="sellerCard" onclick="viewSellerProfile()">
+            <div class="seller-avatar" id="sellerAvatar">?</div>
             <div class="seller-info">
-              <div class="seller-name" id="sellerName">Maria Santos</div>
+              <div class="seller-name" id="sellerName">Seller</div>
               <div class="seller-sub" id="sellerSub">Tap to view profile</div>
             </div>
-            <div class="seller-rating">⭐ <span id="sellerRating">4.8</span></div>
+            <div class="seller-rating">⭐ <span id="sellerRating">—</span></div>
           </div>
-
-          <!-- Actions -->
           <div class="item-modal-actions">
-            <button class="btn-buy" id="addToCartBtn" onclick="addToCart()">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-              Add to Cart
+            <button class="btn-buy" id="buyBtn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+              Buy Now
             </button>
-            <button class="btn-contact" onclick="openContactModal()">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-              Contact via Messenger
+            <button class="btn-message-seller" id="msgSellerBtn">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+              Message Seller
             </button>
-
+            <button class="btn-save-row" id="saveRowBtn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg>
+              Save for later
+            </button>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ===== CONTACT MODAL ===== -->
-  <div class="modal-overlay" id="contactModal">
-    <div class="contact-modal">
-      <div class="modal-header">
-        <h3>Message Seller</h3>
-        <button class="modal-close" onclick="closeContactModal()">
+  <!-- ===== PAYMENT MODAL ===== -->
+  <div class="modal-overlay" id="paymentModal">
+    <div class="payment-modal">
+      <div style="padding: 20px 28px 0; display:flex; align-items:center; justify-content:space-between;">
+        <h3 style="font-family:'Sora',sans-serif;font-size:1.1rem;font-weight:700;color:var(--charcoal);">Complete Purchase</h3>
+        <button class="modal-close" id="closePaymentModal">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
       </div>
-      <div style="display:flex;align-items:center;gap:10px;background:var(--light);border-radius:8px;padding:12px 14px;margin-bottom:18px;border:1px solid rgba(50,111,202,0.09);">
-        <div style="font-size:1.5rem;" id="contactItemEmoji">📚</div>
-        <div>
-          <div style="font-family:'Sora',sans-serif;font-size:0.85rem;font-weight:600;color:var(--charcoal);" id="contactItemName">Engineering Math Vol. 2</div>
-          <div style="font-size:0.76rem;color:var(--blue);font-weight:600;" id="contactItemPrice">₱180</div>
+      <!-- Step indicators -->
+      <div class="payment-steps">
+        <div class="payment-step active" id="step1Indicator">1. Payment Method</div>
+        <div class="payment-step" id="step2Indicator">2. Pay & Proof</div>
+      </div>
+      <div class="payment-body">
+        <!-- Item summary -->
+        <div class="payment-item-row">
+          <div id="paymentItemImg" style="width:44px;height:44px;border-radius:8px;background:#dde2ec;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;">📦</div>
+          <div>
+            <div class="payment-item-name" id="paymentItemName">Product Name</div>
+            <div class="payment-item-price" id="paymentItemPrice">₱0</div>
+          </div>
+        </div>
+
+        <!-- STEP 1: Choose payment method -->
+        <div id="paymentStep1">
+          <p style="font-size:0.85rem;color:var(--charcoal-2);margin-bottom:14px;font-weight:300;">How would you like to pay?</p>
+          <div class="payment-methods">
+            <button class="payment-method-btn" id="pmGcash" onclick="selectPaymentMethod('GCash')">
+              <div class="pm-icon">💙</div>
+              <div class="pm-name">GCash</div>
+              <div class="pm-sub">Mobile wallet</div>
+            </button>
+            <button class="payment-method-btn" id="pmEbank" onclick="selectPaymentMethod('E-bank')">
+              <div class="pm-icon">🏦</div>
+              <div class="pm-name">E-bank</div>
+              <div class="pm-sub">Online banking</div>
+            </button>
+          </div>
+          <button class="btn-modal-submit" id="paymentStep1Next" onclick="goToPaymentStep2()" disabled style="opacity:0.5;">
+            Next →
+          </button>
+        </div>
+
+        <!-- STEP 2a: GCash — QR code + proof upload -->
+        <div id="paymentStep2GCash" style="display:none;">
+          <div class="qr-display">
+            <div class="qr-amount" id="qrAmount">₱0</div>
+            <p style="font-size:0.8rem;color:var(--charcoal-3);margin-bottom:12px;" id="qrInstruction">Scan the GCash QR code below and pay the exact amount</p>
+            <!-- QR image: object-fit:contain so portrait images don't overflow -->
+            <div style="width:100%;max-width:260px;margin:0 auto 12px;background:#f4f5f7;border-radius:12px;border:2px solid rgba(50,111,202,0.12);overflow:hidden;aspect-ratio:1;display:flex;align-items:center;justify-content:center;">
+              <img id="qrCodeImg" src="" alt="Seller QR Code"
+                   style="display:none;width:100%;height:100%;object-fit:contain;" />
+            </div>
+            <div class="qr-no-code" id="qrNoCode" style="display:none;">
+              ⚠️ The seller has not uploaded a QR code yet. Please message them directly to arrange payment.
+            </div>
+          </div>
+
+          <!-- Proof upload -->
+          <p style="font-size:0.84rem;font-weight:600;color:var(--charcoal-2);margin-bottom:8px;">Upload proof of payment</p>
+          <div class="proof-upload-zone" id="proofUploadZone">
+            <input type="file" id="proofFile" accept="image/*" onchange="handleProofUpload(this)" />
+            <div class="puz-icon">📷</div>
+            <div class="puz-text">Tap to upload screenshot</div>
+            <div class="puz-sub">GCash receipt screenshot</div>
+          </div>
+          <img id="proofPreview" class="proof-preview" src="" alt="Payment proof preview" />
+
+          <div class="confirm-check">
+            <input type="checkbox" id="confirmPaidCheck" onchange="updateSubmitBtn()" />
+            <label for="confirmPaidCheck">I confirm that I have paid <strong id="confirmAmount">₱0</strong> to <strong id="confirmSeller">the seller</strong> via GCash and the screenshot above is my proof.</label>
+          </div>
+
+          <div style="display:flex;gap:10px;">
+            <button onclick="goBackToStep1()" style="flex:1;padding:11px;border:1.5px solid #dde2ec;border-radius:var(--radius-sm);background:transparent;color:var(--charcoal-2);font-family:'Sora',sans-serif;font-size:0.88rem;font-weight:600;cursor:pointer;">← Back</button>
+            <button class="btn-modal-submit" id="submitPaymentBtn" onclick="submitPayment()" disabled style="flex:2;opacity:0.5;margin-top:0;">
+              Submit Purchase
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 2b: E-bank — card info form + proof upload -->
+        <div id="paymentStep2Ebank" style="display:none;">
+          <div style="background:linear-gradient(135deg,#326fca,#4e87d4);border-radius:12px;padding:20px 22px;margin-bottom:18px;color:white;">
+            <div style="font-size:0.7rem;letter-spacing:0.1em;opacity:0.7;margin-bottom:16px;">ENYUKADO · ONLINE BANKING</div>
+            <div style="font-family:'Sora',sans-serif;font-size:1.3rem;font-weight:700;letter-spacing:0.12em;margin-bottom:16px;" id="ebankCardNum">•••• •••• •••• ••••</div>
+            <div style="display:flex;justify-content:space-between;align-items:flex-end;">
+              <div>
+                <div style="font-size:0.65rem;opacity:0.7;margin-bottom:2px;">CARD HOLDER</div>
+                <div style="font-family:'Sora',sans-serif;font-size:0.88rem;font-weight:600;" id="ebankCardName">Your Name</div>
+              </div>
+              <div>
+                <div style="font-size:0.65rem;opacity:0.7;margin-bottom:2px;">EXPIRES</div>
+                <div style="font-family:'Sora',sans-serif;font-size:0.88rem;" id="ebankCardExp">MM/YY</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:14px;">
+            <div style="display:flex;flex-direction:column;gap:4px;">
+              <label style="font-size:0.82rem;font-weight:500;color:var(--charcoal-2);">Card Number</label>
+              <input id="ebankNum" type="text" maxlength="19" placeholder="1234 1234 1234 1234"
+                oninput="formatCardNum(this)" onchange="document.getElementById('ebankCardNum').textContent = this.value || '•••• •••• •••• ••••'"
+                style="padding:10px 12px;border:1.5px solid #dde2ec;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;transition:border-color 0.2s;" />
+            </div>
+            <div style="display:flex;gap:10px;">
+              <div style="flex:1;display:flex;flex-direction:column;gap:4px;">
+                <label style="font-size:0.82rem;font-weight:500;color:var(--charcoal-2);">Expiry Date</label>
+                <input id="ebankExp" type="text" maxlength="5" placeholder="MM/YY"
+                  oninput="formatExpiry(this)" onchange="document.getElementById('ebankCardExp').textContent = this.value || 'MM/YY'"
+                  style="padding:10px 12px;border:1.5px solid #dde2ec;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;" />
+              </div>
+              <div style="flex:1;display:flex;flex-direction:column;gap:4px;">
+                <label style="font-size:0.82rem;font-weight:500;color:var(--charcoal-2);">CVC</label>
+                <input id="ebankCvc" type="text" maxlength="4" placeholder="•••"
+                  style="padding:10px 12px;border:1.5px solid #dde2ec;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;" />
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:4px;">
+              <label style="font-size:0.82rem;font-weight:500;color:var(--charcoal-2);">Card Holder Name</label>
+              <input id="ebankName" type="text" placeholder="As it appears on your card"
+                oninput="document.getElementById('ebankCardName').textContent = this.value || 'Your Name'"
+                style="padding:10px 12px;border:1.5px solid #dde2ec;border-radius:var(--radius-sm);font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;" />
+            </div>
+          </div>
+
+          <div style="background:rgba(245,166,35,0.08);border:1px solid rgba(245,166,35,0.25);border-radius:var(--radius-sm);padding:10px 12px;margin-bottom:14px;font-size:0.78rem;color:#b07d10;line-height:1.5;">
+            ⚠️ Please complete the bank transfer of <strong id="ebankAmount">₱0</strong> to the seller, then upload your transfer confirmation below.
+          </div>
+
+          <!-- Proof upload for ebank -->
+          <p style="font-size:0.84rem;font-weight:600;color:var(--charcoal-2);margin-bottom:8px;">Upload transfer confirmation</p>
+          <div class="proof-upload-zone">
+            <input type="file" id="proofFileEbank" accept="image/*" onchange="handleProofUploadEbank(this)" />
+            <div class="puz-icon">📷</div>
+            <div class="puz-text">Tap to upload screenshot</div>
+            <div class="puz-sub">Bank transfer confirmation screenshot</div>
+          </div>
+          <img id="proofPreviewEbank" class="proof-preview" src="" alt="Transfer proof preview" />
+
+          <div class="confirm-check">
+            <input type="checkbox" id="confirmPaidCheckEbank" onchange="updateSubmitBtnEbank()" />
+            <label for="confirmPaidCheckEbank">I confirm I have completed the bank transfer of <strong id="confirmAmountEbank">₱0</strong> to <strong id="confirmSellerEbank">the seller</strong> and the screenshot above is my proof.</label>
+          </div>
+
+          <div style="display:flex;gap:10px;">
+            <button onclick="goBackToStep1()" style="flex:1;padding:11px;border:1.5px solid #dde2ec;border-radius:var(--radius-sm);background:transparent;color:var(--charcoal-2);font-family:'Sora',sans-serif;font-size:0.88rem;font-weight:600;cursor:pointer;">← Back</button>
+            <button class="btn-modal-submit" id="submitPaymentBtnEbank" onclick="submitPaymentEbank()" disabled style="flex:2;opacity:0.5;margin-top:0;">
+              Submit Purchase
+            </button>
+          </div>
         </div>
       </div>
-      <div class="modal-field">
-        <label>Your message</label>
-        <textarea id="contactMsg" placeholder="Hi! Is this item still available? I'm interested…"></textarea>
-      </div>
-      <div class="modal-field">
-        <label>Preferred meetup spot (optional)</label>
-        <input type="text" id="contactMeetup" placeholder="e.g. Library, Main lobby, Canteen…" />
-      </div>
-      <button class="btn-modal-submit" onclick="sendMessage()">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-        Send Message
-      </button>
     </div>
   </div>
 
@@ -1246,11 +858,12 @@
   <div class="modal-overlay" id="sellModal">
     <div class="sell-modal">
       <div class="modal-header">
-        <h3>Post a listing</h3>
+        <h3 id="sellModalTitle">Post a listing</h3>
         <button class="modal-close" id="closeSellModal">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
       </div>
+
       <div class="modal-field">
         <label>Item name</label>
         <input type="text" id="itemName" placeholder="e.g. Engineering Math Vol. 2" />
@@ -1268,45 +881,147 @@
       <div class="modal-row">
         <div class="modal-field">
           <label>Category</label>
-          <select id="itemCategory">
-            <option value="">Select category</option>
+          <select id="itemCategory"><option value="">Select category</option></select>
+        </div>
+        <div class="modal-field">
+          <label>Condition</label>
+          <select id="itemCondition">
+            <option value="">Select condition</option>
+            <option>Like new</option>
+            <option>Good</option>
+            <option>Used</option>
+            <option>Fair</option>
+            <option>Poor</option>
           </select>
         </div>
       </div>
       <div class="modal-field">
-        <label>Condition</label>
-        <select id="itemCondition">
-          <option value="">Select condition</option>
-          <option>Like new</option>
-          <option>Good</option>
-          <option>Fair</option>
-          <option>Poor</option>
-        </select>
-      </div>
-      <div class="modal-field">
         <label>Description</label>
-        <textarea id="itemDesc" placeholder="Describe the item, any defects, why you're selling it…"></textarea>
+        <textarea id="itemDesc" placeholder="Describe the item, any defects, why you're selling…"></textarea>
       </div>
 
-      <!-- IMAGE FILE UPLOAD -->
-      <div style="margin-bottom:20px;">
-        <span class="upload-label">Cover Image <span style="color:var(--charcoal-3);font-weight:300;">(optional)</span></span>
-        <div style="margin-top:8px;">
-          <label for="itemImageFile" style="display:flex;align-items:center;gap:10px;padding:10px 14px;border:1.5px dashed #dde2ec;border-radius:8px;background:#f4f5f7;cursor:pointer;transition:border-color 0.2s;"
-            onmouseover="this.style.borderColor='#326fca'" onmouseout="this.style.borderColor='#dde2ec'">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-            <span id="itemImageFileLabel" style="font-size:0.88rem;color:#888;">Click to upload an image</span>
-          </label>
-          <input type="file" id="itemImageFile" accept="image/*" style="display:none;"
-            onchange="document.getElementById('itemImageFileLabel').textContent = this.files[0]?.name || 'Click to upload an image'" />
-        </div>
-        <div id="imagePreview" style="margin-top:10px;display:none;">
-          <img id="previewImg" src="" alt="Preview" style="width:100%;max-height:180px;object-fit:cover;border-radius:8px;border:1.5px solid #dde2ec;" />
+      <!-- Multi-image upload -->
+      <div style="margin-bottom:16px;">
+        <label style="font-size:0.88rem;font-weight:500;color:var(--charcoal-2);display:block;margin-bottom:8px;">
+          Photos <span style="color:var(--charcoal-3);font-weight:300;">(1 required, max 5)</span>
+        </label>
+        <!-- Thumbs preview -->
+        <div class="img-preview-grid" id="imgPreviewGrid"></div>
+        <div class="upload-count" id="uploadCount">0 / 5 photos</div>
+        <!-- Upload zone (hidden when 5 reached) -->
+        <div class="upload-zone" id="uploadZone">
+          <input type="file" id="productImages" accept="image/*" multiple onchange="handleImagesSelected(this)" />
+          <div class="upload-zone-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          </div>
+          <div class="upload-zone-title">Click or drag to upload photos</div>
+          <div class="upload-zone-sub">JPG, PNG, WEBP · <span>Max 10MB each</span> · 1–5 photos</div>
         </div>
       </div>
 
-      <button class="btn-modal-submit" id="submitListing">Post listing →</button>
+      <button class="btn-modal-submit" id="submitListing">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Post listing
+      </button>
     </div>
+  </div>
+
+  <!-- ===== MESSAGES MODAL ===== -->
+  <div class="modal-overlay" id="messagesModal">
+    <div class="messages-modal">
+      <div class="messages-modal-header">
+        <h3>💬 Messages</h3>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <button class="msg-new-btn" id="msgNewChatBtn">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            New Message
+          </button>
+          <button class="modal-close" id="closeMessagesModal">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="messages-layout">
+
+        <!-- LEFT: conversation list -->
+        <div class="conv-list" id="convList">
+          <div class="conv-list-header">
+            <div class="conv-search-wrap">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" placeholder="Find or start a conversation…" id="convSearchInput" autocomplete="off" />
+              <div class="conv-search-results" id="convSearchResults"></div>
+            </div>
+          </div>
+          <div class="conv-section-label" id="convSectionLabel">Recent</div>
+          <div id="convItems">
+            <div class="conv-empty">No conversations yet.<br>Click <strong>New Message</strong> to start one!</div>
+          </div>
+        </div>
+
+        <!-- RIGHT: message thread -->
+        <div class="msg-thread" id="msgThread">
+          <div class="msg-thread-empty" id="msgThreadEmpty">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#dde2ec" stroke-width="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+            <span style="color:var(--charcoal-3);font-size:0.9rem;">Select a conversation to start messaging</span>
+          </div>
+
+          <div id="msgThreadActive" style="display:none;flex-direction:column;flex:1;overflow:hidden;">
+            <!-- Thread header -->
+            <div class="msg-thread-header">
+              <div class="msg-thread-header-avatar" id="msgThreadAvatar" onclick="goToUserProfile()">?</div>
+              <div class="msg-thread-header-info">
+                <div class="msg-thread-header-name" id="msgThreadName" onclick="goToUserProfile()">Name</div>
+                <div class="msg-thread-header-sub" id="msgThreadSub"></div>
+              </div>
+            </div>
+
+            <!-- Messages -->
+            <div class="msg-messages" id="msgMessages"></div>
+
+            <!-- Image preview before send -->
+            <div class="msg-img-preview-wrap" id="msgImgPreviewWrap">
+              <img id="msgImgPreview" class="msg-img-preview" src="" alt="preview" />
+              <button class="msg-img-preview-remove" onclick="removeMsgImage()">✕</button>
+            </div>
+
+            <!-- Input row -->
+            <div class="msg-input-row">
+              <div class="msg-input-wrap">
+                <textarea id="msgInput" placeholder="Type a message…" rows="1" onkeydown="handleMsgKeydown(event)" oninput="autoResizeMsgInput(this)"></textarea>
+
+                <!-- Emoji -->
+                <div class="msg-input-action-wrap" style="position:relative;">
+                  <button class="msg-input-action" id="emojiToggleBtn" title="Emoji" onclick="toggleEmojiPicker(event)">😊</button>
+                  <div class="emoji-picker" id="emojiPicker">
+                    😊 😂 ❤️ 👍 🙏 😭 😍 🥰 😅 🤣 🔥 💯 ✅ 🎉 👀 😢 😎 🤔 💪 🫶
+                    😤 😩 🫠 😏 🙄 😬 🥺 😋 🤩 😱 👌 🫡 💀 🤦 🤷 🎊 🏆 💡 📦 🛍️
+                  </div>
+                </div>
+
+                <!-- Image/file -->
+                <div class="msg-input-action-wrap">
+                  <button class="msg-input-action" title="Send image">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    <input type="file" id="msgImageInput" accept="image/*" onchange="handleMsgImageSelected(this)" />
+                  </button>
+                </div>
+
+              </div>
+
+              <button class="msg-send-btn" onclick="sendMessageInThread()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Image lightbox for message images -->
+  <div class="msg-lightbox" id="msgLightbox" onclick="closeMsgLightbox()">
+    <img id="msgLightboxImg" src="" alt="Full image" />
   </div>
 
   <!-- ===== TOAST ===== -->
@@ -1315,231 +1030,6 @@
     <span id="toastMsg">Done!</span>
   </div>
 
-  <script>
-    // ===== LISTINGS DATA =====
-    const listings = [
-      {
-        emoji: '📚', category: 'Books', title: 'Engineering Math Vol. 2',
-        price: '₱180', condition: 'Good condition', conditionClass: '',
-        posted: '2h ago', views: 12,
-        desc: 'Gently used Engineering Math Volume 2 by Gillesania. Some highlights on chapter 3–5 but otherwise in great shape. Perfect for 2nd year engineering students.',
-        seller: { initials: 'MS', name: 'Maria Santos', sub: 'BS Computer Engineering · 3rd year', rating: '4.8' }
-      },
-      {
-        emoji: '💻', category: 'Electronics', title: 'Mechanical Keyboard',
-        price: '₱950', condition: 'Like new', conditionClass: '',
-        posted: '3h ago', views: 38,
-        desc: 'Redragon K552 TKL mechanical keyboard, red switches. Used for only 2 months, selling because I upgraded. Comes with original cable and box.',
-        seller: { initials: 'AJ', name: 'Angelo Jimenez', sub: 'BS Information Technology · 4th year', rating: '4.9' }
-      },
-      {
-        emoji: '🎒', category: 'Supplies', title: 'Drafting Set (Complete)',
-        price: '₱320', condition: 'Fair', conditionClass: 'fair',
-        posted: '5h ago', views: 7,
-        desc: 'Complete drafting set for Engineering and Architecture students. T-square, compass, triangle sets, french curve included. Slight wear on the case.',
-        seller: { initials: 'RC', name: 'Rina Cruz', sub: 'BS Architecture · 2nd year', rating: '4.6' }
-      },
-      {
-        emoji: '👕', category: 'Fashion', title: 'NU Jacket (XL)',
-        price: '₱450', condition: 'Good', conditionClass: '',
-        posted: '6h ago', views: 24,
-        desc: 'Official NU varsity-style jacket in XL. Worn only once during our org event. No stains, no damage. A steal for the price!',
-        seller: { initials: 'KL', name: 'Karl Lim', sub: 'BS Business Administration · 1st year', rating: '5.0' }
-      },
-      {
-        emoji: '🎨', category: 'Arts', title: 'Watercolor Set (24 pcs)',
-        price: '₱220', condition: 'Like new', conditionClass: '',
-        posted: '8h ago', views: 15,
-        desc: 'Maries 24-color professional watercolor set. Barely used — only swatched. Great for Fine Arts students or hobbyists.',
-        seller: { initials: 'PR', name: 'Paula Reyes', sub: 'BFA Fine Arts · 2nd year', rating: '4.7' }
-      },
-      {
-        emoji: '📱', category: 'Electronics', title: 'USB-C Hub (7-in-1)',
-        price: '₱600', condition: 'Fair', conditionClass: 'fair',
-        posted: '1d ago', views: 19,
-        desc: '7-in-1 USB-C hub with HDMI, USB 3.0 x3, SD card, microSD, and PD charging pass-through. One USB port is slightly loose but all other ports work perfectly.',
-        seller: { initials: 'BT', name: 'Bianca Torres', sub: 'BS Electronics Engineering · 3rd year', rating: '4.5' }
-      },
-      {
-        emoji: '🎟️', category: 'Tickets', title: 'JS Prom Ticket (1 slot)',
-        price: '₱250', condition: 'Valid', conditionClass: '',
-        posted: '1d ago', views: 41,
-        desc: 'One JS Prom ticket for this Saturday\'s event at the Grand Ballroom. Can\'t attend anymore due to a family commitment. Non-transferable name slot — buyer must coordinate with the organizer.',
-        seller: { initials: 'JV', name: 'Josh Vega', sub: 'BS Accountancy · 3rd year', rating: '4.8' }
-      },
-      {
-        emoji: '🍱', category: 'Food', title: 'Homemade Bento Box',
-        price: '₱85', condition: 'Fresh', conditionClass: '',
-        posted: '2d ago', views: 56,
-        desc: 'Pre-order your homemade bento box! Includes rice, adobo chicken, egg, and veggies. Made fresh every morning. Order before 7AM for 10AM pickup at the main gate.',
-        seller: { initials: 'EG', name: 'Elena Garcia', sub: 'BS Nutrition · 4th year', rating: '4.9' }
-      }
-    ];
-
-    let currentItem = null;
-    let bookmarked = false;
-
-    // ===== OPEN ITEM MODAL =====
-    function openItem(idx) {
-      const item = listings[idx];
-      currentItem = item;
-      bookmarked = false;
-
-      document.getElementById('itemModalEmoji').textContent = item.emoji;
-      document.getElementById('itemModalCategory').textContent = item.category;
-      document.getElementById('itemModalTitle').textContent = item.title;
-      document.getElementById('itemModalPrice').textContent = item.price;
-      document.getElementById('itemModalDesc').textContent = item.desc;
-
-      // Seller
-      document.getElementById('sellerAvatar').textContent = item.seller.initials;
-      document.getElementById('sellerName').textContent = item.seller.name;
-      document.getElementById('sellerSub').textContent = item.seller.sub;
-      document.getElementById('sellerRating').textContent = item.seller.rating;
-
-      // Meta tags
-      const meta = document.getElementById('itemMetaTags');
-      meta.innerHTML = `
-        <div class="meta-tag"><span class="dot ${item.conditionClass}"></span> ${item.condition}</div>
-        <div class="meta-tag">${item.emoji} ${item.category}</div>
-        <div class="meta-tag">🕐 ${item.posted}</div>
-        <div class="meta-tag">👁 ${item.views} views</div>
-      `;
-
-      // Reset fav & bookmark state
-      const favBtn = document.getElementById('itemFavBtn');
-      favBtn.textContent = '♡';
-      favBtn.style.color = '';
-      updateBookmarkUI();
-
-      document.getElementById('itemModal').classList.add('open');
-    }
-
-    document.getElementById('closeItemModal').addEventListener('click', () => {
-      document.getElementById('itemModal').classList.remove('open');
-    });
-    document.getElementById('itemModal').addEventListener('click', e => {
-      if (e.target === document.getElementById('itemModal')) document.getElementById('itemModal').classList.remove('open');
-    });
-
-    // ===== FAV (wishlist heart) =====
-    function toggleItemFav() {
-      const btn = document.getElementById('itemFavBtn');
-      const isLiked = btn.textContent === '♥';
-      btn.textContent = isLiked ? '♡' : '♥';
-      btn.style.color = isLiked ? '' : '#e0504a';
-      showToast(isLiked ? 'Removed from wishlist' : 'Added to wishlist ♥');
-    }
-
-    // ===== BOOKMARK =====
-    function toggleBookmark() {
-      bookmarked = !bookmarked;
-      updateBookmarkUI();
-      showToast(bookmarked ? 'Saved for later 🔖' : 'Removed from saved items');
-    }
-
-    function updateBookmarkUI() {
-      const iconBtn = document.getElementById('itemBookmarkBtn');
-      const rowBtn = document.getElementById('bookmarkRowBtn');
-      if (bookmarked) {
-        iconBtn.classList.add('bookmarked');
-        iconBtn.style.color = 'var(--blue)';
-        rowBtn.classList.add('saved');
-        rowBtn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="var(--blue)" stroke="var(--blue)" stroke-width="2.2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg> Saved`;
-      } else {
-        iconBtn.classList.remove('bookmarked');
-        iconBtn.style.color = '';
-        rowBtn.classList.remove('saved');
-        rowBtn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg> Save for later`;
-      }
-    }
-
-    // ===== SHARE =====
-    function shareItem() {
-      showToast('Link copied to clipboard 🔗');
-    }
-
-    // ===== BUY MODAL =====
-    function openBuyModal() {
-      if (!currentItem) return;
-      document.getElementById('buyModalEmoji').textContent = currentItem.emoji;
-      document.getElementById('buyModalName').textContent = currentItem.title;
-      document.getElementById('buyModalPrice').textContent = currentItem.price;
-      document.getElementById('buyModal').classList.add('open');
-    }
-    // ===== CONTACT MODAL =====
-    function openContactModal() {
-      if (!currentItem) return;
-      document.getElementById('contactItemEmoji').textContent = currentItem.emoji;
-      document.getElementById('contactItemName').textContent = currentItem.title;
-      document.getElementById('contactItemPrice').textContent = currentItem.price;
-      document.getElementById('contactMsg').value = '';
-      document.getElementById('contactMeetup').value = '';
-      document.getElementById('contactModal').classList.add('open');
-    }
-    function closeContactModal() { document.getElementById('contactModal').classList.remove('open'); }
-    function sendMessage() {
-      const msg = document.getElementById('contactMsg').value.trim();
-      if (!msg) { showToast('Please write a message first', 'error'); return; }
-      closeContactModal();
-      showToast(`Message sent to ${currentItem.seller.name}! 💬`);
-    }
-    document.getElementById('contactModal').addEventListener('click', e => {
-      if (e.target === document.getElementById('contactModal')) closeContactModal();
-    });
-
-    // ===== SELL MODAL =====
-    const sellModal = document.getElementById('sellModal');
-
-    // -- Media upload state --
-    function openSell() {
-      sellModal.classList.add('open');
-    }
-
-    document.getElementById('openSellModal').addEventListener('click', openSell);
-    document.getElementById('openSellModal2').addEventListener('click', openSell);
-    function closeSellModal() {
-      sellModal.classList.remove('open');
-      // Reset image file input and preview
-      const fileInput = document.getElementById('itemImageFile');
-      const fileLabel = document.getElementById('itemImageFileLabel');
-      const preview   = document.getElementById('imagePreview');
-      if (fileInput) fileInput.value = '';
-      if (fileLabel) fileLabel.textContent = 'Click to upload an image';
-      if (preview)   preview.style.display = 'none';
-    }
-
-    document.getElementById('closeSellModal').addEventListener('click', closeSellModal);
-    sellModal.addEventListener('click', e => { if (e.target === sellModal) closeSellModal(); });
-
-    // Submit listing is handled by dashboard-api.js
-
-    // ===== CATEGORY CHIPS =====
-    document.querySelectorAll('.chip').forEach(chip => {
-      chip.addEventListener('click', () => {
-        document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-        chip.classList.add('active');
-      });
-    });
-
-    // ===== LISTING CARD FAV =====
-    function toggleFav(btn) {
-      const liked = btn.classList.toggle('liked');
-      btn.textContent = liked ? '♥' : '♡';
-    }
-
-    // ===== TOAST =====
-    let toastTimeout;
-    function showToast(message, type = 'success') {
-      const toast = document.getElementById('toast');
-      document.getElementById('toastMsg').textContent = message;
-      const icon = toast.querySelector('svg');
-      if (icon) icon.style.color = type === 'error' ? '#e0504a' : '#5ddf7a';
-      toast.classList.add('show');
-      clearTimeout(toastTimeout);
-      toastTimeout = setTimeout(() => toast.classList.remove('show'), 3000);
-    }
-  </script>
   <script src="dashboard-api.js"></script>
 </body>
 </html>

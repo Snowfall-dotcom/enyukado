@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard — Enyukado</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --dark:     #0f1923;
+      --dark-2:   #1a2535;
+      --dark-3:   #243040;
+      --accent:   #326fca;
+      --peach:    #ffe7be;
+      --white:    #ffffff;
+      --light:    #f4f5f7;
+      --charcoal: #3c3c3c;
+      --ch2:      #5a5a5a;
+      --ch3:      #888;
+      --radius:   14px;
+      --radius-sm:8px;
+      --shadow:   0 4px 24px rgba(50,111,202,0.10);
+      --green:    #5ddf7a;
+      --red:      #e0504a;
+      --orange:   #f5a623;
+    }
+    html, body { min-height: 100%; font-family: 'DM Sans', sans-serif; color: var(--charcoal); background: var(--light); }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--dark);
+      height: 62px; padding: 0 40px;
+      display: flex; align-items: center; justify-content: space-between;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.3);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .navbar-left { display: flex; align-items: center; gap: 16px; }
+    .navbar-brand { display: flex; align-items: center; gap: 9px; text-decoration: none; }
+    .navbar-brand-icon { width: 32px; height: 32px; background: var(--accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+    .navbar-brand-name { font-family: 'Sora', sans-serif; font-size: 1rem; font-weight: 700; color: var(--white); letter-spacing: -0.02em; }
+    .navbar-admin-badge {
+      display: flex; align-items: center; gap: 6px;
+      padding: 3px 10px; background: rgba(50,111,202,0.2);
+      border: 1px solid rgba(50,111,202,0.3); border-radius: 100px;
+      font-size: 0.72rem; font-weight: 600; color: rgba(255,255,255,0.7);
+      letter-spacing: 0.06em; text-transform: uppercase;
+    }
+    .navbar-badge-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 5px rgba(50,111,202,0.8); }
+    .navbar-right { display: flex; align-items: center; gap: 12px; }
+    .admin-name { font-size: 0.84rem; color: rgba(255,255,255,0.6); font-weight: 300; }
+    .btn-logout {
+      display: flex; align-items: center; gap: 6px;
+      padding: 7px 14px; border-radius: 100px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: transparent; color: rgba(255,255,255,0.5);
+      font-family: 'DM Sans', sans-serif; font-size: 0.82rem;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .btn-logout:hover { border-color: rgba(224,80,74,0.4); color: #f08080; background: rgba(224,80,74,0.07); }
+
+    /* ===== MAIN ===== */
+    .main { max-width: 1100px; margin: 0 auto; padding: 36px 40px 72px; }
+
+    /* ===== STAT CARDS ===== */
+    .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 32px; }
+    .stat-card {
+      background: var(--white); border-radius: var(--radius);
+      padding: 22px 24px; border: 1px solid rgba(50,111,202,0.08);
+      box-shadow: var(--shadow);
+      display: flex; align-items: center; gap: 16px;
+      cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .stat-card:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(50,111,202,0.14); }
+    .stat-card.active-section { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(50,111,202,0.2); }
+    .stat-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
+    .stat-icon.accounts { background: rgba(245,166,35,0.12); }
+    .stat-icon.listings  { background: rgba(50,111,202,0.1); }
+    .stat-icon.payments  { background: rgba(93,223,122,0.12); }
+    .stat-info { flex: 1; }
+    .stat-count { font-family: 'Sora', sans-serif; font-size: 2rem; font-weight: 700; color: var(--charcoal); line-height: 1; margin-bottom: 3px; }
+    .stat-label { font-size: 0.84rem; color: var(--ch3); font-weight: 300; }
+    .stat-badge { min-width: 22px; height: 22px; border-radius: 100px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; padding: 0 6px; }
+    .stat-badge.warn { background: rgba(245,166,35,0.15); color: #b07d10; }
+    .stat-badge.info { background: rgba(50,111,202,0.12); color: var(--accent); }
+    .stat-badge.success { background: rgba(93,223,122,0.15); color: #2d9e50; }
+
+    /* ===== APPROVAL SECTION ===== */
+    .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+    .section-title {
+      font-family: 'Sora', sans-serif; font-size: 1.1rem;
+      font-weight: 700; color: var(--charcoal); letter-spacing: -0.02em;
+    }
+    .section-tabs { display: flex; gap: 4px; background: var(--white); border-radius: var(--radius); padding: 5px; border: 1px solid rgba(50,111,202,0.08); box-shadow: var(--shadow); margin-bottom: 24px; }
+    .section-tab { flex: 1; padding: 9px 12px; border-radius: var(--radius-sm); border: none; background: transparent; font-family: 'Sora', sans-serif; font-size: 0.84rem; font-weight: 600; color: var(--ch3); cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 7px; }
+    .section-tab:hover { background: var(--light); color: var(--ch2); }
+    .section-tab.active { background: var(--dark); color: var(--white); }
+    .section-tab .tab-badge { min-width: 18px; height: 18px; border-radius: 100px; font-size: 0.65rem; font-weight: 700; padding: 0 5px; display: flex; align-items: center; justify-content: center; }
+    .section-tab.active .tab-badge { background: rgba(255,255,255,0.2); }
+    .section-tab:not(.active) .tab-badge { background: rgba(50,111,202,0.1); color: var(--accent); }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ===== APPROVAL CARDS ===== */
+    .approval-list { display: flex; flex-direction: column; gap: 12px; }
+    .approval-card {
+      background: var(--white); border-radius: var(--radius);
+      padding: 18px 20px; border: 1px solid rgba(50,111,202,0.07);
+      box-shadow: 0 2px 10px rgba(50,111,202,0.06);
+      display: flex; align-items: flex-start; gap: 16px;
+    }
+    .approval-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+    .approval-icon.account { background: rgba(245,166,35,0.12); }
+    .approval-icon.listing { background: rgba(50,111,202,0.1); }
+    .approval-icon.payment { background: rgba(93,223,122,0.12); }
+    .approval-body { flex: 1; min-width: 0; }
+    .approval-title { font-family: 'Sora', sans-serif; font-size: 0.92rem; font-weight: 600; color: var(--charcoal); margin-bottom: 3px; }
+    .approval-sub { font-size: 0.78rem; color: var(--ch3); font-weight: 300; margin-bottom: 8px; }
+    .approval-meta { display: flex; flex-wrap: wrap; gap: 8px; }
+    .approval-tag { display: flex; align-items: center; gap: 4px; padding: 3px 9px; border-radius: 100px; background: var(--light); border: 1px solid rgba(50,111,202,0.08); font-size: 0.74rem; font-weight: 500; color: var(--ch2); }
+    .approval-actions { display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
+    .btn-approve {
+      display: flex; align-items: center; gap: 5px;
+      padding: 8px 16px; border-radius: var(--radius-sm);
+      background: rgba(93,223,122,0.12); color: #2d9e50;
+      border: 1.5px solid rgba(93,223,122,0.3);
+      font-family: 'Sora', sans-serif; font-size: 0.82rem; font-weight: 600;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .btn-approve:hover { background: rgba(93,223,122,0.2); border-color: rgba(93,223,122,0.5); }
+    .btn-reject {
+      display: flex; align-items: center; gap: 5px;
+      padding: 8px 16px; border-radius: var(--radius-sm);
+      background: rgba(224,80,74,0.07); color: #c0392b;
+      border: 1.5px solid rgba(224,80,74,0.25);
+      font-family: 'Sora', sans-serif; font-size: 0.82rem; font-weight: 600;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .btn-reject:hover { background: rgba(224,80,74,0.14); border-color: rgba(224,80,74,0.4); }
+
+    /* Payment proof image */
+    .proof-thumb {
+      width: 100%; max-height: 200px; object-fit: contain;
+      border-radius: var(--radius-sm); border: 1px solid rgba(50,111,202,0.12);
+      margin-top: 10px; cursor: pointer; transition: opacity 0.2s;
+    }
+    .proof-thumb:hover { opacity: 0.85; }
+    .proof-section { margin-top: 10px; }
+    .proof-label { font-size: 0.74rem; font-weight: 600; color: var(--ch3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+
+    /* Listing image in approval */
+    .listing-approval-img { width: 72px; height: 72px; border-radius: var(--radius-sm); object-fit: cover; border: 1px solid rgba(50,111,202,0.1); flex-shrink: 0; }
+    .listing-approval-placeholder { width: 72px; height: 72px; border-radius: var(--radius-sm); background: var(--light); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; border: 1px solid rgba(50,111,202,0.1); flex-shrink: 0; }
+
+    /* Reject reason modal */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(30,40,60,0.5); backdrop-filter: blur(4px); z-index: 200; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+    .reason-modal { background: var(--white); border-radius: var(--radius); width: 100%; max-width: 440px; margin: 20px; box-shadow: 0 24px 64px rgba(30,40,60,0.22); transform: translateY(20px) scale(0.97); transition: transform 0.3s cubic-bezier(0.34,1.2,0.64,1); overflow: hidden; }
+    .modal-overlay.open .reason-modal { transform: translateY(0) scale(1); }
+    .reason-modal-header { padding: 20px 22px 14px; border-bottom: 1px solid rgba(50,111,202,0.08); display: flex; align-items: center; justify-content: space-between; }
+    .reason-modal-header h3 { font-family: 'Sora', sans-serif; font-size: 1rem; font-weight: 700; color: var(--charcoal); }
+    .reason-modal-body { padding: 20px 22px 24px; }
+    .reason-modal-body label { font-size: 0.84rem; font-weight: 500; color: var(--ch2); display: block; margin-bottom: 8px; }
+    .reason-modal-body textarea { width: 100%; padding: 10px 12px; border: 1.5px solid #dde2ec; border-radius: var(--radius-sm); font-family: 'DM Sans', sans-serif; font-size: 0.9rem; color: var(--charcoal); background: var(--light); outline: none; resize: none; height: 100px; transition: border-color 0.2s; }
+    .reason-modal-body textarea:focus { border-color: var(--accent); background: var(--white); }
+    .reason-modal-actions { display: flex; gap: 10px; margin-top: 14px; }
+    .btn-cancel-modal { flex: 1; padding: 10px; border: 1.5px solid #dde2ec; border-radius: var(--radius-sm); background: transparent; color: var(--ch2); font-family: 'Sora', sans-serif; font-size: 0.88rem; font-weight: 600; cursor: pointer; }
+    .btn-confirm-reject { flex: 2; padding: 10px; background: var(--red); color: var(--white); border: none; border-radius: var(--radius-sm); font-family: 'Sora', sans-serif; font-size: 0.88rem; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+    .btn-confirm-reject:hover { background: #c0392b; }
+
+    /* Image lightbox */
+    .lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 500; display: flex; align-items: center; justify-content: center; cursor: zoom-out; display: none; }
+    .lightbox img { max-width: 90vw; max-height: 90vh; border-radius: var(--radius-sm); object-fit: contain; }
+
+    /* Empty state */
+    .empty-state { text-align: center; padding: 52px 20px; background: var(--white); border-radius: var(--radius); border: 1px solid rgba(50,111,202,0.07); }
+    .empty-state-icon { font-size: 2.5rem; margin-bottom: 12px; }
+    .empty-state h4 { font-family: 'Sora', sans-serif; font-size: 1rem; font-weight: 700; color: var(--charcoal); margin-bottom: 6px; }
+    .empty-state p { font-size: 0.86rem; color: var(--ch3); font-weight: 300; }
+
+    /* Loading */
+    .loading-row { text-align: center; padding: 32px; color: var(--ch3); font-size: 0.88rem; }
+
+    /* TOAST */
+    .toast { position: fixed; bottom: 28px; right: 28px; background: var(--charcoal); color: var(--white); padding: 12px 18px; border-radius: var(--radius-sm); display: flex; align-items: center; gap: 10px; font-size: 0.86rem; font-weight: 500; box-shadow: 0 8px 32px rgba(60,60,60,0.22); transform: translateY(80px); opacity: 0; transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s; pointer-events: none; z-index: 999; }
+    .toast.show { transform: translateY(0); opacity: 1; }
+
+    @media (max-width: 768px) {
+      .navbar { padding: 0 20px; }
+      .main { padding: 24px 16px 60px; }
+      .stats-row { grid-template-columns: 1fr; }
+      .approval-card { flex-direction: column; }
+      .approval-actions { flex-direction: row; width: 100%; }
+      .btn-approve, .btn-reject { flex: 1; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="navbar-left">
+      <a href="#" class="navbar-brand">
+        <div class="navbar-brand-icon">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M7 8h2l2.5 9h8l2-6H11" stroke="#ffe7be" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="13.5" cy="21.5" r="1.5" fill="#f4f5f7"/><circle cx="19.5" cy="21.5" r="1.5" fill="#f4f5f7"/></svg>
+        </div>
+        <span class="navbar-brand-name">Enyukado</span>
+      </a>
+      <div class="navbar-admin-badge">
+        <div class="navbar-badge-dot"></div>
+        Admin Portal
+      </div>
+    </div>
+    <div class="navbar-right">
+      <span class="admin-name" id="adminNameDisplay">Admin</span>
+      <button class="btn-logout" id="logoutBtn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Log out
+      </button>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- STAT CARDS -->
+    <div class="stats-row">
+      <div class="stat-card" onclick="switchSection('accounts')" id="statAccounts">
+        <div class="stat-icon accounts">👤</div>
+        <div class="stat-info">
+          <div class="stat-count" id="countAccounts">—</div>
+          <div class="stat-label">Pending Accounts</div>
+        </div>
+        <div class="stat-badge warn" id="badgeAccounts">0</div>
+      </div>
+      <div class="stat-card" onclick="switchSection('listings')" id="statListings">
+        <div class="stat-icon listings">📦</div>
+        <div class="stat-info">
+          <div class="stat-count" id="countListings">—</div>
+          <div class="stat-label">Pending Listings</div>
+        </div>
+        <div class="stat-badge info" id="badgeListings">0</div>
+      </div>
+      <div class="stat-card" onclick="switchSection('payments')" id="statPayments">
+        <div class="stat-icon payments">💳</div>
+        <div class="stat-info">
+          <div class="stat-count" id="countPayments">—</div>
+          <div class="stat-label">Pending Payments</div>
+        </div>
+        <div class="stat-badge success" id="badgePayments">0</div>
+      </div>
+    </div>
+
+    <!-- SECTION TABS -->
+    <div class="section-tabs">
+      <button class="section-tab active" id="tabAccounts" onclick="switchSection('accounts')">
+        👤 Account Requests
+        <span class="tab-badge" id="tabBadgeAccounts">0</span>
+      </button>
+      <button class="section-tab" id="tabListings" onclick="switchSection('listings')">
+        📦 Listing Requests
+        <span class="tab-badge" id="tabBadgeListings">0</span>
+      </button>
+      <button class="section-tab" id="tabPayments" onclick="switchSection('payments')">
+        💳 Payment Verifications
+        <span class="tab-badge" id="tabBadgePayments">0</span>
+      </button>
+    </div>
+
+    <!-- ACCOUNTS PANEL -->
+    <div class="tab-panel active" id="panel-accounts">
+      <div class="approval-list" id="accountsList">
+        <div class="loading-row">Loading...</div>
+      </div>
+    </div>
+
+    <!-- LISTINGS PANEL -->
+    <div class="tab-panel" id="panel-listings">
+      <div class="approval-list" id="listingsList">
+        <div class="loading-row">Loading...</div>
+      </div>
+    </div>
+
+    <!-- PAYMENTS PANEL -->
+    <div class="tab-panel" id="panel-payments">
+      <div class="approval-list" id="paymentsList">
+        <div class="loading-row">Loading...</div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- REJECT REASON MODAL -->
+  <div class="modal-overlay" id="rejectModal">
+    <div class="reason-modal">
+      <div class="reason-modal-header">
+        <h3 id="rejectModalTitle">Reject — Provide a Reason</h3>
+        <button onclick="closeRejectModal()" style="background:none;border:none;cursor:pointer;color:var(--ch3);font-size:1.1rem;">✕</button>
+      </div>
+      <div class="reason-modal-body">
+        <label>Reason for rejection <span style="color:var(--ch3);">(required — will be sent to the user)</span></label>
+        <textarea id="rejectReason" placeholder="e.g. Listing violates campus policy, prohibited item..."></textarea>
+        <div class="reason-modal-actions">
+          <button class="btn-cancel-modal" onclick="closeRejectModal()">Cancel</button>
+          <button class="btn-confirm-reject" onclick="confirmReject()">Confirm Rejection</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- IMAGE LIGHTBOX -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <img id="lightboxImg" src="" alt="Proof of payment" />
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+    <span id="toastMsg">Done!</span>
+  </div>
+
+<script>
+// ======================================================
+// AUTH GUARD
+// ======================================================
+(function() {
+  const token   = localStorage.getItem('adminToken');
+  const isAdmin = localStorage.getItem('adminIsAdmin');
+  if (!token || isAdmin !== 'true') window.location.replace('admin-login.html');
+})();
+
+const API_BASE = 'http://localhost:5000/api';
+const token    = localStorage.getItem('adminToken');
+
+// Display admin name
+const firstName = localStorage.getItem('adminFirstName') || 'Admin';
+const lastName  = localStorage.getItem('adminLastName')  || '';
+document.getElementById('adminNameDisplay').textContent = `${firstName} ${lastName}`;
+
+// Logout
+document.getElementById('logoutBtn').addEventListener('click', () => {
+  if (confirm('Log out of admin portal?')) {
+    localStorage.removeItem('adminToken');
+    localStorage.removeItem('adminFirstName');
+    localStorage.removeItem('adminLastName');
+    localStorage.removeItem('adminEmail');
+    localStorage.removeItem('adminID');
+    localStorage.removeItem('adminIsAdmin');
+    window.location.href = 'admin-login.html';
+  }
+});
+
+// ======================================================
+// SECTION SWITCHING
+// ======================================================
+function switchSection(section) {
+  ['accounts','listings','payments'].forEach(s => {
+    document.getElementById(`tabAccounts`.replace('Accounts', s.charAt(0).toUpperCase() + s.slice(1))).classList.remove('active');
+    document.getElementById(`panel-${s}`).classList.remove('active');
+    document.getElementById(`stat${s.charAt(0).toUpperCase() + s.slice(1)}`).classList.remove('active-section');
+  });
+  // Fix IDs
+  document.getElementById('tabAccounts').classList.remove('active');
+  document.getElementById('tabListings').classList.remove('active');
+  document.getElementById('tabPayments').classList.remove('active');
+  document.getElementById('panel-accounts').classList.remove('active');
+  document.getElementById('panel-listings').classList.remove('active');
+  document.getElementById('panel-payments').classList.remove('active');
+  document.getElementById('statAccounts').classList.remove('active-section');
+  document.getElementById('statListings').classList.remove('active-section');
+  document.getElementById('statPayments').classList.remove('active-section');
+
+  document.getElementById(`tab${section.charAt(0).toUpperCase() + section.slice(1)}s`).classList.add('active');
+  document.getElementById(`panel-${section}s`).classList.add('active');
+  document.getElementById(`stat${section.charAt(0).toUpperCase() + section.slice(1)}s`).classList.add('active-section');
+}
+
+// Fix: IDs are plural
+function switchSectionFixed(section) {
+  const tabs   = ['Accounts','Listings','Payments'];
+  const panels = ['accounts','listings','payments'];
+  tabs.forEach((t,i) => {
+    document.getElementById(`tab${t}`).classList.remove('active');
+    document.getElementById(`panel-${panels[i]}`).classList.remove('active');
+    document.getElementById(`stat${t}`).classList.remove('active-section');
+  });
+  const cap = section.charAt(0).toUpperCase() + section.slice(1);
+  document.getElementById(`tab${cap}`).classList.add('active');
+  document.getElementById(`panel-${section}`).classList.add('active');
+  document.getElementById(`stat${cap}`).classList.add('active-section');
+}
+
+// Override
+window.switchSection = switchSectionFixed;
+
+// ======================================================
+// LOAD COUNTS
+// ======================================================
+async function loadCounts() {
+  try {
+    const res  = await fetch(`${API_BASE}/admin/counts`, { headers: { 'x-auth-token': token } });
+    const data = await res.json();
+
+    const { pendingAccounts: a, pendingListings: l, pendingPayments: p } = data;
+
+    document.getElementById('countAccounts').textContent = a;
+    document.getElementById('countListings').textContent = l;
+    document.getElementById('countPayments').textContent = p;
+
+    ['Accounts','Listings','Payments'].forEach((k,i) => {
+      const count = [a,l,p][i];
+      document.getElementById(`badge${k}`).textContent    = count;
+      document.getElementById(`tabBadge${k}`).textContent = count;
+    });
+  } catch(err) {
+    console.error('Failed to load counts:', err);
+  }
+}
+
+// ======================================================
+// ACCOUNTS
+// ======================================================
+async function loadPendingAccounts() {
+  const list = document.getElementById('accountsList');
+  list.innerHTML = `<div class="loading-row">Loading...</div>`;
+  try {
+    const res      = await fetch(`${API_BASE}/admin/accounts/pending`, { headers: { 'x-auth-token': token } });
+    const accounts = await res.json();
+
+    if (!accounts.length) {
+      list.innerHTML = `<div class="empty-state"><div class="empty-state-icon">✅</div><h4>All caught up!</h4><p>No pending account registrations.</p></div>`;
+      return;
+    }
+
+    list.innerHTML = accounts.map(u => `
+      <div class="approval-card" id="account-card-${u.UserID}">
+        <div class="approval-icon account">👤</div>
+        <div class="approval-body">
+          <div class="approval-title">${u.FirstName} ${u.LastName}</div>
+          <div class="approval-sub">${u.Email}</div>
+          <div class="approval-meta">
+            <div class="approval-tag">📅 Registered ${new Date(u.DateCreated).toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' })}</div>
+            <div class="approval-tag">🏫 NU Manila</div>
+          </div>
+        </div>
+        <div class="approval-actions">
+          <button class="btn-approve" onclick="approveAccount(${u.UserID}, '${u.FirstName} ${u.LastName}')">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Approve
+          </button>
+          <button class="btn-reject" onclick="openRejectModal('account', ${u.UserID}, '${u.FirstName} ${u.LastName}')">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            Reject
+          </button>
+        </div>
+      </div>
+    `).join('');
+  } catch(err) {
+    list.innerHTML = `<div class="empty-state"><div class="empty-state-icon">⚠️</div><h4>Failed to load</h4><p>Server may be offline.</p></div>`;
+  }
+}
+
+async function approveAccount(userID, name) {
+  try {
+    const res  = await fetch(`${API_BASE}/admin/accounts/${userID}/approve`, { method: 'PATCH', headers: { 'x-auth-token': token } });
+    const data = await res.json();
+    if (res.ok) {
+      showToast(`✅ ${name}'s account approved!`);
+      document.getElementById(`account-card-${userID}`)?.remove();
+      loadCounts();
+    } else {
+      showToast(data.message || 'Failed.', 'error');
+    }
+  } catch(err) { showToast('Server is offline.', 'error'); }
+}
+
+// ======================================================
+// LISTINGS
+// ======================================================
+async function loadPendingListings() {
+  const list = document.getElementById('listingsList');
+  list.innerHTML = `<div class="loading-row">Loading...</div>`;
+  try {
+    const res      = await fetch(`${API_BASE}/admin/listings/pending`, { headers: { 'x-auth-token': token } });
+    const listings = await res.json();
+
+    if (!listings.length) {
+      list.innerHTML = `<div class="empty-state"><div class="empty-state-icon">✅</div><h4>All caught up!</h4><p>No pending listing approvals.</p></div>`;
+      return;
+    }
+
+    list.innerHTML = listings.map(p => {
+      const imgURL = (p.images && p.images.length > 0) ? p.images[0].ImageURL : (p.ImageURL || null);
+      return `
+      <div class="approval-card" id="listing-card-${p.ProductID}">
+        ${imgURL
+          ? `<img class="listing-approval-img" src="${imgURL}" alt="${p.ProductName}" onclick="openLightbox('${imgURL}')" title="Click to enlarge" />`
+          : `<div class="listing-approval-placeholder">📦</div>`
+        }
+        <div class="approval-body">
+          <div class="approval-title">${p.ProductName}</div>
+          <div class="approval-sub">${p.SellerFirstName} ${p.SellerLastName} · ${p.SellerEmail}</div>
+          <div class="approval-meta">
+            <div class="approval-tag">💰 ₱${parseFloat(p.Price).toLocaleString()}</div>
+            <div class="approval-tag">🏷️ ${p.CategoryName}</div>
+            <div class="approval-tag">📦 ${p.ProductCondition}</div>
+            <div class="approval-tag">🔢 Qty: ${p.Quantity}</div>
+            ${p.images && p.images.length > 1 ? `<div class="approval-tag">🖼️ ${p.images.length} photos</div>` : ''}
+          </div>
+          ${p.Description ? `<div style="font-size:0.8rem;color:var(--ch3);margin-top:8px;line-height:1.5;">${p.Description.slice(0, 160)}${p.Description.length > 160 ? '…' : ''}</div>` : ''}
+          ${p.images && p.images.length > 1 ? `
+            <div style="display:flex;gap:6px;margin-top:10px;flex-wrap:wrap;">
+              ${p.images.slice(1).map(img => `<img src="${img.ImageURL}" style="width:52px;height:52px;border-radius:6px;object-fit:cover;border:1px solid rgba(50,111,202,0.12);cursor:pointer;" onclick="openLightbox('${img.ImageURL}')" />`).join('')}
+            </div>` : ''
+          }
+        </div>
+        <div class="approval-actions">
+          <button class="btn-approve" onclick="approveListing(${p.ProductID}, '${p.ProductName.replace(/'/g,"\\'")}')">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Approve
+          </button>
+          <button class="btn-reject" onclick="openRejectModal('listing', ${p.ProductID}, '${p.ProductName.replace(/'/g,"\\'")}')">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            Reject
+          </button>
+        </div>
+      </div>`;
+    }).join('');
+  } catch(err) {
+    list.innerHTML = `<div class="empty-state"><div class="empty-state-icon">⚠️</div><h4>Failed to load</h4><p>Server may be offline.</p></div>`;
+  }
+}
+
+async function approveListing(productID, name) {
+  try {
+    const res  = await fetch(`${API_BASE}/admin/listings/${productID}/approve`, { method: 'PATCH', headers: { 'x-auth-token': token } });
+    const data = await res.json();
+    if (res.ok) {
+      showToast(`✅ "${name}" is now live on the marketplace!`);
+      document.getElementById(`listing-card-${productID}`)?.remove();
+      loadCounts();
+    } else {
+      showToast(data.message || 'Failed.', 'error');
+    }
+  } catch(err) { showToast('Server is offline.', 'error'); }
+}
+
+// ======================================================
+// PAYMENTS
+// ======================================================
+async function loadPendingPayments() {
+  const list = document.getElementById('paymentsList');
+  list.innerHTML = `<div class="loading-row">Loading...</div>`;
+  try {
+    const res      = await fetch(`${API_BASE}/admin/payments/pending`, { headers: { 'x-auth-token': token } });
+    const payments = await res.json();
+
+    if (!payments.length) {
+      list.innerHTML = `<div class="empty-state"><div class="empty-state-icon">✅</div><h4>All caught up!</h4><p>No pending payment verifications.</p></div>`;
+      return;
+    }
+
+    list.innerHTML = payments.map(t => `
+      <div class="approval-card" id="payment-card-${t.TransactionID}">
+        <div class="approval-icon payment">💳</div>
+        <div class="approval-body">
+          <div class="approval-title">Transaction #${t.TransactionID} — ${t.ProductName}</div>
+          <div class="approval-sub">Buyer: ${t.BuyerFirstName} ${t.BuyerLastName} · ${t.BuyerEmail}</div>
+          <div class="approval-meta">
+            <div class="approval-tag">💰 ₱${parseFloat(t.Price).toLocaleString()}</div>
+            <div class="approval-tag">💳 ${t.PaymentMethod}</div>
+            <div class="approval-tag">👤 Seller: ${t.SellerFirstName} ${t.SellerLastName}</div>
+            <div class="approval-tag">📅 ${new Date(t.TransactionDate).toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric', hour:'2-digit', minute:'2-digit' })}</div>
+          </div>
+          ${t.PaymentProofImage ? `
+            <div class="proof-section">
+              <div class="proof-label">Payment Proof</div>
+              <img class="proof-thumb" src="${t.PaymentProofImage}" alt="Payment proof" onclick="openLightbox('${t.PaymentProofImage}')" title="Click to enlarge" />
+            </div>` : `<div style="font-size:0.78rem;color:var(--ch3);margin-top:8px;">⚠️ No payment proof uploaded</div>`
+          }
+        </div>
+        <div class="approval-actions">
+          <button class="btn-approve" onclick="approvePayment(${t.TransactionID}, '${t.ProductName.replace(/'/g,"\\'")}')">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Approve
+          </button>
+          <button class="btn-reject" onclick="openRejectModal('payment', ${t.TransactionID}, '${t.ProductName.replace(/'/g,"\\'")}')">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            Reject
+          </button>
+        </div>
+      </div>
+    `).join('');
+  } catch(err) {
+    list.innerHTML = `<div class="empty-state"><div class="empty-state-icon">⚠️</div><h4>Failed to load</h4><p>Server may be offline.</p></div>`;
+  }
+}
+
+async function approvePayment(transactionID, name) {
+  try {
+    const res  = await fetch(`${API_BASE}/admin/payments/${transactionID}/approve`, { method: 'PATCH', headers: { 'x-auth-token': token } });
+    const data = await res.json();
+    if (res.ok) {
+      showToast(`✅ Payment for "${name}" approved! Seller notified.`);
+      document.getElementById(`payment-card-${transactionID}`)?.remove();
+      loadCounts();
+    } else {
+      showToast(data.message || 'Failed.', 'error');
+    }
+  } catch(err) { showToast('Server is offline.', 'error'); }
+}
+
+// ======================================================
+// REJECT MODAL
+// ======================================================
+let rejectContext = null; // { type, id, name }
+
+function openRejectModal(type, id, name) {
+  rejectContext = { type, id, name };
+  const titles = { account: 'Reject Account Registration', listing: 'Reject Listing', payment: 'Reject Payment' };
+  document.getElementById('rejectModalTitle').textContent = titles[type] || 'Reject';
+  document.getElementById('rejectReason').value = '';
+  document.getElementById('rejectModal').classList.add('open');
+}
+
+function closeRejectModal() {
+  document.getElementById('rejectModal').classList.remove('open');
+  rejectContext = null;
+}
+
+document.getElementById('rejectModal').addEventListener('click', e => {
+  if (e.target === document.getElementById('rejectModal')) closeRejectModal();
+});
+
+async function confirmReject() {
+  if (!rejectContext) return;
+  const reason = document.getElementById('rejectReason').value.trim();
+  if (!reason) { showToast('Please enter a reason for rejection.', 'error'); return; }
+
+  const { type, id, name } = rejectContext;
+  const urls = {
+    account: `${API_BASE}/admin/accounts/${id}/reject`,
+    listing: `${API_BASE}/admin/listings/${id}/reject`,
+    payment: `${API_BASE}/admin/payments/${id}/reject`,
+  };
+
+  try {
+    const res  = await fetch(urls[type], {
+      method:  'PATCH',
+      headers: { 'Content-Type': 'application/json', 'x-auth-token': token },
+      body:    JSON.stringify({ reason })
+    });
+    const data = await res.json();
+    if (res.ok) {
+      closeRejectModal();
+      showToast(`❌ "${name}" rejected. User notified.`);
+      const cardID = `${type}-card-${id}`;
+      document.getElementById(cardID)?.remove();
+      loadCounts();
+    } else {
+      showToast(data.message || 'Failed.', 'error');
+    }
+  } catch(err) { showToast('Server is offline.', 'error'); }
+}
+
+// ======================================================
+// LIGHTBOX
+// ======================================================
+window.openLightbox = function(src) {
+  document.getElementById('lightboxImg').src = src;
+  document.getElementById('lightbox').style.display = 'flex';
+};
+window.closeLightbox = function() {
+  document.getElementById('lightbox').style.display = 'none';
+};
+
+// ======================================================
+// TOAST
+// ======================================================
+let toastTimeout;
+function showToast(msg, type = 'success') {
+  const toast = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  const icon = toast.querySelector('svg');
+  if (icon) icon.style.color = type === 'error' ? '#e0504a' : '#5ddf7a';
+  toast.classList.add('show');
+  clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => toast.classList.remove('show'), 3500);
+}
+
+// ======================================================
+// INIT
+// ======================================================
+loadCounts();
+loadPendingAccounts();
+loadPendingListings();
+loadPendingPayments();
+
+// Auto-refresh every 30 seconds
+setInterval(() => {
+  loadCounts();
+  loadPendingAccounts();
+  loadPendingListings();
+  loadPendingPayments();
+}, 30000);
+</script>
+
+</body>
+</html>

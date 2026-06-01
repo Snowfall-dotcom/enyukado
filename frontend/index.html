@@ -9,15 +9,211 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ==================== PRIVACY MODAL ==================== */
+    .privacy-modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+      background: rgba(30, 40, 60, 0.55);
+      backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    .privacy-modal-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .privacy-modal {
+      background: #ffffff;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 520px;
+      margin: 20px;
+      box-shadow: 0 24px 64px rgba(30, 40, 60, 0.25);
+      transform: translateY(24px) scale(0.97);
+      transition: transform 0.35s cubic-bezier(0.34, 1.15, 0.64, 1);
+      overflow: hidden;
+    }
+
+    .privacy-modal-overlay.open .privacy-modal {
+      transform: translateY(0) scale(1);
+    }
+
+    .privacy-modal-header {
+      background: linear-gradient(135deg, #1e3f78 0%, #326fca 100%);
+      padding: 24px 28px 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .privacy-modal-header-icon {
+      width: 44px;
+      height: 44px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .privacy-modal-header h3 {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+      margin-bottom: 2px;
+    }
+
+    .privacy-modal-header p {
+      font-size: 0.78rem;
+      color: rgba(255, 255, 255, 0.65);
+      font-weight: 300;
+    }
+
+    .privacy-modal-body {
+      padding: 24px 28px;
+      max-height: 52vh;
+      overflow-y: auto;
+    }
+
+    .privacy-modal-body p {
+      font-size: 0.9rem;
+      line-height: 1.75;
+      color: #5a5a5a;
+      font-weight: 300;
+      margin-bottom: 16px;
+    }
+
+    .privacy-modal-body p strong {
+      color: #3c3c3c;
+      font-weight: 600;
+    }
+
+    .privacy-points {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 16px;
+      padding: 0;
+    }
+
+    .privacy-points li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.88rem;
+      color: #5a5a5a;
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    .privacy-points li::before {
+      content: '·';
+      color: #326fca;
+      font-size: 1.4rem;
+      line-height: 1.2;
+      flex-shrink: 0;
+    }
+
+    .privacy-modal-footer {
+      padding: 16px 28px 24px;
+      border-top: 1px solid rgba(50, 111, 202, 0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .privacy-read-link {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #888;
+      font-weight: 300;
+    }
+
+    .privacy-read-link a {
+      color: #326fca;
+      text-decoration: underline;
+      font-weight: 500;
+    }
+
+    .btn-privacy-agree {
+      width: 100%;
+      padding: 13px 20px;
+      background: #326fca;
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      font-family: 'Sora', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background 0.2s, transform 0.15s;
+      box-shadow: 0 4px 16px rgba(50, 111, 202, 0.3);
+    }
+
+    .btn-privacy-agree:hover {
+      background: #2458a8;
+      transform: translateY(-1px);
+    }
+
+    .btn-privacy-cancel {
+      width: 100%;
+      padding: 11px 20px;
+      background: transparent;
+      color: #888;
+      border: 1.5px solid #dde2ec;
+      border-radius: 8px;
+      font-family: 'Sora', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .btn-privacy-cancel:hover {
+      background: #f4f5f7;
+      border-color: #c0c8d8;
+    }
+
+    /* Pending approval notice on login card */
+    .pending-notice {
+      background: rgba(245, 166, 35, 0.1);
+      border: 1px solid rgba(245, 166, 35, 0.3);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 0.82rem;
+      color: #b07d10;
+      font-weight: 400;
+      line-height: 1.5;
+      display: none;
+    }
+
+    .pending-notice.show { display: block; }
+  </style>
 </head>
 <body>
 
-  <!-- INTRO OVERLAY : fullscreen fade-out animation -->
+  <!-- INTRO OVERLAY -->
   <div class="intro-overlay">
     <div class="intro-brand">
-
       <div class="intro-icon">
         <svg width="40" height="40" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect width="32" height="32" rx="8" fill="rgba(255,255,255,0.15)"/>
@@ -26,11 +222,8 @@
           <circle cx="19.5" cy="21.5" r="1.5" fill="#f4f5f7"/>
         </svg>
       </div>
-
       <span class="intro-name">Enyukado</span>
-
     </div>
-
     <p class="intro-tagline">Your campus marketplace</p>
   </div>
 
@@ -39,11 +232,9 @@
 
     <!-- LEFT PANEL -->
     <div class="left-panel">
-
       <div class="left-inner">
 
         <div class="brand">
-
           <div class="brand-icon">
             <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect width="32" height="32" rx="8" fill="#326fca"/>
@@ -52,74 +243,51 @@
               <circle cx="19.5" cy="21.5" r="1.5" fill="#f4f5f7"/>
             </svg>
           </div>
-
           <span class="brand-name">Enyukado</span>
-
         </div>
 
         <div class="left-content">
-
           <div class="tagline-block">
             <h1 class="tagline-heading">
               Buy and sell within the campus — safely.
             </h1>
-
             <p class="tagline-sub">
               The marketplace for Nationalians.
             </p>
           </div>
 
           <div class="features">
-
             <div class="feature-item">
               <div class="feature-icon">🔒</div>
-
               <div class="feature-text">
                 <h3>Verified Student Access</h3>
-
-                <p>
-                  Only registered and verified students can use the platform,
-                  ensuring a safer marketplace.
-                </p>
+                <p>Only registered and verified students can use the platform, ensuring a safer marketplace.</p>
               </div>
             </div>
-
             <div class="feature-item">
               <div class="feature-icon">🏷️</div>
-
               <div class="feature-text">
                 <h3>Organized Listings with Categories</h3>
-
-                <p>
-                  Items are grouped into categories for easier browsing and searching.
-                </p>
+                <p>Items are grouped into categories for easier browsing and searching.</p>
               </div>
             </div>
-
             <div class="feature-item">
               <div class="feature-icon">📦</div>
-
               <div class="feature-text">
                 <h3>Advanced Search and Filter System</h3>
-
-                <p>
-                  Find specific items based on keywords, category, or condition.
-                </p>
+                <p>Find specific items based on keywords, category, or condition.</p>
               </div>
             </div>
-
           </div>
         </div>
       </div>
 
       <div class="blob blob-1"></div>
       <div class="blob blob-2"></div>
-
     </div>
 
     <!-- RIGHT PANEL -->
     <div class="right-panel">
-
       <div class="right-inner">
 
         <!-- LOGIN CARD -->
@@ -130,51 +298,41 @@
             <p>Access your campus marketplace.</p>
           </div>
 
+          <!-- Pending approval notice — shown when account not yet approved -->
+          <div class="pending-notice" id="pendingNotice">
+            ⏳ Your account is pending admin approval. You'll be able to log in once approved.
+          </div>
+
           <div class="input-group">
-
             <label for="loginEmail">University Email</label>
-
             <div class="input-wrap">
-
               <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
                 <polyline points="22,6 12,13 2,6"/>
               </svg>
-
               <input
                 type="email"
                 id="loginEmail"
-                placeholder="yourname@national-u.edu.ph"
+                placeholder="yourname@students.national-u.edu.ph"
                 autocomplete="off"
               />
-
             </div>
           </div>
 
           <div class="input-group">
-
             <label for="loginPassword">Password</label>
-
             <div class="input-wrap">
-
               <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
                 <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
               </svg>
-
-              <input
-                type="password"
-                id="loginPassword"
-                placeholder="Enter your password"
-              />
-
+              <input type="password" id="loginPassword" placeholder="Enter your password" />
               <button class="toggle-pw" data-target="loginPassword" type="button">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
                   <circle cx="12" cy="12" r="3"/>
                 </svg>
               </button>
-
             </div>
           </div>
 
@@ -183,14 +341,11 @@
           </div>
 
           <button class="btn-primary" id="submitLoginBtn">
-
             <span>Log in</span>
-
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
               <line x1="5" y1="12" x2="19" y2="12"/>
               <polyline points="12 5 19 12 12 19"/>
             </svg>
-
           </button>
 
           <p class="switch-cta">
@@ -216,118 +371,80 @@
           </div>
 
           <div class="row-2cols">
-
             <div class="input-group">
-
               <label for="signupFirst">First name</label>
-
               <div class="input-wrap">
-
                 <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                   <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
                   <circle cx="12" cy="7" r="4"/>
                 </svg>
-
                 <input type="text" id="signupFirst" placeholder="Juan" />
-
               </div>
             </div>
-
             <div class="input-group">
-
               <label for="signupLast">Last name</label>
-
               <div class="input-wrap">
-
                 <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                   <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
                   <circle cx="12" cy="7" r="4"/>
                 </svg>
-
                 <input type="text" id="signupLast" placeholder="Dela Cruz" />
-
               </div>
             </div>
-
           </div>
 
           <div class="input-group">
-
             <label for="signupEmail">University Email</label>
-
             <div class="input-wrap">
-
               <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                 <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
                 <polyline points="22,6 12,13 2,6"/>
               </svg>
-
-              <input type="email" id="signupEmail" placeholder="delacruzja@national-u.edu.ph" />
-
+              <input type="email" id="signupEmail" placeholder="delacruzja@students.national-u.edu.ph" />
             </div>
           </div>
 
-
-
           <div class="row-2cols">
-
             <div class="input-group">
-
               <label for="signupPassword">Password</label>
-
               <div class="input-wrap">
-
                 <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                   <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
                   <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
                 </svg>
-
                 <input type="password" id="signupPassword" placeholder="Create password" />
-
                 <button class="toggle-pw" data-target="signupPassword" type="button">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                     <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
                     <circle cx="12" cy="12" r="3"/>
                   </svg>
                 </button>
-
               </div>
             </div>
-
             <div class="input-group">
-
               <label for="signupConfirm">Confirm password</label>
-
               <div class="input-wrap">
-
                 <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                   <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
                   <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
                 </svg>
-
                 <input type="password" id="signupConfirm" placeholder="Confirm password" />
-
                 <button class="toggle-pw" data-target="signupConfirm" type="button">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                     <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
                     <circle cx="12" cy="12" r="3"/>
                   </svg>
                 </button>
-
               </div>
             </div>
-
           </div>
 
           <button class="btn-primary" id="submitSignupBtn">
-
             <span>Create account</span>
-
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
               <line x1="5" y1="12" x2="19" y2="12"/>
               <polyline points="12 5 19 12 12 19"/>
             </svg>
-
           </button>
 
           <p class="switch-cta">
@@ -348,12 +465,74 @@
     </div>
   </div>
 
+  <!-- ==================== PRIVACY CONSENT MODAL ==================== -->
+  <div class="privacy-modal-overlay" id="privacyModal">
+    <div class="privacy-modal">
+
+      <div class="privacy-modal-header">
+        <div class="privacy-modal-header-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffe7be" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <div>
+          <h3>Data Privacy Consent</h3>
+          <p>Please read before creating your account</p>
+        </div>
+      </div>
+
+      <div class="privacy-modal-body">
+        <p>
+          Before creating your Enyukado account, we want to be transparent about
+          how we collect and use your personal data in accordance with the
+          <strong>Data Privacy Act of 2012 (Republic Act No. 10173)</strong>.
+        </p>
+
+        <p>By creating an account, you consent to the following:</p>
+
+        <ul class="privacy-points">
+          <li>Your <strong>full name and university email</strong> will be collected to verify your student status and authenticate your account.</li>
+          <li>Your <strong>payment information</strong> (QR code) will be stored and shown to buyers during transactions.</li>
+          <li>Your <strong>listing data</strong> including item descriptions, photos, and prices will be visible to other verified students on the platform.</li>
+          <li>Your data will <strong>never be sold or shared</strong> with third parties except as required by law or university policy.</li>
+          <li>You may request <strong>access, correction, or deletion</strong> of your data at any time by contacting contact.enyukado@gmail.com.</li>
+          <li>Your account is subject to <strong>admin approval</strong> before you can access the platform.</li>
+        </ul>
+
+        <p>
+          Your data will be retained for as long as your account remains active.
+          Continued use of Enyukado constitutes acceptance of our full
+          <a href="privacy.html" target="_blank" style="color:#326fca;font-weight:500;">Privacy Policy</a>
+          and
+          <a href="terms.html" target="_blank" style="color:#326fca;font-weight:500;">Terms &amp; Conditions</a>.
+        </p>
+      </div>
+
+      <div class="privacy-modal-footer">
+        <div class="privacy-read-link">
+          <a href="privacy.html" target="_blank">Read full Privacy Policy</a>
+          &nbsp;·&nbsp;
+          <a href="terms.html" target="_blank">Read Terms &amp; Conditions</a>
+        </div>
+        <button class="btn-privacy-agree" id="privacyAgreeBtn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          I Agree — Create My Account
+        </button>
+        <button class="btn-privacy-cancel" id="privacyCancelBtn">
+          Cancel
+        </button>
+      </div>
+
+    </div>
+  </div>
+
   <!-- TOAST NOTIFICATION -->
   <div class="toast" id="toast">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
       <polyline points="20 6 9 17 4 12"/>
     </svg>
-
     <span id="toastMsg">Welcome!</span>
   </div>
 

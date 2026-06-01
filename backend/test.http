@@ -18,35 +18,39 @@
 # USERS
 # ============================================================
 
-### 1. Register Juan (Seller)
+### 1. Register User 1
 POST {{baseUrl}}/api/users/register
 Content-Type: application/json
 
 {
-    "firstName": "Juan",
-    "lastName": "Dela Cruz",
-    "email": "juan@national-u.edu.ph",
-    "password": "NEWpassword123",
-    "contactNumber": "contact number",
-    "messengerLink": "messenger link"
+    "firstName": "Lyle Tristan",
+    "lastName": "Rivera",
+    "email": "riveralm@students.national-u.edu.ph",
+    "password": "123123",
 }
 
 ###
 
-### 2. Register Maria (Buyer)
+### 2. Register User 2
 POST {{baseUrl}}/api/users/register
 Content-Type: application/json
 
 {
     "firstName": "Maria",
     "lastName": "Santos",
-    "email": "maria@national-u.edu.ph",
-    "password": "myPassword123",
-    "contactNumber": "contact number"
-    "messengerLink": "messenger link"
+    "email": "maria@students.national-u.edu.ph",
+    "password": "123456",
 }
 
 ###
+
+###
+
+### 3. Log in as Admin
+{
+    "email": "admin@national-u.edu.ph",
+    "password": "admin1234"
+}
 
 ### 3. Login User (copy token from response into @token above)
 POST {{baseUrl}}/api/users/login

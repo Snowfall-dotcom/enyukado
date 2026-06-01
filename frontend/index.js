@@ -14,9 +14,12 @@
 // Login and Signup wired to backend API
 // ======================================================
 
-const API_URL = 'http://localhost:5000/api/users';
+const API_URL       = 'http://localhost:5000/api/users';
+const ALLOWED_DOMAIN = '@students.national-u.edu.ph';
 
-// ---------- INTRO SEQUENCE ----------
+// ======================================================
+// INTRO SEQUENCE
+// ======================================================
 window.addEventListener('load', () => {
   const overlay     = document.querySelector('.intro-overlay');
   const brand       = document.querySelector('.intro-brand');
@@ -25,7 +28,6 @@ window.addEventListener('load', () => {
 
   if (!overlay || !brand) return;
 
-  // Reset state on every load
   overlay.style.display = 'flex';
   overlay.classList.remove('fade-out');
   pageWrapper?.classList.remove('slide-in');
@@ -45,8 +47,12 @@ window.addEventListener('load', () => {
   setTimeout(() => { overlay.style.display = 'none'; }, 5200);
 });
 
-// ---------- CARD TOGGLE ----------
+// ======================================================
+// MAIN LOGIC
+// ======================================================
 document.addEventListener('DOMContentLoaded', () => {
+
+  // ---------- CARD TOGGLE ----------
   const loginCard  = document.getElementById('loginCard');
   const signupCard = document.getElementById('signupCard');
   const showSignup = document.getElementById('showSignup');
@@ -57,6 +63,8 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       loginCard.classList.add('hidden-card');
       signupCard.classList.remove('hidden-card');
+      // Clear pending notice when switching to signup
+      document.getElementById('pendingNotice')?.classList.remove('show');
     });
   }
 
@@ -92,40 +100,55 @@ document.addEventListener('DOMContentLoaded', () => {
       showToast('Please contact contact.enyukado@gmail.com to reset your password.');
     });
   }
-  // Uses email + password (backend has no StudentID column)
+
+  // ======================================================
+  // LOGIN
+  // ======================================================
   const loginBtn = document.getElementById('submitLoginBtn');
   if (loginBtn) {
     loginBtn.addEventListener('click', async () => {
       const email    = document.getElementById('loginEmail').value.trim();
       const password = document.getElementById('loginPassword').value;
 
+      // Hide pending notice on new attempt
+      document.getElementById('pendingNotice')?.classList.remove('show');
+
       if (!email)    return showError('loginEmail', 'Please enter your email');
       if (!password) return showError('loginPassword', 'Please enter your password');
+
+      // Frontend domain check
+      if (!email.toLowerCase().endsWith(ALLOWED_DOMAIN)) {
+        return showError('loginEmail', `Only ${ALLOWED_DOMAIN} emails are allowed`);
+      }
 
       loginBtn.disabled = true;
       loginBtn.querySelector('span').textContent = 'Logging in...';
 
       try {
         const response = await fetch(`${API_URL}/login`, {
-          method: 'POST',
+          method:  'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password })
+          body:    JSON.stringify({ email, password })
         });
 
         const data = await response.json();
 
         if (response.ok) {
-          // Save token and user info for use across pages
-          localStorage.setItem('userToken',     data.token);
-          localStorage.setItem('userName',      data.user.firstName);
-          localStorage.setItem('userLastName',  data.user.lastName);
-          localStorage.setItem('userEmail',     data.user.email);
-          localStorage.setItem('userID',        data.user.id);
+          localStorage.setItem('userToken',    data.token);
+          localStorage.setItem('userName',     data.user.firstName);
+          localStorage.setItem('userLastName', data.user.lastName);
+          localStorage.setItem('userEmail',    data.user.email);
+          localStorage.setItem('userID',       data.user.id);
 
           showToast(`Welcome back, ${data.user.firstName}!`);
           setTimeout(() => { window.location.href = 'dashboard.html'; }, 1500);
         } else {
-          showError('loginEmail', data.message || 'Login failed');
+          // Show pending notice specifically for approval-pending accounts
+          if (data.message && data.message.toLowerCase().includes('pending')) {
+            document.getElementById('pendingNotice')?.classList.add('show');
+          } else {
+            showError('loginEmail', data.message || 'Login failed');
+          }
           loginBtn.disabled = false;
           loginBtn.querySelector('span').textContent = 'Log in';
         }
@@ -137,60 +160,132 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ---------- SIGNUP ----------
+  // ======================================================
+  // SIGNUP — Step 1: validate form, then show privacy modal
+  // ======================================================
+
+  // Store pending signup data here until user agrees to privacy policy
+  let pendingSignupData = null;
+
   const signupBtn = document.getElementById('submitSignupBtn');
   if (signupBtn) {
-    signupBtn.addEventListener('click', async () => {
+    signupBtn.addEventListener('click', () => {
       const firstName = document.getElementById('signupFirst').value.trim();
       const lastName  = document.getElementById('signupLast').value.trim();
       const email     = document.getElementById('signupEmail').value.trim();
       const password  = document.getElementById('signupPassword').value;
       const confirmPw = document.getElementById('signupConfirm').value;
 
+      // Validate all fields first
       if (!firstName) return showError('signupFirst',    'First name is required');
       if (!lastName)  return showError('signupLast',     'Last name is required');
-      if (!email || !email.includes('@')) return showError('signupEmail', 'Valid email required');
-      if (!password || password.length < 6) return showError('signupPassword', 'Min 6 characters');
-      if (password !== confirmPw) return showError('signupConfirm', 'Passwords do not match');
+      if (!email)     return showError('signupEmail',    'Email is required');
 
-      signupBtn.disabled = true;
-      signupBtn.querySelector('span').textContent = 'Creating account...';
-
-      try {
-        const response = await fetch(`${API_URL}/register`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ firstName, lastName, email, password })
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-          showToast('Account created! Please log in.');
-          document.getElementById('showLogin').click();
-        } else {
-          showError('signupEmail', data.message || 'Registration failed');
-        }
-      } catch (err) {
-        showToast('Server connection error', 'error');
-      } finally {
-        signupBtn.disabled = false;
-        signupBtn.querySelector('span').textContent = 'Create account';
+      // Domain validation
+      if (!email.toLowerCase().endsWith(ALLOWED_DOMAIN)) {
+        return showError('signupEmail', `Only ${ALLOWED_DOMAIN} emails are allowed`);
       }
+
+      if (!password || password.length < 6) return showError('signupPassword', 'Min 6 characters');
+      if (password !== confirmPw)           return showError('signupConfirm',  'Passwords do not match');
+
+      // All valid — store data and show privacy modal
+      pendingSignupData = { firstName, lastName, email, password };
+      openPrivacyModal();
     });
   }
-});
 
-// ---------- UTILITIES ----------
+  // ======================================================
+  // PRIVACY MODAL
+  // ======================================================
+  const privacyModal     = document.getElementById('privacyModal');
+  const privacyAgreeBtn  = document.getElementById('privacyAgreeBtn');
+  const privacyCancelBtn = document.getElementById('privacyCancelBtn');
+
+  function openPrivacyModal() {
+    privacyModal?.classList.add('open');
+  }
+
+  function closePrivacyModal() {
+    privacyModal?.classList.remove('open');
+  }
+
+  // Cancel — close modal, do nothing
+  privacyCancelBtn?.addEventListener('click', () => {
+    closePrivacyModal();
+    pendingSignupData = null;
+  });
+
+  // Click outside modal to cancel
+  privacyModal?.addEventListener('click', (e) => {
+    if (e.target === privacyModal) {
+      closePrivacyModal();
+      pendingSignupData = null;
+    }
+  });
+
+  // Agree — submit registration
+  privacyAgreeBtn?.addEventListener('click', async () => {
+    if (!pendingSignupData) return;
+
+    privacyAgreeBtn.disabled = true;
+    privacyAgreeBtn.textContent = 'Creating account...';
+
+    try {
+      const response = await fetch(`${API_URL}/register`, {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify(pendingSignupData)
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        closePrivacyModal();
+        pendingSignupData = null;
+
+        // Clear signup form
+        ['signupFirst', 'signupLast', 'signupEmail', 'signupPassword', 'signupConfirm']
+          .forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+
+        // Switch to login and show pending notice
+        signupCard.classList.add('hidden-card');
+        loginCard.classList.remove('hidden-card');
+        document.getElementById('pendingNotice')?.classList.add('show');
+        showToast('Account submitted! Awaiting admin approval.');
+      } else {
+        closePrivacyModal();
+        showError('signupEmail', data.message || 'Registration failed');
+      }
+    } catch (err) {
+      closePrivacyModal();
+      showToast('Server connection error', 'error');
+    } finally {
+      pendingSignupData = null;
+      privacyAgreeBtn.disabled = false;
+      privacyAgreeBtn.innerHTML = `
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+        I Agree — Create My Account
+      `;
+    }
+  });
+
+}); // end DOMContentLoaded
+
+// ======================================================
+// UTILITIES
+// ======================================================
 function showError(fieldId, message) {
   showToast(message, 'error');
   const input = document.getElementById(fieldId);
   if (input) {
     input.style.borderColor = '#e0504a';
-    input.style.animation = 'shake 0.4s ease';
+    input.style.animation   = 'shake 0.4s ease';
     setTimeout(() => {
       input.style.borderColor = '';
-      input.style.animation = '';
+      input.style.animation   = '';
     }, 500);
   }
 }
@@ -205,5 +300,5 @@ function showToast(message, type = 'success') {
   if (icon) icon.style.color = type === 'error' ? '#e0504a' : '#5ddf7a';
   toast.classList.add('show');
   clearTimeout(toastTimeout);
-  toastTimeout = setTimeout(() => toast.classList.remove('show'), 3000);
+  toastTimeout = setTimeout(() => toast.classList.remove('show'), 3500);
 }
