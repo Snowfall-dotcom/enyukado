@@ -92,41 +92,37 @@
     .privacy-modal-body p {
       font-size: 0.9rem;
       line-height: 1.75;
-      color: #5a5a5a;
+      color: #3c3c3c;
       font-weight: 300;
       margin-bottom: 16px;
     }
 
-    .privacy-modal-body p strong {
+    .privacy-modal-body p strong,
+    .privacy-modal-body li strong {
       color: #3c3c3c;
-      font-weight: 600;
+      font-weight: 500;
     }
 
     .privacy-points {
-      list-style: none;
+      list-style: disc;
+      padding-left: 20px;
       display: flex;
       flex-direction: column;
       gap: 10px;
       margin-bottom: 16px;
-      padding: 0;
     }
 
     .privacy-points li {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
+      display: list-item;
       font-size: 0.88rem;
       color: #5a5a5a;
       line-height: 1.6;
       font-weight: 300;
+      padding-left: 4px;
     }
 
     .privacy-points li::before {
-      content: '·';
-      color: #326fca;
-      font-size: 1.4rem;
-      line-height: 1.2;
-      flex-shrink: 0;
+      display: none;
     }
 
     .privacy-modal-footer {
@@ -135,19 +131,6 @@
       display: flex;
       flex-direction: column;
       gap: 10px;
-    }
-
-    .privacy-read-link {
-      text-align: center;
-      font-size: 0.8rem;
-      color: #888;
-      font-weight: 300;
-    }
-
-    .privacy-read-link a {
-      color: #326fca;
-      text-decoration: underline;
-      font-weight: 500;
     }
 
     .btn-privacy-agree {
@@ -495,7 +478,7 @@
           <li>Your <strong>payment information</strong> (QR code) will be stored and shown to buyers during transactions.</li>
           <li>Your <strong>listing data</strong> including item descriptions, photos, and prices will be visible to other verified students on the platform.</li>
           <li>Your data will <strong>never be sold or shared</strong> with third parties except as required by law or university policy.</li>
-          <li>You may request <strong>access, correction, or deletion</strong> of your data at any time by contacting contact.enyukado@gmail.com.</li>
+          <li>You may request <strong>access, correction, or deletion</strong> of your data at any time by contacting <strong>contact.enyukado@gmail.com.</strong></li>
           <li>Your account is subject to <strong>admin approval</strong> before you can access the platform.</li>
         </ul>
 
@@ -509,11 +492,6 @@
       </div>
 
       <div class="privacy-modal-footer">
-        <div class="privacy-read-link">
-          <a href="privacy.html" target="_blank">Read full Privacy Policy</a>
-          &nbsp;·&nbsp;
-          <a href="terms.html" target="_blank">Read Terms &amp; Conditions</a>
-        </div>
         <button class="btn-privacy-agree" id="privacyAgreeBtn">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
             <polyline points="20 6 9 17 4 12"/>
