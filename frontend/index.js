@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (!email)    return showError('loginEmail', 'Please enter your email');
       if (!password) return showError('loginPassword', 'Please enter your password');
-
+      
       // Frontend domain check
       if (!email.toLowerCase().endsWith(ALLOWED_DOMAIN)) {
         return showError('loginEmail', `Only ${ALLOWED_DOMAIN} emails are allowed`);
@@ -177,8 +177,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const confirmPw = document.getElementById('signupConfirm').value;
 
       // Validate all fields first
-      if (!firstName) return showError('signupFirst',    'First name is required');
-      if (!lastName)  return showError('signupLast',     'Last name is required');
+      if (!firstName) return showError('signupFirst', 'First name is required');
+      if (!/^[a-zA-Z\s\-']+$/.test(firstName)) return showError('signupFirst', 'First name must contain letters only');
+      if (!lastName) return showError('signupLast', 'Last name is required');
+      if (!/^[a-zA-Z\s\-']+$/.test(lastName)) return showError('signupLast', 'Last name must contain letters only');
       if (!email)     return showError('signupEmail',    'Email is required');
 
       // Domain validation
@@ -186,7 +188,9 @@ document.addEventListener('DOMContentLoaded', () => {
         return showError('signupEmail', `Only ${ALLOWED_DOMAIN} emails are allowed`);
       }
 
-      if (!password || password.length < 6) return showError('signupPassword', 'Min 6 characters');
+      if (!password) return showError('signupPassword', 'Password is required');
+      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/;
+      if (!passwordRegex.test(password)) return showError('signupPassword', 'Password must be at least 8 characters and include uppercase, lowercase, a number, and a special character');
       if (password !== confirmPw)           return showError('signupConfirm',  'Passwords do not match');
 
       // All valid — store data and show privacy modal
