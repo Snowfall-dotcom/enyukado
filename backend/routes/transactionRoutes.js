@@ -328,12 +328,6 @@ router.patch('/:id/dropoff', auth, async (req, res) => {
             .input('id', sql.Int, transactionID)
             .query(`UPDATE Transactions SET Status = 'Dropped Off' WHERE TransactionID = @id`);
 
-        // Auto message FROM seller TO buyer — appears in conversation
-        await sendAutoMessage(
-            pool, tx.SellerID, tx.BuyerID, transactionID,
-            `Hi! I've just dropped off "${tx.ProductName}" at the pickup location. You can now collect it! 📦`
-        );
-
         // System notification → buyer only
         await sendBotMessage(
             pool, tx.BuyerID, transactionID,
@@ -388,12 +382,6 @@ router.patch('/:id/complete', auth, async (req, res) => {
         await pool.request()
             .input('id', sql.Int, transactionID)
             .query(`UPDATE Transactions SET Status = 'Completed' WHERE TransactionID = @id`);
-
-        // Auto message FROM buyer TO seller — appears in conversation
-        await sendAutoMessage(
-            pool, tx.BuyerID, tx.SellerID, transactionID,
-            `Hi! I've picked up "${tx.ProductName}". Thanks so much! 🙌`
-        );
 
         // System notification → buyer
         await sendBotMessage(
