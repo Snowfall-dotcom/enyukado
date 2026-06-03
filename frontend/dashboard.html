@@ -825,22 +825,12 @@
           </div>
 
           <div style="background:rgba(245,166,35,0.08);border:1px solid rgba(245,166,35,0.25);border-radius:var(--radius-sm);padding:10px 12px;margin-bottom:14px;font-size:0.78rem;color:#b07d10;line-height:1.5;">
-            ⚠️ Please complete the bank transfer of <strong id="ebankAmount">₱0</strong> to the seller, then upload your transfer confirmation below.
+            ⚠️ Please complete the bank transfer of <strong id="ebankAmount">₱0</strong> to the seller using your card details above.
           </div>
-
-          <!-- Proof upload for ebank -->
-          <p style="font-size:0.84rem;font-weight:600;color:var(--charcoal-2);margin-bottom:8px;">Upload transfer confirmation</p>
-          <div class="proof-upload-zone">
-            <input type="file" id="proofFileEbank" accept="image/*" onchange="handleProofUploadEbank(this)" />
-            <div class="puz-icon">📷</div>
-            <div class="puz-text">Tap to upload screenshot</div>
-            <div class="puz-sub">Bank transfer confirmation screenshot</div>
-          </div>
-          <img id="proofPreviewEbank" class="proof-preview" src="" alt="Transfer proof preview" />
 
           <div class="confirm-check">
             <input type="checkbox" id="confirmPaidCheckEbank" onchange="updateSubmitBtnEbank()" />
-            <label for="confirmPaidCheckEbank">I confirm I have completed the bank transfer of <strong id="confirmAmountEbank">₱0</strong> to <strong id="confirmSellerEbank">the seller</strong> and the screenshot above is my proof.</label>
+            <label for="confirmPaidCheckEbank">I confirm I have completed the bank transfer of <strong id="confirmAmountEbank">₱0</strong> to <strong id="confirmSellerEbank">the seller</strong>.</label>
           </div>
 
           <div style="display:flex;gap:10px;">

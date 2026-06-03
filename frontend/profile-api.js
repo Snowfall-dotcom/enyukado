@@ -431,7 +431,7 @@ async function loadMySales() {
 
         // Pending — waiting for admin
         html += renderGroup('⏳ Pending Admin Approval', groups['Pending'], t => `
-            <div class="listing-card" style="opacity:0.85;">
+            <div class="listing-card">
                 <div class="listing-img">
                     ${t.ImageURL ? `<img src="${t.ImageURL}" alt="${t.ProductName}" />` : '📦'}
                     <span class="listing-status pending">Pending</span>
@@ -447,7 +447,7 @@ async function loadMySales() {
 
         // Dropped Off — waiting for pickup
         html += renderGroup('📦 Dropped Off — Waiting for pickup', groups['Dropped Off'], t => `
-            <div class="listing-card" style="opacity:0.85;">
+            <div class="listing-card">
                 <div class="listing-img">
                     ${t.ImageURL ? `<img src="${t.ImageURL}" alt="${t.ProductName}" />` : '📦'}
                     <span class="listing-status dropped">Dropped Off</span>
@@ -463,7 +463,7 @@ async function loadMySales() {
 
         // Completed
         html += renderGroup('✅ Completed', groups['Completed'], t => `
-            <div class="listing-card" style="opacity:0.75;">
+            <div class="listing-card">
                 <div class="listing-img">
                     ${t.ImageURL ? `<img src="${t.ImageURL}" alt="${t.ProductName}" />` : '📦'}
                     <span class="listing-status sold">Completed</span>
@@ -478,7 +478,7 @@ async function loadMySales() {
 
         // Cancelled
         html += renderGroup('❌ Cancelled', groups['Cancelled'], t => `
-            <div class="listing-card" style="opacity:0.6;">
+            <div class="listing-card">
                 <div class="listing-img">
                     ${t.ImageURL ? `<img src="${t.ImageURL}" alt="${t.ProductName}" />` : '📦'}
                     <span class="listing-status sold">Cancelled</span>

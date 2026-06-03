@@ -93,11 +93,13 @@ router.post('/', auth, proofUpload.single('paymentProof'), async (req, res) => {
         return res.status(400).json({ message: 'Payment method must be GCash or E-bank.' });
     }
 
-    if (!req.file) {
-        return res.status(400).json({ message: 'Payment proof image is required.' });
+    if (!req.file && paymentMethod !== 'E-bank') {
+        return res.status(400).json({ message: 'Payment proof image is required for GCash.' });
     }
 
-    const paymentProofURL = `http://localhost:5000/uploads/payment-proofs/${req.file.filename}`;
+    const paymentProofURL = req.file
+        ? `http://localhost:5000/uploads/payment-proofs/${req.file.filename}`
+        : null;
 
     try {
         const pool = await poolPromise;
@@ -328,6 +330,12 @@ router.patch('/:id/dropoff', auth, async (req, res) => {
             .input('id', sql.Int, transactionID)
             .query(`UPDATE Transactions SET Status = 'Dropped Off' WHERE TransactionID = @id`);
 
+        // Auto message FROM seller TO buyer — appears in conversation
+        await sendAutoMessage(
+            pool, tx.SellerID, tx.BuyerID, transactionID,
+            `Hi! I've just dropped off "${tx.ProductName}" at the pickup location. You can now collect it! 📦`
+        );
+
         // System notification → buyer only
         await sendBotMessage(
             pool, tx.BuyerID, transactionID,
@@ -382,6 +390,12 @@ router.patch('/:id/complete', auth, async (req, res) => {
         await pool.request()
             .input('id', sql.Int, transactionID)
             .query(`UPDATE Transactions SET Status = 'Completed' WHERE TransactionID = @id`);
+
+        // Auto message FROM buyer TO seller — appears in conversation
+        await sendAutoMessage(
+            pool, tx.BuyerID, tx.SellerID, transactionID,
+            `Hi! I've picked up "${tx.ProductName}". Thanks so much! 🙌`
+        );
 
         // System notification → buyer
         await sendBotMessage(

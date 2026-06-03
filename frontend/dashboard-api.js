@@ -435,11 +435,10 @@ window.handleProofUploadEbank = function(input) {
   updateSubmitBtnEbank();
 };
 window.updateSubmitBtnEbank = function() {
-  const checked  = document.getElementById('confirmPaidCheckEbank').checked;
-  const hasProof = proofFileDataEbank !== null;
-  const btn      = document.getElementById('submitPaymentBtnEbank');
-  const enabled  = checked && hasProof;
-  btn.disabled = !enabled; btn.style.opacity = enabled ? '1' : '0.5';
+  const checked = document.getElementById('confirmPaidCheckEbank').checked;
+  const btn     = document.getElementById('submitPaymentBtnEbank');
+  btn.disabled = !checked;
+  btn.style.opacity = checked ? '1' : '0.5';
 };
 
 // ── Submit GCash payment ──
@@ -452,8 +451,8 @@ window.submitPayment = async function() {
 // ── Submit E-bank payment ──
 window.submitPaymentEbank = async function() {
   const productID = document.getElementById('itemModal').dataset.productId;
-  if (!productID || !proofFileDataEbank) { showDashToast('Please upload transfer confirmation.', 'error'); return; }
-  await doSubmitPayment(productID, 'E-bank', proofFileDataEbank, 'submitPaymentBtnEbank');
+  if (!productID) { showDashToast('Something went wrong.', 'error'); return; }
+  await doSubmitPayment(productID, 'E-bank', null, 'submitPaymentBtnEbank');
 };
 
 async function doSubmitPayment(productID, method, proofFile, btnID) {
@@ -464,7 +463,7 @@ async function doSubmitPayment(productID, method, proofFile, btnID) {
     const formData = new FormData();
     formData.append('productID',     productID);
     formData.append('paymentMethod', method);
-    formData.append('paymentProof',  proofFile);
+    if (proofFile) formData.append('paymentProof', proofFile);
 
     const response = await fetch(`${API_BASE}/transactions`, {
       method:  'POST',
