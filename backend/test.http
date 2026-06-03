@@ -52,7 +52,7 @@ Content-Type: application/json
     "password": "admin1234"
 }
 
-### 3. Login User (copy token from response into @token above)
+### 4. Login User (copy token from response into @token above)
 POST {{baseUrl}}/api/users/login
 Content-Type: application/json
 
@@ -63,13 +63,13 @@ Content-Type: application/json
 
 ###
 
-### 4. Get my profile (requires token)
+### 5. Get my profile (requires token)
 GET {{baseUrl}}/api/users/profile
 x-auth-token: {{token}}
 
 ###
 
-### 5. Update my profile (requires token)
+### 6. Update my profile (requires token)
 PUT {{baseUrl}}/api/users/profile
 Content-Type: application/json
 x-auth-token: {{token}}
@@ -84,7 +84,7 @@ x-auth-token: {{token}}
 
 ###
 
-### 6. Change password (requires token)
+### 7. Change password (requires token)
 PUT {{baseUrl}}/api/users/change-password
 Content-Type: application/json
 x-auth-token: {{token}}
@@ -96,7 +96,7 @@ x-auth-token: {{token}}
 
 ###
 
-### 7. Get any user's public profile (replace 1 with real UserID)
+### 8. Get any user's public profile (replace 1 with real UserID)
 GET {{baseUrl}}/api/users/1
 
 
@@ -104,12 +104,12 @@ GET {{baseUrl}}/api/users/1
 # CATEGORIES
 # ============================================================
 
-### 8. Get all categories
+### 9. Get all categories
 GET {{baseUrl}}/api/categories
 
 ###
 
-### 9. Get single category by ID
+### 10. Get single category by ID
 GET {{baseUrl}}/api/categories/1
 
 
@@ -117,48 +117,48 @@ GET {{baseUrl}}/api/categories/1
 # PRODUCTS
 # ============================================================
 
-### 10. Get all available products
+### 11. Get all available products
 GET {{baseUrl}}/api/products
 
 ###
 
-### 11. Search by keyword
+### 12. Search by keyword
 GET {{baseUrl}}/api/products?search=textbook
 
 ###
 
-### 12. Filter by category ID
+### 13. Filter by category ID
 GET {{baseUrl}}/api/products?category=1
 
 ###
 
-### 13. Filter by condition
+### 14. Filter by condition
 GET {{baseUrl}}/api/products?condition=Used
 
 ###
 
-### 14. Filter by price range and sort
+### 15. Filter by price range and sort
 GET {{baseUrl}}/api/products?minPrice=100&maxPrice=500&sort=price_asc
 
 ###
 
-### 15. Get all products including sold
+### 16. Get all products including sold
 GET {{baseUrl}}/api/products?status=Sold
 
 ###
 
-### 16. Get single product by ID (replace 1 with real ProductID)
+### 17. Get single product by ID (replace 1 with real ProductID)
 GET {{baseUrl}}/api/products/1
 
 ###
 
-### 17. Get my listings (requires token)
+### 18. Get my listings (requires token)
 GET {{baseUrl}}/api/products/my/listings
 x-auth-token: {{token}}
 
 ###
 
-### 18. Add a new product (requires token)
+### 19. Add a new product (requires token)
 POST {{baseUrl}}/api/products/add
 Content-Type: application/json
 x-auth-token: {{token}}
@@ -175,7 +175,7 @@ x-auth-token: {{token}}
 
 ###
 
-### 19. Edit a product (replace 1 with real ProductID)
+### 20. Edit a product (replace 1 with real ProductID)
 PUT {{baseUrl}}/api/products/12
 Content-Type: application/json
 x-auth-token: {{token}}
@@ -192,13 +192,13 @@ x-auth-token: {{token}}
 
 ###
 
-### 20. Mark product as sold
+### 21. Mark product as sold
 PATCH {{baseUrl}}/api/products/12/sold
 x-auth-token: {{token}}
 
 ###
 
-### 21. Delete a product
+### 22. Delete a product
 DELETE {{baseUrl}}/api/products/12
 x-auth-token: {{token}}
 
@@ -208,7 +208,7 @@ x-auth-token: {{token}}
 # NOTE: Login as MARIA before running #22
 # ============================================================
 
-### 22. Buy a product (login as Maria, replace ProductID)
+### 23. Buy a product (login as Maria, replace ProductID)
 POST {{baseUrl}}/api/transactions
 Content-Type: application/json
 x-auth-token: {{token}}
@@ -219,25 +219,25 @@ x-auth-token: {{token}}
 
 ###
 
-### 23. Get my purchases (login as buyer)
+### 24. Get my purchases (login as buyer)
 GET {{baseUrl}}/api/transactions/my/purchases
 x-auth-token: {{token}}
 
 ###
 
-### 24. Get my sales (login as seller)
+### 25. Get my sales (login as seller)
 GET {{baseUrl}}/api/transactions/my/sales
 x-auth-token: {{token}}
 
 ###
 
-### 25. Get single transaction (replace 1 with real TransactionID)
+### 26. Get single transaction (replace 1 with real TransactionID)
 GET {{baseUrl}}/api/transactions/4
 x-auth-token: {{token}}
 
 ###
 
-### 26. Update transaction status (login as Juan/seller, replace 1 with real TransactionID)
+### 27. Update transaction status (login as Juan/seller, replace 1 with real TransactionID)
 ### Valid values: Pending, Completed, Cancelled
 PATCH {{baseUrl}}/api/transactions/4/status
 Content-Type: application/json
@@ -254,7 +254,7 @@ x-auth-token: {{token}}
 # Login as Maria (buyer) before running #27
 # ============================================================
 
-### 27. Submit a review (login as buyer, replace TransactionID)
+### 28. Submit a review (login as buyer, replace TransactionID)
 POST {{baseUrl}}/api/reviews
 Content-Type: application/json
 x-auth-token: {{token}}
@@ -267,16 +267,16 @@ x-auth-token: {{token}}
 
 ###
 
-### 28. Get all reviews for a user (replace 1 with real UserID)
+### 29. Get all reviews for a user (replace 1 with real UserID)
 GET {{baseUrl}}/api/reviews/user/3
 
 ###
 
-### 29. Get single review (replace 1 with real ReviewID)
+### 30. Get single review (replace 1 with real ReviewID)
 GET {{baseUrl}}/api/reviews/4
 
 ###
 
-### 30. Delete a review (replace 1 with real ReviewID)
+### 31. Delete a review (replace 1 with real ReviewID)
 DELETE {{baseUrl}}/api/reviews/4
 x-auth-token: {{token}}

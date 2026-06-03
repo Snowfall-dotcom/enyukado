@@ -80,11 +80,10 @@
     .listing-img { width: 100%; aspect-ratio: 1; background: var(--light); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; position: relative; overflow: hidden; }
     .listing-img img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
     .listing-status { position: absolute; top: 10px; right: 10px; font-size: 0.7rem; font-weight: 600; padding: 3px 8px; border-radius: 100px; }
-    .listing-status.available { background: var(--white); color: #2d9e50; border: 1px solid #2d9e50; }
-    .listing-status.pending   { background: var(--white); color: #b07d10; border: 1px solid #b07d10; }
-    .listing-status.sold      { background: var(--white); color: #c0392b; border: 1px solid #c0392b; }
-    .listing-status.completed { background: var(--white); color: #2d9e50; border: 1px solid #2d9e50; }
-    .listing-status.dropped   { background: var(--white); color: var(--blue); border: 1px solid var(--blue); }
+    .listing-status.available { background: rgba(93,223,122,0.15); color: #2d9e50; border: 1px solid rgba(93,223,122,0.3); }
+    .listing-status.pending { background: rgba(245,166,35,0.15); color: #b07d10; border: 1px solid rgba(245,166,35,0.3); }
+    .listing-status.sold { background: rgba(224,80,74,0.12); color: #c0392b; border: 1px solid rgba(224,80,74,0.2); }
+    .listing-status.dropped { background: rgba(50,111,202,0.12); color: var(--blue); border: 1px solid rgba(50,111,202,0.2); }
     .listing-info { padding: 12px 14px 14px; }
     .listing-info h4 { font-family: 'Sora', sans-serif; font-size: 0.88rem; font-weight: 600; color: var(--charcoal); margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .listing-info .price { font-family: 'Sora', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--blue); margin-bottom: 6px; }
@@ -313,6 +312,75 @@
     </div>
 
   </main>
+
+  <!-- EDIT LISTING MODAL -->
+  <div class="modal-overlay" id="editListingModal">
+    <div class="edit-modal" style="max-width:540px;">
+      <div class="edit-modal-header">
+        <h3>Edit Listing</h3>
+        <button class="modal-close-btn" onclick="closeEditListingModal()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="edit-modal-body">
+        <input type="hidden" id="editListingProductID" />
+
+        <div class="modal-field">
+          <label>Item name</label>
+          <input type="text" id="editListingName" placeholder="e.g. Engineering Math Vol. 2" />
+        </div>
+
+        <div class="modal-row">
+          <div class="modal-field">
+            <label>Price (₱)</label>
+            <input type="number" id="editListingPrice" placeholder="0.00" min="0" />
+          </div>
+          <div class="modal-field">
+            <label>Quantity</label>
+            <input type="number" id="editListingQuantity" placeholder="1" min="1" value="1" />
+          </div>
+        </div>
+
+        <div class="modal-row">
+          <div class="modal-field">
+            <label>Category</label>
+            <select id="editListingCategory"><option value="">Select category</option></select>
+          </div>
+          <div class="modal-field">
+            <label>Condition</label>
+            <select id="editListingCondition">
+              <option value="">Select condition</option>
+              <option>Like new</option>
+              <option>Good</option>
+              <option>Used</option>
+              <option>Fair</option>
+              <option>Poor</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="modal-field">
+          <label>Description <span style="color:var(--charcoal-3);font-weight:300;">(optional)</span></label>
+          <textarea id="editListingDesc" placeholder="Describe the item, any defects, why you're selling…" style="height:80px;"></textarea>
+        </div>
+
+        <!-- Image upload -->
+        <div style="margin-bottom:16px;">
+          <label style="font-size:0.88rem;font-weight:500;color:var(--charcoal-2);display:block;margin-bottom:6px;">
+            Current photos <span style="color:var(--charcoal-3);font-weight:300;">(upload new to replace all)</span>
+          </label>
+          <div id="editListingCurrentImgs" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;"></div>
+          <div style="border:2px dashed #c8d3e8;border-radius:var(--radius-sm);background:var(--light);padding:14px;text-align:center;cursor:pointer;position:relative;">
+            <input type="file" id="editListingImages" accept="image/*" multiple style="position:absolute;inset:0;opacity:0;cursor:pointer;" onchange="handleEditListingImages(this)" />
+            <div style="font-size:0.84rem;color:var(--charcoal-2);">Click to upload new photos (1–5, replaces existing)</div>
+          </div>
+          <div id="editListingNewImgPreview" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;"></div>
+        </div>
+
+        <button class="btn-save" id="saveEditListingBtn" onclick="saveEditedListing()">Save Changes</button>
+      </div>
+    </div>
+  </div>
 
   <!-- EDIT PROFILE MODAL -->
   <div class="modal-overlay" id="editModal">

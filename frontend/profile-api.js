@@ -233,23 +233,135 @@ async function loadMyListings() {
     }
 }
 
-// Redirect to dashboard with edit data
+// ── Edit listing inline modal ──
+let editListingFiles = [];
+
 window.redirectToEditListing = async function(productID) {
     try {
         const res = await fetch(`${API_BASE}/products/${productID}`);
         const p   = await res.json();
-        localStorage.setItem('editProductID',   productID);
-        localStorage.setItem('editProductData', JSON.stringify({
-            name:        p.ProductName,
-            price:       p.Price,
-            categoryID:  p.CategoryID,
-            condition:   p.ProductCondition,
-            description: p.Description || '',
-            quantity:    p.Quantity
-        }));
-        window.location.href = 'dashboard.html';
+
+        // Fill fields
+        document.getElementById('editListingProductID').value  = productID;
+        document.getElementById('editListingName').value       = p.ProductName        || '';
+        document.getElementById('editListingPrice').value      = p.Price              || '';
+        document.getElementById('editListingQuantity').value   = p.Quantity           || 1;
+        document.getElementById('editListingDesc').value       = p.Description        || '';
+        document.getElementById('editListingCondition').value  = p.ProductCondition   || '';
+
+        // Load categories into select if not already loaded
+        const catSelect = document.getElementById('editListingCategory');
+        if (catSelect.options.length <= 1) {
+            const catRes  = await fetch(`${API_BASE}/categories`);
+            const cats    = await catRes.json();
+            cats.forEach(c => {
+                const opt = document.createElement('option');
+                opt.value = c.CategoryID;
+                opt.textContent = c.CategoryName;
+                catSelect.appendChild(opt);
+            });
+        }
+        catSelect.value = p.CategoryID || '';
+
+        // Show current images
+        const currentImgsEl = document.getElementById('editListingCurrentImgs');
+        currentImgsEl.innerHTML = '';
+        if (p.images && p.images.length > 0) {
+            p.images.forEach(img => {
+                const el = document.createElement('img');
+                el.src = img.ImageURL;
+                el.style.cssText = 'width:56px;height:56px;border-radius:6px;object-fit:cover;border:1.5px solid #dde2ec;';
+                currentImgsEl.appendChild(el);
+            });
+        }
+
+        // Reset new image selection
+        editListingFiles = [];
+        document.getElementById('editListingNewImgPreview').innerHTML = '';
+        document.getElementById('editListingImages').value = '';
+
+        document.getElementById('editListingModal').classList.add('open');
     } catch(e) {
         showProfileToast('Could not load listing data.', 'error');
+    }
+};
+
+window.closeEditListingModal = function() {
+    document.getElementById('editListingModal').classList.remove('open');
+    editListingFiles = [];
+};
+
+window.handleEditListingImages = function(input) {
+    const files = Array.from(input.files).slice(0, 5);
+    editListingFiles = files;
+    const preview = document.getElementById('editListingNewImgPreview');
+    preview.innerHTML = '';
+    files.forEach(f => {
+        const reader = new FileReader();
+        reader.onload = e => {
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            img.style.cssText = 'width:56px;height:56px;border-radius:6px;object-fit:cover;border:1.5px solid var(--blue);';
+            preview.appendChild(img);
+        };
+        reader.readAsDataURL(f);
+    });
+};
+
+window.saveEditedListing = async function() {
+    const productID      = document.getElementById('editListingProductID').value;
+    const productName    = document.getElementById('editListingName').value.trim();
+    const price          = document.getElementById('editListingPrice').value;
+    const quantity       = document.getElementById('editListingQuantity').value;
+    const categoryID     = document.getElementById('editListingCategory').value;
+    const condition      = document.getElementById('editListingCondition').value;
+    const description    = document.getElementById('editListingDesc').value.trim();
+
+    if (!productName) return showProfileToast('Item name is required.', 'error');
+    if (!price)       return showProfileToast('Price is required.', 'error');
+    if (!categoryID)  return showProfileToast('Please select a category.', 'error');
+    if (!condition)   return showProfileToast('Please select a condition.', 'error');
+
+    const btn = document.getElementById('saveEditListingBtn');
+    btn.disabled = true;
+    btn.textContent = 'Saving…';
+
+    try {
+        const formData = new FormData();
+        formData.append('productName',      productName);
+        formData.append('price',            parseFloat(price));
+        formData.append('description',      description);
+        formData.append('productCondition', condition);
+        formData.append('categoryID',       parseInt(categoryID));
+        formData.append('quantity',         parseInt(quantity) || 1);
+
+        // Only append images if new ones were selected
+        if (editListingFiles.length > 0) {
+            editListingFiles.forEach(f => formData.append('productImages', f));
+        } else {
+            // Send a placeholder so backend knows to keep existing images
+            formData.append('keepExistingImages', 'true');
+        }
+
+        const res  = await fetch(`${API_BASE}/products/${productID}`, {
+            method:  'PUT',
+            headers: { 'x-auth-token': token },
+            body:    formData
+        });
+        const data = await res.json();
+
+        if (res.ok) {
+            closeEditListingModal();
+            showProfileToast('Listing updated! Re-submitted for approval. ✅');
+            loadMyListings();
+        } else {
+            showProfileToast(data.message || 'Failed to update.', 'error');
+        }
+    } catch(err) {
+        showProfileToast('Server is offline.', 'error');
+    } finally {
+        btn.disabled = false;
+        btn.textContent = 'Save Changes';
     }
 };
 
@@ -351,10 +463,10 @@ async function loadMySales() {
 
         // Completed
         html += renderGroup('✅ Completed', groups['Completed'], t => `
-            <div class="listing-card">
+            <div class="listing-card" style="opacity:0.75;">
                 <div class="listing-img">
                     ${t.ImageURL ? `<img src="${t.ImageURL}" alt="${t.ProductName}" />` : '📦'}
-                    <span class="listing-status completed">Completed</span>
+                    <span class="listing-status sold">Completed</span>
                 </div>
                 <div class="listing-info">
                     <h4>${t.ProductName}</h4>
@@ -366,7 +478,7 @@ async function loadMySales() {
 
         // Cancelled
         html += renderGroup('❌ Cancelled', groups['Cancelled'], t => `
-            <div class="listing-card"
+            <div class="listing-card" style="opacity:0.6;">
                 <div class="listing-img">
                     ${t.ImageURL ? `<img src="${t.ImageURL}" alt="${t.ProductName}" />` : '📦'}
                     <span class="listing-status sold">Cancelled</span>
@@ -419,7 +531,7 @@ async function loadMyPurchases() {
 
         tab.innerHTML = `<div class="listings-grid">` + txns.map(t => {
             const statusClass =
-                t.Status === 'Completed'        ? 'completed' :
+                t.Status === 'Completed'        ? 'available' :
                 t.Status === 'Dropped Off'      ? 'dropped'   :
                 t.Status === 'Payment Approved' ? 'available' :
                 t.Status === 'Cancelled'        ? 'sold'      : 'pending';
